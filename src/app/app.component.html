@@ -1,10 +1,12 @@
 <div  class="app" [ngClass]="{'dark': isDark()}">
-  <div class="bg-red h-full dark:bg-black transition">
+  <!-- <div class="bg-red h-full dark:bg-black transition">
     <h1 class="text-gray-800 dark:text-white text-[6rem]">Bem-vindo!</h1>
 
-    <button class="bg-gray-800 dark:bg-white dark:border-gray-200 dark:text-black rounded-lg p-4 text-white" (click)="isDark.set(!isDark())">
+    <button class="bg-black dark:bg-white dark:border-gray-800 dark:text-black rounded-lg p-4 text-white" (click)="isDark.set(!isDark())">
       {{isDark() ? 'Dark' : 'Ligth'}} Mode
     </button>
     <p class="text-gray-700">Teste tema</p>
-  </div>
+  </div> -->
+
+  <router-outlet></router-outlet>
 </div>
