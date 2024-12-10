@@ -2,6 +2,8 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
+import { UserService } from '../../services/user/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,11 @@ export class LoginComponent implements OnInit{
 
   protected form!: FormGroup;
   protected formBuilder = inject(FormBuilder);
+
   protected authService = inject(AuthService);
+  protected userService = inject(UserService);
+
+  private router = inject(Router);
 
   ngOnInit(): void {
       this.form = this.formBuilder.group({
@@ -26,8 +32,19 @@ export class LoginComponent implements OnInit{
 
   onSigIn = (email: string, senha: string) => {
     this.authService.signIn(email, senha)
-    .then( res => {
-      console.log('login realizado', res);
+    .then( user_response => {
+      if (user_response.user) {
+        const { uid, email, displayName } = user_response.user;
+
+        const userData = {
+          uid,
+          email,
+          displayName
+        }
+
+        this.userService.setUserStorge(userData);
+        this.router.navigateByUrl('/dashboard');
+      }
     }).catch(error => {
       console.log('error', error);
     })
