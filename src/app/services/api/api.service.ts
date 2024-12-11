@@ -8,24 +8,16 @@ const API_KEY = environment.API_KEY;
   providedIn: 'root'
 })
 export class ApiService {
-
   private http = inject(HttpClient);
+  token = typeof window === 'undefined' || !window.localStorage ? null : localStorage.getItem('token'); //Melhor isso
 
   postDespesa = (userID: string) => {
-    return this.http.post(`${API_KEY}/${userID}/expends.json`, {
+    return this.http.post(`${API_KEY}/${userID}/expends.json?auth=${this.token}`, {
       title: 'Despesa de teste'
     });
   }
 
   getDespesas = (userID: string) => {
-    return this.http.get(`${API_KEY}/${userID}/expends.json`)
-  }
-
-  postReceita = () => {
-    // return this.http.post()
-  }
-
-  getReceitas = () => {
-    // return this.http.get()
+    return this.http.get(`${API_KEY}/${userID}/expends.json?auth=${this.token}`);    
   }
 }

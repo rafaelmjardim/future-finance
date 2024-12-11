@@ -44,10 +44,17 @@ export class LoginComponent implements OnInit{
 
   onSigIn = (email: string, senha: string) => {
     this.authService.signIn(email, senha)
-    .then( user_response => {
+    .then( user_response => {      
       if (user_response.user) {
-        const { uid, email, displayName } = user_response.user;
+        user_response.user.getIdToken()
+        .then(token => {
+          localStorage.setItem('token', token);
+        })
+        .catch(error => {
+          console.log('Erro ao pegar token! ', error);
+        })
 
+        const { uid, email, displayName } = user_response.user;
         const userData = {
           uid,
           email,
