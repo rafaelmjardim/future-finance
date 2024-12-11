@@ -15,7 +15,7 @@ module.exports = {
         surfaceColor: '#FFFFFF',
         borderColor: '#DDDDDD',
         textColor: '#191919',
-      },
+      }
     },
     borderRadius: {
       'none': '0',

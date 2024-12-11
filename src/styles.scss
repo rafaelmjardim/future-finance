@@ -4,6 +4,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    body {
+      @apply text-textColor; /* Aplica a cor personalizada como padrão */
+    }
+}
+
 * {
     margin: 0;
     padding: 0;

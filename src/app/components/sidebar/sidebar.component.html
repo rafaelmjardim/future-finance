@@ -1,6 +1,30 @@
 <div class="h-full border-r border-borderColor bg-surfaceColor">
-<!-- Logo -->
-<!-- Menu -->
+        <!-- Logo -->
+    <div class="h-[6.4rem] flex justify-center items-center">
+        <img src="assets/logo.png" alt="Logo do sistema">
+    </div>
 
- <!-- Logout -->
+    <div class="w-full py-[3rem] flex justify-center items-center">
+        <button class="bg-primary hover:bg-[#303030] text-white text-base h-[4.5rem] px-8 rounded flex items-center gap-4 transition">
+            <ng-icon name="ionAddOutline" size="2.2rem"></ng-icon>
+            Adicionar Transação
+        </button>
+    </div>
+
+        <!-- Menu -->
+    <div class="">
+        <label class="text-sm mb-[.8rem] px-[2rem]">GERAL</label>
+        <ul>
+            <li class="flex items-center gap-4 px-[2rem] py-[1.2rem] hover:bg-gray-200 transition cursor-pointer" routerLink="/dashboard">
+                <ng-icon [name]="'lucideLayoutPanelLeft'" size="2.2rem"  strokeWidth="1.5"></ng-icon>
+                Dashboard
+            </li>
+            <li class="flex items-center gap-4 px-[2rem] py-[1.2rem] hover:bg-gray-200 transition cursor-pointer" routerLink="/transacoes">
+                <ng-icon [name]="'ionSwapHorizontalOutline'" size="2.2rem"></ng-icon>
+                Transações
+            </li>
+        </ul>
+    </div>
+
+    <!-- Logout -->
 </div>

@@ -6,8 +6,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { UserService } from './services/user/user.service';
 import { AuthService } from './services/auth/auth.service';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { ionSettings } from '@ng-icons/ionicons';
-import { lucideLogOut } from '@ng-icons/lucide';
+import { ionAddOutline, ionSettings, ionSwapHorizontalOutline } from '@ng-icons/ionicons';
+import { lucideLayoutDashboard, lucideLayoutPanelLeft, lucideLogOut } from '@ng-icons/lucide';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @Component({
@@ -20,7 +20,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     HeaderComponent,
     SidebarComponent,
   ],
-  viewProviders: [provideIcons({ ionSettings, lucideLogOut })],
+  viewProviders: [provideIcons({ ionSettings, ionAddOutline, ionSwapHorizontalOutline, lucideLogOut, lucideLayoutPanelLeft, lucideLayoutDashboard })],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
