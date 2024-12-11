@@ -16,6 +16,10 @@ export class UserService {
   }
 
   getUserStorge = () => {
+    if (typeof window === 'undefined' || !window.localStorage) {
+      return null
+    }
+    
     const userStorge = localStorage.getItem('userData');
 
     return userStorge ? JSON.parse(userStorge) : null;

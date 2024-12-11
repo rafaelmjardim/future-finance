@@ -16,7 +16,6 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
   imports: [
     RouterOutlet, 
     NgClass, 
-    NgIcon,
     AngularFireAuthModule,
     HeaderComponent,
     SidebarComponent,
