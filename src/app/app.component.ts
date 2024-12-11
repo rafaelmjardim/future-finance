@@ -8,6 +8,7 @@ import { AuthService } from './services/auth/auth.service';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { ionSettings } from '@ng-icons/ionicons';
 import { lucideLogOut } from '@ng-icons/lucide';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-root',
@@ -15,9 +16,10 @@ import { lucideLogOut } from '@ng-icons/lucide';
   imports: [
     RouterOutlet, 
     NgClass, 
+    NgIcon,
     AngularFireAuthModule,
     HeaderComponent,
-    NgIcon
+    SidebarComponent,
   ],
   viewProviders: [provideIcons({ ionSettings, lucideLogOut })],
   templateUrl: './app.component.html',

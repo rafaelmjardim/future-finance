@@ -1,7 +1,17 @@
-<div  class="app bg-backgroundColor">
+<div class="app bg-backgroundColor" [ngClass]="{'app--login-router': !authService.isLogged()}">
 
   @if (authService.isLogged()) {
-    <app-header></app-header>
+    <div class="app__sidebar">
+      <app-sidebar></app-sidebar>
+    </div>
   }
-  <router-outlet></router-outlet>
+  <div class="app__main">
+    @if (authService.isLogged()) {
+      <app-header></app-header>
+    }
+
+    <div class="app__content h-full">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>

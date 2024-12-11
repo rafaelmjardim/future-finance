@@ -1,3 +1,20 @@
 .app {
     height: 100vh;
+    display: grid;
+    grid-template-columns: auto 1fr;
+
+    &--login-router {
+        grid-template-columns: 1fr;
+    }
+
+    &__sidebar {
+        width: 28.0rem;
+    }
+    
+    &__main{
+    }
+
+    &__content {
+        padding: 2.5rem;
+    }
 }
