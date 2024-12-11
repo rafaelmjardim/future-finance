@@ -5,7 +5,7 @@
       <app-sidebar></app-sidebar>
     </div>
   }
-  <div class="app__main">
+  <div class="app__main" [ngClass]="{'app__main--login-router': !authService.isLogged()}">
     @if (authService.isLogged()) {
       <app-header></app-header>
     }

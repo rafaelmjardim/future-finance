@@ -12,6 +12,13 @@
     }
     
     &__main{
+        display: grid;
+        width: 100%;
+        grid-template-rows: auto 1fr;
+
+        &--login-router {
+            grid-template-rows: 1fr;
+        }
     }
 
     &__content {
