@@ -10,7 +10,7 @@ module.exports = {
         accent: '#D33535',
         greenColor: '#6e9c90',
         grayColor: '#6e839c',
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#F3F3F3',
         surfaceColor: '#FFFFFF',
         borderColor: '#DDDDDD',
         textColor: '#191919',
@@ -21,7 +21,7 @@ module.exports = {
       'sm': '.2rem',
       DEFAULT: '.5rem',
       'lg': '1rem',
-      'ful': '9999px'
+      'full': '9999px'
     },
     gap: {
       '0.5': '.5rem',
