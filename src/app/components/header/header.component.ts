@@ -2,11 +2,12 @@ import { Component, inject } from '@angular/core';
 import { UserService } from '../../services/user/user.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [],
+  imports: [NgIcon],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })

@@ -3,7 +3,7 @@ import { NgClass } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 import { UserService } from '../../services/user/user.service';
-import { Router } from '@angular/router';
+import { Router, RouterState } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -24,10 +24,22 @@ export class LoginComponent implements OnInit{
   private router = inject(Router);
 
   ngOnInit(): void {
-      this.form = this.formBuilder.group({
-        email: [''],
-        senha: ['']
-      })
+    this.initForm();
+    this.checkLoggedRoute();
+  }
+
+  initForm = () => {
+    this.form = this.formBuilder.group({
+      email: [''],
+      senha: ['']
+    })
+  }
+
+  //Melhorar esse redirect (está muito lento)
+  checkLoggedRoute = () => {
+    if (this.userService.getUserStorge()) {
+      this.router.navigateByUrl('/dashboard');
+    }
   }
 
   onSigIn = (email: string, senha: string) => {

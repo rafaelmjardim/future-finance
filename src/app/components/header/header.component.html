@@ -1,10 +1,12 @@
 <div class="flex items-center justify-end p-10 bg-white h-[6.4rem] border-b border-borderColor">
     <!-- Actions -->
-    <div >
+    <div class="flex items-center gap-6">
+        <ng-icon class="cursor-pointer text-grayDarkColor hover:text-greenColor transition" name="ionSettings" size="2.4rem"></ng-icon>
+        <ng-icon class="cursor-pointer text-grayDarkColor hover:text-greenColor transition" name="lucideLogOut" size="2.4rem" (click)="handleLogout()"></ng-icon>
+
         <img 
             class="size-[4.5rem] object-cover rounded-full cursor-pointer" 
             src="https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            (click)="handleLogout()"
         >
     </div>
 </div>

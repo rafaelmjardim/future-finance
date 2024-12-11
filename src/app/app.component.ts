@@ -1,10 +1,13 @@
 import { NgClass } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { UserService } from './services/user/user.service';
 import { AuthService } from './services/auth/auth.service';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { ionSettings } from '@ng-icons/ionicons';
+import { lucideLogOut } from '@ng-icons/lucide';
 
 @Component({
   selector: 'app-root',
@@ -13,8 +16,10 @@ import { AuthService } from './services/auth/auth.service';
     RouterOutlet, 
     NgClass, 
     AngularFireAuthModule,
-    HeaderComponent
+    HeaderComponent,
+    NgIcon
   ],
+  viewProviders: [provideIcons({ ionSettings, lucideLogOut })],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
