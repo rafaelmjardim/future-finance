@@ -1,6 +1,6 @@
 export const environment = {
     production: false,
-    API_KEY: 'https://future-finance-ba592-default-rtdb.firebaseio.com',
+    API_KEY: 'https://future-finance-ba592-default-rtdb.firebaseio.com/usuarios',
     firebaseConfig: {
         apiKey: "AIzaSyCVF8-rb9ma3TzNelGs4WiVnsMnaS4I134",
         authDomain: "future-finance-ba592.firebaseapp.com",

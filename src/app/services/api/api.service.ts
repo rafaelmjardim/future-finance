@@ -12,12 +12,12 @@ export class ApiService {
   token = typeof window === 'undefined' || !window.localStorage ? null : localStorage.getItem('token'); //Melhor isso
 
   postDespesa = (userID: string) => {
-    return this.http.post(`${API_KEY}/${userID}/expends.json?auth=${this.token}`, {
+    return this.http.post(`${API_KEY}/${userID}/despesas.json?auth=${this.token}`, {
       title: 'Despesa de teste'
     });
   }
 
   getDespesas = (userID: string) => {
-    return this.http.get(`${API_KEY}/${userID}/expends.json?auth=${this.token}`);    
+    return this.http.get(`${API_KEY}/${userID}/despesas.json?auth=${this.token}`);    
   }
 }
