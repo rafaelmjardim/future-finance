@@ -21,4 +21,5 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/transitions/transitions.component').then(c => c.TransitionsComponent),
         canActivate: [AuthGuard]
     },
+    {   path: '**', redirectTo: 'login' } //Error route
 ];
