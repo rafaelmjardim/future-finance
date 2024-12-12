@@ -62,7 +62,6 @@ export class LoginComponent implements OnInit{
         }
 
         this.userService.setUserStorge(userData);
-        this.authService.isLogged.set(true);
         this.router.navigateByUrl('/dashboard');
       }
     }).catch(error => {

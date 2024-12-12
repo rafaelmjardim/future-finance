@@ -21,7 +21,6 @@ export class HeaderComponent {
     .then(logout_response => {
       console.log('Fez logout', logout_response);
       this.userService.removeUserStorge();
-      this.autService.isLogged.set(false);
       this.router.navigateByUrl('/login');
     })
     .catch(error_response => {
