@@ -6,7 +6,6 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { environment } from '../environments/environment.development'; //Verificar se precisa remover (development)
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 
