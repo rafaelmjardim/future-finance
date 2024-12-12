@@ -1,10 +1,10 @@
 .app {
     height: 100vh;
     display: grid;
-    grid-template-columns: auto 1fr;
-
-    &--login-router {
-        grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
+    
+    &--authenticated {
+        grid-template-columns: auto 1fr;
     }
 
     &__sidebar {
@@ -14,10 +14,10 @@
     &__main{
         display: grid;
         width: 100%;
-        grid-template-rows: auto 1fr;
-
-        &--login-router {
-            grid-template-rows: 1fr;
+        grid-template-rows: 1fr;
+        
+        &--authenticated {
+            grid-template-rows: auto 1fr;
         }
     }
 

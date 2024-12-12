@@ -1,6 +1,6 @@
-import { NgClass } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { UserService } from './services/user/user.service';
@@ -15,8 +15,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
   standalone: true,
   imports: [
     RouterOutlet, 
+    AsyncPipe,
     NgClass, 
-    AngularFireAuthModule,
     HeaderComponent,
     SidebarComponent,
   ],
@@ -25,14 +25,9 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
-  private userService = inject(UserService);
-  protected authService = inject(AuthService);
+  protected authService = inject(AuthService);  
 
   ngOnInit(): void {
-    this.checkUserLogged();
   }
   
-  checkUserLogged = () => {
-    this.authService.isLogged.set(this.userService.getUserStorge() ? true : false);
-  }
 }

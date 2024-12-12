@@ -1,12 +1,12 @@
-<div class="app bg-backgroundColor" [ngClass]="{'app--login-router': !authService.isLogged()}">
+<div class="app bg-backgroundColor" [ngClass]="{'app--authenticated': authService.isAuthenticated$ | async}">
 
-  @if (authService.isLogged()) {
+  @if (authService.isAuthenticated$ | async) {
     <div class="app__sidebar">
       <app-sidebar></app-sidebar>
     </div>
   }
-  <div class="app__main" [ngClass]="{'app__main--login-router': !authService.isLogged()}">
-    @if (authService.isLogged()) {
+  <div class="app__main" [ngClass]="{'app__main--authenticated': authService.isAuthenticated$ | async}">
+    @if (authService.isAuthenticated$ | async) {
       <app-header></app-header>
     }
 
