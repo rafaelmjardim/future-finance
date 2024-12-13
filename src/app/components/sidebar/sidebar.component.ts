@@ -3,6 +3,7 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { NgIcon } from '@ng-icons/core';
 import { Menu } from './sidebar';
+import { SheetService } from '../sheet/sheet.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,6 +14,7 @@ import { Menu } from './sidebar';
 })
 export class SidebarComponent {
   protected router = inject(Router);
+  protected sheetService = inject(SheetService);
 
   protected menu: Menu[] = [
     {
