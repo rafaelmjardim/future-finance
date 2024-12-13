@@ -1,8 +1,8 @@
-import { ApiService } from '../../services/api/api.service';
 import { User } from '../../services/user/user';
-import { UtilsService } from '../../services/utils/utils.service';
 import { UserService } from './../../services/user/user.service';
 import { Component, inject, OnInit } from '@angular/core';
+import { Dialog } from "@angular/cdk/dialog";
+import { SheetComponent } from '../../components/sheet/sheet.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,12 +12,16 @@ import { Component, inject, OnInit } from '@angular/core';
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit {
-
   private userService = inject(UserService);
-  private api = inject(ApiService);
-  private utilsService = inject(UtilsService);
   protected user: User = this.userService.getUserStorge();
+
+  private dialog = inject(Dialog);
   
   ngOnInit(): void {
   } 
+
+  openDialog() {
+    this.dialog.open(SheetComponent, {
+    })
+  }
 }
