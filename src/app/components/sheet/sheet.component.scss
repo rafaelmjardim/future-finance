@@ -1,4 +1,48 @@
-:host {
-    display: block;
+.sheet{
+    // display: block;
     background: #fff;
+    border-top-left-radius: .8rem;
+    border-bottom-left-radius: .8rem;
+    width: 45rem;
+    // height: calc(100% - 6.4rem);
+    padding: 1.6rem;
+    position: fixed;
+    right: 0;
+    top: 6.4rem;
+    bottom: 0;
+
+    /* Quando o sheet estiver ativo (entrada) */
+    &--active {
+        animation: slideInFromRight 0.3s ease forwards;
+    }
+
+    /* Quando o sheet estiver fechando (saída) */
+    &--closing {
+        animation: slideOutToRight 0.3s ease forwards;
+    }
+    
 }
+
+// /* Define a animação de entrada */
+// @keyframes slideInFromRight {
+//     from {
+//       transform: translateX(100%);
+//       opacity: 0;
+//     }
+//     to {
+//       transform: translateX(0);
+//       opacity: 1;
+//     }
+//   }
+  
+// /* Define a animação de saída */
+// @keyframes slideOutToRight {
+//     from {
+//         transform: translateX(0);
+//         opacity: 1;
+//     }
+//     to {
+//         transform: translateX(100%);
+//         opacity: 0;
+//     }
+// }
