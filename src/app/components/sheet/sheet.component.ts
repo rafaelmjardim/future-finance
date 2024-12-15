@@ -13,10 +13,10 @@ import { NgIcon } from '@ng-icons/core';
     trigger('sheetAnimation', [
       transition(':enter', [
         style({ transform: 'translateX(100%)', opacity: 0 }),
-        animate('.5s ease', style({ transform: 'translateX(0)', opacity: 1 })),
+        animate('.4s ease', style({ transform: 'translateX(0)', opacity: 1 })),
       ]),
       transition(':leave', [
-        animate('1s ease', style({ transform: 'translateX(100%)', opacity: 0 })),
+        animate('.4s ease', style({ transform: 'translateX(100%)', opacity: 0 })),
       ]),
     ]),
   ],
