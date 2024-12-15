@@ -3,11 +3,13 @@ import { UserService } from '../../services/user/user.service';
 import { ApiService } from '../../services/api/api.service';
 import { UtilsService } from '../../services/utils/utils.service';
 import { User } from '../../services/user/user';
+import { PageHeaderComponent } from '../../components/pageheader/page-header.component';
+import { pagesItems } from '../../constants/menu';
 
 @Component({
   selector: 'app-transitions',
   standalone: true,
-  imports: [],
+  imports: [PageHeaderComponent],
   templateUrl: './transitions.component.html',
   styleUrl: './transitions.component.scss'
 })
@@ -16,6 +18,8 @@ export class TransitionsComponent implements OnInit {
   private api = inject(ApiService);
   private utilsService = inject(UtilsService);
   protected user: User = this.userService.getUserStorge();
+
+  protected pageItem = pagesItems['transacoes'];
 
   ngOnInit(): void {
     this.getDespesas();
