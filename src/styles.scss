@@ -25,3 +25,9 @@ html {
 body {
     font-size: 1.6rem;
 }
+
+.cdk-overlay-dark-backdrop {
+    // background-color: #ffffffcc;
+    background-color: #44444415;
+    backdrop-filter: blur(.4rem);
+}
