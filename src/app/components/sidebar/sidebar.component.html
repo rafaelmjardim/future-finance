@@ -5,12 +5,11 @@
     </div>
 
     <div class="w-full py-[3rem] flex justify-center items-center">
-        <button class="bg-primary hover:bg-[#303030] text-white text-base h-[4.5rem] px-8 rounded flex items-center gap-4 transition"
-            (click)="sheetService.openSheetDialog()"
-        >
-            <ng-icon name="ionAddOutline" size="2.2rem"></ng-icon>
-            Adicionar Transação
-        </button>
+        <app-button 
+            txt="Adicionar Transação"
+            icon="ionAddOutline"
+            (actionEvent)="sheetService.openSheetDialog()"
+        ></app-button>
     </div>
 
         <!-- Menu -->
