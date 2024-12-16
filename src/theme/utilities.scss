@@ -1,0 +1,12 @@
+.box {
+    background-color: var(--surfaceColor);
+    border-radius: .5rem;
+    border: .1rem solid var(--borderColor);
+    width: 100%;
+    padding: 1.6rem;
+
+    &__title {
+        font-size: 1.8rem;
+        margin-bottom: 1.6rem;
+    }
+}

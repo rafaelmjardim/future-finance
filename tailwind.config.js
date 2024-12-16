@@ -5,9 +5,9 @@ module.exports = {
   theme: {
     extend: { 
       colors: {
-        primary: '#191919',
-        secundary: '#777777',
-        accent: '#D33535',
+        primaryColor: '#191919',
+        secundaryColor: '#777777',
+        accentColor: '#D33535',
         greenColor: '#6e9c90',
         grayColor: '#6e839c',
         grayDarkColor: '#444444',
@@ -35,7 +35,8 @@ module.exports = {
     //   '6': '6rem',
     // },
     fontSize: {
-      'sm': '1.4rem',
+      'sm': '1.2rem',
+      'md': '1.4rem',
       'base': '1.6rem',
       'lg': '1.8rem'
     }
