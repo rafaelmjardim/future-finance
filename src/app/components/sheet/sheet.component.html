@@ -1,7 +1,39 @@
 <div class="sheet" [ngClass]="{'sheet--active': true}">
-    <div class="flex items-center gap-4 cursor-pointer hover:text-gray-700" (click)="dialogRef.close()">
+    <div class="flex items-center gap-4 cursor-pointer hover:text-gray-700 mb-8" (click)="dialogRef.close()">
         <ng-icon name="ionArrowBack" size="2rem"></ng-icon>
         <span>Adicionar transação</span>
     </div>
+
+    <form class="flex flex-col gap-12">        
+        <label class="input">
+            <span>Valor da transação</span>
+            <input type="text" placeholder="R$ 0.00">
+        </label>
+       
+        <label class="input">
+            <span>Descrição</span>
+            <textarea rows="3" placeholder="Adicione uma descrição"></textarea>
+        </label>
+
+        <div class="flex flex-col gap-2">
+            <span>Tipo</span>
+            <div class="flex items-center gap-6">
+                <label class="flex items-center gap-2">
+                    <input class="accent-primaryColor" type="radio">
+                    <span class="text-md font-medium">Despesa</span>
+                </label>
+
+                <label class="flex items-center gap-2">
+                    <input class="accent-primaryColor" type="radio">
+                    <span class="text-md font-medium">Receita</span>
+                </label>
+            </div>
+        </div>
+
+        <app-button 
+            txt="Adicionar Transação" 
+            icon="ionAddOutlined"
+        />
+    </form>
 
 </div>
