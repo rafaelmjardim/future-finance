@@ -6,12 +6,12 @@ import { UtilsService } from '../../services/utils/utils.service';
 import { User } from '../../services/user/user';
 import { PageHeaderComponent } from '../../components/pageheader/page-header.component';
 import { pagesItems } from '../../constants/menu';
-import { NgIcon } from '@ng-icons/core';
+import { Transition } from './transitions';
 
 @Component({
   selector: 'app-transitions',
   standalone: true,
-  imports: [PageHeaderComponent, NgIcon, TransitionsListComponent],
+  imports: [PageHeaderComponent, TransitionsListComponent],
   templateUrl: './transitions.component.html',
   styleUrl: './transitions.component.scss'
 })
@@ -22,6 +22,42 @@ export class TransitionsComponent implements OnInit {
   protected user: User = this.userService.getUserStorge();
 
   protected pageItem = pagesItems['transacoes'];
+
+  protected incomings: Transition[] = [
+    {
+      title: 'Receita titulo',
+      icon: 'ionCashOutline',
+      date: '20 jul, 12:30',
+      status: false,
+      value: 2500
+    },
+
+  ]
+
+  protected expenses: Transition[] = [
+    {
+      title: 'Despesa titulo',
+      icon: 'ionCashOutline',
+      date: '20 jul, 12:30',
+      status: false,
+      value: 1500
+    },
+    {
+      title: 'Despesa titulo',
+      icon: 'ionCashOutline',
+      date: '20 jul, 12:30',
+      status: false,
+      value: 1500
+    },
+    {
+      title: 'Despesa titulo',
+      icon: 'ionCashOutline',
+      date: '20 jul, 12:30',
+      status: false,
+      value: 1500
+    },
+
+  ]
 
   ngOnInit(): void {
     this.getDespesas();
