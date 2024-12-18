@@ -1,3 +1,4 @@
+import { TransitionsListComponent } from './transitions-list/transitions-list.component';
 import { Component, inject, OnInit } from '@angular/core';
 import { UserService } from '../../services/user/user.service';
 import { ApiService } from '../../services/api/api.service';
@@ -5,11 +6,12 @@ import { UtilsService } from '../../services/utils/utils.service';
 import { User } from '../../services/user/user';
 import { PageHeaderComponent } from '../../components/pageheader/page-header.component';
 import { pagesItems } from '../../constants/menu';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-transitions',
   standalone: true,
-  imports: [PageHeaderComponent],
+  imports: [PageHeaderComponent, NgIcon, TransitionsListComponent],
   templateUrl: './transitions.component.html',
   styleUrl: './transitions.component.scss'
 })

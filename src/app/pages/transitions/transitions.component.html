@@ -1,4 +1,23 @@
+<!-- Header -->
 <app-page-header
     [title]="pageItem.txt"
     [icon]="pageItem.icon"
-></app-page-header>
+/>
+
+<!-- Main -->
+ <div class="grid grid-cols-2">
+     <div class="box">
+         <h2 class="box__title font-medium">Transações</h2>
+     
+         <div class="box__content flex flex-col gap-8">
+                 <app-transitions-list
+                     label="Receitas"
+                     typeRef="INCOME"
+                 />
+                 <app-transitions-list
+                     label="Despesas"
+                     typeRef="EXPENSE"
+                 />
+         </div>
+     </div>
+ </div>
