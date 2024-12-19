@@ -1,4 +1,4 @@
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, LOCALE_ID } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -11,6 +11,11 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
 import { provideIcons } from '@ng-icons/core';
 import { iconsConfig } from './constants/icons.config';
+import { registerLocaleData } from '@angular/common';
+import ptBr from '@angular/common/locales/pt';
+
+
+registerLocaleData(ptBr);
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,5 +27,6 @@ export const appConfig: ApplicationConfig = {
     provideAuth(() => getAuth()),
     provideHttpClient(withFetch()),
     { provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig },
+    { provide: LOCALE_ID, useValue: 'pt' },
   ]
 };
