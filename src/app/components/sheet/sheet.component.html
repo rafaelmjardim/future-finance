@@ -4,27 +4,38 @@
         <span>Adicionar transação</span>
     </div>
 
-    <form class="flex flex-col gap-12">        
+    <form class="flex flex-col gap-12" [formGroup]="transitionForm">        
         <label class="input">
             <span>Valor da transação</span>
-            <input type="text" placeholder="R$ 0.00">
+            <input type="number" placeholder="R$ 0.00" formControlName="value">
+        </label>
+
+        <label class="input">
+            <span>Data</span>
+            <input type="date" placeholder="Adicione um nome para a transação" formControlName="date">
+        </label>
+        
+        <label class="input">
+            <span>Nome da transação</span>
+            <input type="text" placeholder="Adicione um nome para a transação" formControlName="name">
         </label>
        
         <label class="input">
             <span>Descrição</span>
-            <textarea rows="3" placeholder="Adicione uma descrição"></textarea>
+            <textarea rows="3" placeholder="Adicione uma descrição" formControlName="description"></textarea>
         </label>
 
         <div class="flex flex-col gap-2">
             <span>Tipo</span>
+
             <div class="flex items-center gap-6">
                 <label class="flex items-center gap-2">
-                    <input class="accent-primaryColor" type="radio">
+                    <input class="accent-primaryColor" type="radio" value="despesas" formControlName="typeRef">
                     <span class="text-md font-medium">Despesa</span>
                 </label>
 
                 <label class="flex items-center gap-2">
-                    <input class="accent-primaryColor" type="radio">
+                    <input class="accent-primaryColor" type="radio" value="receitas"  formControlName="typeRef">
                     <span class="text-md font-medium">Receita</span>
                 </label>
             </div>
@@ -33,6 +44,7 @@
         <app-button 
             txt="Adicionar Transação" 
             icon="ionAddOutlined"
+            (actionEvent)="handleSubmit()"
         />
     </form>
 

@@ -11,9 +11,14 @@ export class ApiService {
   private http = inject(HttpClient);
   token = typeof window === 'undefined' || !window.localStorage ? null : localStorage.getItem('token'); //Melhor isso
 
-  postDespesa = (userID: string) => {
-    return this.http.post(`${API_KEY}/${userID}/despesas.json?auth=${this.token}`, {
-      title: 'Despesa de teste'
+  postTransition = (userID: string, transitionData: any) => {
+    const { date, value, description, name, typeRef } = transitionData;
+
+    return this.http.post(`${API_KEY}/${userID}/${typeRef}.json?auth=${this.token}`, {
+      valor: value,
+      data: date,
+      nome: name,
+      descricao: description
     });
   }
 
