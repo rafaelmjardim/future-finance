@@ -1,5 +1,5 @@
-<div class="box">
-    <p class="text-md font-medium mb-4">{{ title }}</p>
+<div class="box py-4">
+    <p class="text-md font-medium mb-2">{{ title }}</p>
     <h2 class="text-[2.2rem] font-bold mb-1" [ngClass]="{'text-grayColor': typeRef === 'BALANCO', 'text-greenColor': typeRef === 'RECEITA', 'text-accentColor': typeRef === 'DESPESA'}">{{ value | currency: 'BRL' }}</h2>
     <p class="text-sm text-secundaryColor">{{ description }}</p>
 </div>
