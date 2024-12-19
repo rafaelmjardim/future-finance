@@ -1,7 +1,8 @@
 export type Transition = {
-    icon: string
-    title: string
-    date: string
-    value: number
-    status: boolean
+    nome: string
+    data: string
+    valor: number
+    descricao: string
+    icon?: string
+    status?: boolean
 }
