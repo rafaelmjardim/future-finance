@@ -11,13 +11,16 @@
                         </div>
                         <!-- Content -->
                         <div class="flex flex-col justify-between h-full">
-                            <span>Salário</span>
-                            <p class="text-sm text-secundaryColor">20 jul, 12:30</p>
+                            <span>{{transition.nome}}</span>
+                            <!-- <p class="text-sm text-secundaryColor">20 jul, 12:30</p> -->
+                            <p class="text-sm text-secundaryColor">{{transition.data | date}}</p>
                         </div>
                     </div>
     
                     <div class="flex flex-col items-end">
-                        <h2 class="text-greenColor" [ngClass]="{'text-greenColor': typeRef === 'INCOME', 'text-accentColor': typeRef === 'EXPENSE'}">R$2.000,00</h2>
+                        <h2 class="text-greenColor" [ngClass]="{'text-greenColor': typeRef === 'INCOME', 'text-accentColor': typeRef === 'EXPENSE'}">
+                            {{transition.valor | currency: 'BRL'}}
+                        </h2>
                         <p class="text-sm text-secundaryColor">Status</p>
                     </div>
                 </div>

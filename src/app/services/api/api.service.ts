@@ -22,6 +22,10 @@ export class ApiService {
     });
   }
 
+  getReceitas = (userID: string) => {
+    return this.http.get(`${API_KEY}/${userID}/receitas.json?auth=${this.token}`);    
+  }
+
   getDespesas = (userID: string) => {
     return this.http.get(`${API_KEY}/${userID}/despesas.json?auth=${this.token}`);    
   }

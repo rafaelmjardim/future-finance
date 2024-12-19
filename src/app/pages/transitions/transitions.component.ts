@@ -7,6 +7,7 @@ import { User } from '../../services/user/user';
 import { PageHeaderComponent } from '../../components/pageheader/page-header.component';
 import { pagesItems } from '../../constants/menu';
 import { Transition } from './transitions';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-transitions',
@@ -19,48 +20,32 @@ export class TransitionsComponent implements OnInit {
   private userService = inject(UserService);
   private api = inject(ApiService);
   private utilsService = inject(UtilsService);
+  
   protected user: User = this.userService.getUserStorge();
 
   protected pageItem = pagesItems['transacoes'];
 
-  protected incomings: Transition[] = [
-    {
-      title: 'Receita titulo',
-      icon: 'ionCashOutline',
-      date: '20 jul, 12:30',
-      status: false,
-      value: 2500
-    },
-
-  ]
-
-  protected expenses: Transition[] = [
-    {
-      title: 'Despesa titulo',
-      icon: 'ionCashOutline',
-      date: '20 jul, 12:30',
-      status: false,
-      value: 1500
-    },
-    {
-      title: 'Despesa titulo',
-      icon: 'ionCashOutline',
-      date: '20 jul, 12:30',
-      status: false,
-      value: 1500
-    },
-    {
-      title: 'Despesa titulo',
-      icon: 'ionCashOutline',
-      date: '20 jul, 12:30',
-      status: false,
-      value: 1500
-    },
-
-  ]
+  protected incomings: Transition[] = [];
+  protected expenses: Transition[] = [];
 
   ngOnInit(): void {
+    this.getReceitas()
     this.getDespesas();
+  }
+
+  getReceitas = () => {
+    if (!this.user) {
+      return
+    }
+
+    this.api.getReceitas(this.user.uid).subscribe({
+      next: (receitas_response) => {
+        this.incomings = this.utilsService.convertGetFirebase(receitas_response);
+      },
+      error: (receitas_error: HttpErrorResponse) => {
+        console.log('Erro ao carregar receitas', receitas_error);
+      },
+    })
   }
 
   getDespesas = () => {
@@ -68,21 +53,13 @@ export class TransitionsComponent implements OnInit {
       return
     }
 
-    this.api.getDespesas(this.user.uid).subscribe(despesas_response => {
-      const despesas = this.utilsService.convertGetFirebase(despesas_response);
-      console.log('Get despesas', despesas);
+    this.api.getDespesas(this.user.uid).subscribe({
+      next: (despesas_response) => {
+        this.expenses = this.utilsService.convertGetFirebase(despesas_response);
+      },
+      error: (despesas_error: HttpErrorResponse) => {
+        console.log('Erro ao carregar despesas', despesas_error);
+      },
     })
   }
-
-  postDespesa = () => {  
-    if (!this.user) {
-      console.log('Usuario não autenticado!');
-      return  
-    }
-    
-    this.api.postDespesa(this.user.uid).subscribe(res => {
-      console.log('post success', res);
-    })
-  }
-
 }
