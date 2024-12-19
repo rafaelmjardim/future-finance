@@ -8,11 +8,12 @@ import { PageHeaderComponent } from '../../components/pageheader/page-header.com
 import { pagesItems } from '../../constants/menu';
 import { Transition } from './transitions';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CardComponent } from '../../components/card/card.component';
 
 @Component({
   selector: 'app-transitions',
   standalone: true,
-  imports: [PageHeaderComponent, TransitionsListComponent],
+  imports: [PageHeaderComponent, TransitionsListComponent, CardComponent],
   templateUrl: './transitions.component.html',
   styleUrl: './transitions.component.scss'
 })
