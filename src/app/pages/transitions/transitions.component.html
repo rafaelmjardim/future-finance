@@ -7,7 +7,7 @@
 <!-- Main -->
  <div class="grid grid-cols-2 gap-8">
     <div class="box">
-        <h2 class="box__title font-medium">Transações</h2>
+        <h2 class="box__title">Transações</h2>
     
         <div class="box__content flex flex-col gap-8">
                 <app-transitions-list
@@ -23,13 +23,19 @@
         </div>
     </div>
 
-    <div class="box">
-        <h2 class="box__title font-medium">Resumo</h2>
+    <div class="grid grid-rows-2 gap-8">
+        <div class="box">
+            <h2 class="box__title">Resumo</h2>
+    
+            <div class="grid grid-cols-3 gap-6">
+                <app-card title="Balanço" [value]="500" description="Balanço total do mês de x" [typeRef]="'BALANCO'"/>
+                <app-card title="Receitas" [value]="2000" description="Receita total do mês de x" [typeRef]="'RECEITA'"/>
+                <app-card title="Despesas" [value]="1500" description="Despesa total do mês de x" [typeRef]="'DESPESA'"/>
+            </div>
+        </div>
 
-        <div class="grid grid-cols-3 gap-6">
-            <app-card title="Balanço" [value]="500" description="Balanço total do mês de x" [typeRef]="'BALANCO'"/>
-            <app-card title="Receitas" [value]="2000" description="Receita total do mês de x" [typeRef]="'RECEITA'"/>
-            <app-card title="Despesas" [value]="1500" description="Despesa total do mês de x" [typeRef]="'DESPESA'"/>
+        <div class="box">
+            <h2 class="box__title">Grafico</h2>
         </div>
     </div>
  </div>
