@@ -1,15 +1,15 @@
 <div class="box flex items-center gap-6 h-[4.2rem] px-3">
-    <button class="flex items-center text-secundaryColor hover:text-textColor transition">
+    <button class="flex items-center text-secundaryColor hover:text-textColor transition" (click)="changeMouth('PREV')">
         <ng-icon name="ionChevronBackOutline" size="2rem"></ng-icon>
     </button>
     
-    <div class="flex items-center gap-4">
+    <div class="flex items-center justify-center gap-4 w-[15rem]">
         <ng-icon name="ionCalendarOutline" size="1.7rem"></ng-icon>
     
-        <h2 class="text-secundaryColor">Dezembro <b class="text-textColor">2024</b></h2>
+        <h2 class="text-secundaryColor">{{ dataPickerService.currentDateSignal().format('MMMM')| titlecase }} <b class="text-textColor">{{ dataPickerService.currentDateSignal().format('YYYY') }}</b></h2>
     </div>
     
-    <button class="flex items-center text-secundaryColor hover:text-textColor transition">
+    <button class="flex items-center text-secundaryColor hover:text-textColor transition" (click)="changeMouth('NEXT')">
         <ng-icon name="ionChevronForwardOutline" size="2rem"></ng-icon>
     </button>
 </div>
