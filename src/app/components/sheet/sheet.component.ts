@@ -8,6 +8,7 @@ import { ApiService } from '../../services/api/api.service';
 import { User } from '../../services/user/user';
 import { UserService } from '../../services/user/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { SheetService } from './sheet.service';
 
 @Component({
   selector: 'app-sheet',
@@ -20,6 +21,8 @@ export class SheetComponent {
   protected dialogRef = inject(DialogRef<SheetComponent>);
   private apiService = inject(ApiService);
   private userService = inject(UserService);
+  private sheetService = inject(SheetService);
+
   private user: User = this.userService.getUserStorge();
 
   protected transitionForm = new FormGroup({
@@ -35,6 +38,7 @@ export class SheetComponent {
   
     this.apiService.postTransition(this.user.uid, transitionData).subscribe({
       next: (transition_response) => {
+        this.sheetService.reloadTransitionsSignal.set(true);
         this.dialogRef.close();
       },
       error: (transition_error: HttpErrorResponse) => {

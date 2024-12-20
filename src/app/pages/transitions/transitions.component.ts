@@ -1,5 +1,5 @@
 import { TransitionsListComponent } from './transitions-list/transitions-list.component';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit } from '@angular/core';
 import { UserService } from '../../services/user/user.service';
 import { ApiService } from '../../services/api/api.service';
 import { UtilsService } from '../../services/utils/utils.service';
@@ -9,6 +9,7 @@ import { pagesItems } from '../../constants/menu';
 import { ChartOptions, Transition } from './transitions';
 import { CardComponent } from '../../components/card/card.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { SheetService } from '../../components/sheet/sheet.service';
 
 @Component({
   selector: 'app-transitions',
@@ -21,6 +22,7 @@ export class TransitionsComponent implements OnInit {
   private userService = inject(UserService);
   private api = inject(ApiService);
   private utilsService = inject(UtilsService);
+  private sheetService = inject(SheetService);
   
   protected user: User = this.userService.getUserStorge();
 
@@ -34,6 +36,13 @@ export class TransitionsComponent implements OnInit {
 
   protected chartOptions!: Partial<ChartOptions>;
   
+  constructor() {
+    effect(() => {
+      if (this.sheetService.reloadTransitionsSignal()) {
+        this.getTransitions();
+      }
+    })
+  }
 
   ngOnInit(): void {
     this.getTransitions();

@@ -1,5 +1,5 @@
 import { Dialog } from '@angular/cdk/dialog';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { SheetComponent } from './sheet.component';
 
 @Injectable({
@@ -7,6 +7,8 @@ import { SheetComponent } from './sheet.component';
 })
 export class SheetService {
   private dialog = inject(Dialog);
+
+  public reloadTransitionsSignal = signal(false);
 
   public openSheetDialog = () => {
     this.dialog.open(SheetComponent);
