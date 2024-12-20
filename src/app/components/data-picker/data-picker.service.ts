@@ -5,7 +5,7 @@ import moment, { Moment } from 'moment';
   providedIn: 'root'
 })
 export class DataPickerService {
-  public currentDateSignal = signal<Moment>(moment());
+  public currentDateSignal = signal(moment());
 
   constructor() { }
 }

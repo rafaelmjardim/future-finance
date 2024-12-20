@@ -1,5 +1,5 @@
 import { TitleCasePipe } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit } from '@angular/core';
 import { NgIcon } from '@ng-icons/core';
 import { DataPickerService } from './data-picker.service';
 
@@ -10,26 +10,16 @@ import { DataPickerService } from './data-picker.service';
   templateUrl: './data-picker.component.html',
   styleUrl: './data-picker.component.scss'
 })
-export class DataPickerComponent implements OnInit{
+export class DataPickerComponent {
   public dataPickerService = inject(DataPickerService);
-
-  ngOnInit(): void {
-    this.checkDate();
-  }
 
   changeMouth = (direction: 'PREV' | 'NEXT') => {
     if (direction === 'PREV') {
-      this.dataPickerService.currentDateSignal.update(currentDate => currentDate.subtract(1, 'month'));
+      this.dataPickerService.currentDateSignal.update(currentDate => currentDate.clone().subtract(1, 'month'));
     }
     
     if (direction === 'NEXT') {
-      this.dataPickerService.currentDateSignal.update(currentDate => currentDate.add(1, 'month'));
+      this.dataPickerService.currentDateSignal.update(currentDate => currentDate.clone().add(1, 'month'));
     }
-
-    this.checkDate();
-  }
-
-  checkDate = () => {
-    console.log('currentDate', this.dataPickerService.currentDateSignal());
   }
 }
