@@ -28,16 +28,27 @@
             <h2 class="box__title">Resumo</h2>
     
             <div class="grid grid-cols-3 gap-6">
-                <app-card title="Balanço" [value]="500" description="Balanço total do mês de x" [typeRef]="'BALANCO'"/>
-                <app-card title="Receitas" [value]="2000" description="Receita total do mês de x" [typeRef]="'RECEITA'"/>
-                <app-card title="Despesas" [value]="1500" description="Despesa total do mês de x" [typeRef]="'DESPESA'"/>
+                <app-card title="Balanço" [value]="totalIncomings - totalExpenses" description="Balanço total do mês de x" [typeRef]="'BALANCO'"/>
+                <app-card title="Receitas" [value]="totalIncomings" description="Receita total do mês de x" [typeRef]="'RECEITA'"/>
+                <app-card title="Despesas" [value]="totalExpenses" description="Despesa total do mês de x" [typeRef]="'DESPESA'"/>
             </div>
         </div>
 
         <div class="box">
             <h2 class="box__title">Grafico</h2>
 
-            <app-graph></app-graph>
+            <apx-chart
+                [series]="chartOptions.series"
+                [chart]="chartOptions.chart"
+                [dataLabels]="chartOptions.dataLabels"
+                [plotOptions]="chartOptions.plotOptions"
+                [yaxis]="chartOptions.yaxis"
+                [xaxis]="chartOptions.xaxis"
+                [fill]="chartOptions.fill"
+                [grid]="chartOptions.grid"
+                [tooltip]="chartOptions.tooltip"
+                [legend]="chartOptions.legend"
+            ></apx-chart>
         </div>
     </div>
  </div>

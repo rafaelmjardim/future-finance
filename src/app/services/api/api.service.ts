@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
+import { Observable } from 'rxjs';
+import { GET_TRANSITIONS } from '../../pages/transitions/transitions';
 
 const API_KEY = environment.API_KEY;
 
@@ -22,11 +24,7 @@ export class ApiService {
     });
   }
 
-  getReceitas = (userID: string) => {
-    return this.http.get(`${API_KEY}/${userID}/receitas.json?auth=${this.token}`);    
-  }
-
-  getDespesas = (userID: string) => {
-    return this.http.get(`${API_KEY}/${userID}/despesas.json?auth=${this.token}`);    
+  getTransitions = (userID: string): Observable<GET_TRANSITIONS> => {
+    return this.http.get<GET_TRANSITIONS>(`${API_KEY}/${userID}.json?auth=${this.token}`);   
   }
 }

@@ -6,15 +6,14 @@ import { UtilsService } from '../../services/utils/utils.service';
 import { User } from '../../services/user/user';
 import { PageHeaderComponent } from '../../components/pageheader/page-header.component';
 import { pagesItems } from '../../constants/menu';
-import { Transition } from './transitions';
-import { HttpErrorResponse } from '@angular/common/http';
+import { ChartOptions, Transition } from './transitions';
 import { CardComponent } from '../../components/card/card.component';
-import { GraphComponent } from './graph/graph.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @Component({
   selector: 'app-transitions',
   standalone: true,
-  imports: [PageHeaderComponent, TransitionsListComponent, CardComponent, GraphComponent],
+  imports: [PageHeaderComponent, TransitionsListComponent, CardComponent, NgApexchartsModule],
   templateUrl: './transitions.component.html',
   styleUrl: './transitions.component.scss'
 })
@@ -30,38 +29,68 @@ export class TransitionsComponent implements OnInit {
   protected incomings: Transition[] = [];
   protected expenses: Transition[] = [];
 
+  protected totalIncomings!: number;
+  protected totalExpenses!: number;
+
+  protected chartOptions!: Partial<ChartOptions>;
+  
+
   ngOnInit(): void {
-    this.getReceitas()
-    this.getDespesas();
+    this.getTransitions();
   }
 
-  getReceitas = () => {
+  getTransitions = () => {
     if (!this.user) {
       return
     }
 
-    this.api.getReceitas(this.user.uid).subscribe({
-      next: (receitas_response) => {
-        this.incomings = this.utilsService.convertGetFirebase(receitas_response);
-      },
-      error: (receitas_error: HttpErrorResponse) => {
-        console.log('Erro ao carregar receitas', receitas_error);
-      },
+    this.api.getTransitions(this.user.uid).subscribe({
+      next: (transitions_response) => {
+        console.log('transitions', transitions_response);
+        this.incomings = this.utilsService.convertGetFirebase(transitions_response.receitas);
+        this.expenses = this.utilsService.convertGetFirebase(transitions_response.despesas);
+        this.totalIncomings = this.totalTransitionAccumulator(this.incomings);
+        this.totalExpenses = this.totalTransitionAccumulator(this.expenses);
+        this.initChart()
+      }
     })
   }
 
-  getDespesas = () => {
-    if (!this.user) {
-      return
-    }
+  totalTransitionAccumulator = (transitions: Transition[]) => {
+    return transitions.reduce((previuValue, currentValue) => {
+      return previuValue + currentValue.valor;
+    }, 0);
+  }
 
-    this.api.getDespesas(this.user.uid).subscribe({
-      next: (despesas_response) => {
-        this.expenses = this.utilsService.convertGetFirebase(despesas_response);
+  initChart = () => {
+    this.chartOptions = {
+      series: [
+        {
+          name: "Receita",
+          data: [this.totalIncomings],
+          color: "#6e9c90"
+        },
+        {
+          name: "Despesa",
+          data: [this.totalExpenses],
+          color: "#D33535"
+        }
+      ],
+      chart: {
+        height: 350,
+        type: "bar",
       },
-      error: (despesas_error: HttpErrorResponse) => {
-        console.log('Erro ao carregar despesas', despesas_error);
+      xaxis: {
+        categories: ['Janeiro'],
+        title: {
+          text: 'Meses',
+        },
       },
-    })
+      yaxis: {
+        title: {
+          text: 'Valores (R$)',
+        },
+      },
+    }
   }
 }
