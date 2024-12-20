@@ -37,20 +37,7 @@
         <div class="box">
             <h2 class="box__title">Grafico</h2>
 
-            <div>
-                <apx-chart
-                    [series]="chartOptions.series"
-                    [chart]="chartOptions.chart"
-                    [dataLabels]="chartOptions.dataLabels"
-                    [plotOptions]="chartOptions.plotOptions"
-                    [yaxis]="chartOptions.yaxis"
-                    [xaxis]="chartOptions.xaxis"
-                    [fill]="chartOptions.fill"
-                    [grid]="chartOptions.grid"
-                    [tooltip]="chartOptions.tooltip"
-                    [legend]="chartOptions.legend"
-                ></apx-chart>
-            </div>
+            <app-graph></app-graph>
         </div>
     </div>
  </div>

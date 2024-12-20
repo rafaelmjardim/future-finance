@@ -9,27 +9,12 @@ import { pagesItems } from '../../constants/menu';
 import { Transition } from './transitions';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CardComponent } from '../../components/card/card.component';
-import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexFill, ApexPlotOptions, ApexTitleSubtitle, ApexXAxis, ApexYAxis, NgApexchartsModule, ApexTheme, ApexStroke, ApexTooltip, ApexLegend, ApexGrid } from 'ng-apexcharts';
-
-export type ChartOptions = {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  dataLabels: ApexDataLabels;
-  plotOptions: ApexPlotOptions;
-  yaxis: ApexYAxis;
-  xaxis: ApexXAxis;
-  fill: ApexFill;
-  title: ApexTitleSubtitle;
-  stroke: ApexStroke,
-  tooltip: ApexTooltip
-  legend: ApexLegend
-  grid: ApexGrid
-};
+import { GraphComponent } from './graph/graph.component';
 
 @Component({
   selector: 'app-transitions',
   standalone: true,
-  imports: [PageHeaderComponent, TransitionsListComponent, CardComponent, NgApexchartsModule],
+  imports: [PageHeaderComponent, TransitionsListComponent, CardComponent, GraphComponent],
   templateUrl: './transitions.component.html',
   styleUrl: './transitions.component.scss'
 })
@@ -45,41 +30,9 @@ export class TransitionsComponent implements OnInit {
   protected incomings: Transition[] = [];
   protected expenses: Transition[] = [];
 
-  protected chartOptions!: Partial<ChartOptions>;
-
   ngOnInit(): void {
     this.getReceitas()
     this.getDespesas();
-
-    this.chartOptions = {
-      series: [
-        {
-          name: "Receita",
-          data: [2000],
-          color: "#6e9c90"
-        },
-        {
-          name: "Despesa",
-          data: [1200],
-          color: "#D33535"
-        }
-      ],
-      chart: {
-        height: 350,
-        type: "bar",
-      },
-      xaxis: {
-        categories: ['Janeiro'],
-        title: {
-          text: 'Meses',
-        },
-      },
-      yaxis: {
-        title: {
-          text: 'Valores (R$)',
-        },
-      },
-    }
   }
 
   getReceitas = () => {
