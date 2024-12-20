@@ -1,4 +1,4 @@
-<div class="app bg-backgroundColor" [ngClass]="{'app--authenticated': authService.isAuthenticated$ | async}">
+<div class="app" [ngClass]="{'app--authenticated': authService.isAuthenticated$ | async}">
 
   @if (authService.isAuthenticated$ | async) {
     <div class="app__sidebar">
@@ -10,7 +10,7 @@
       <app-header></app-header>
     }
 
-    <div class="app__content h-full">
+    <div class="app__content h-full bg-backgroundColor">
       <router-outlet></router-outlet>
     </div>
   </div>
