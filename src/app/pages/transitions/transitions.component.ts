@@ -21,7 +21,6 @@ export type ChartOptions = {
   fill: ApexFill;
   title: ApexTitleSubtitle;
   stroke: ApexStroke,
-  colors: string[]
   tooltip: ApexTooltip
   legend: ApexLegend
   grid: ApexGrid
@@ -56,20 +55,21 @@ export class TransitionsComponent implements OnInit {
       series: [
         {
           name: "Receita",
-          data: [2000, 2400, 1500],
+          data: [2000],
+          color: "#6e9c90"
         },
         {
           name: "Despesa",
-          data: [1200, 1800, 900],
+          data: [1200],
+          color: "#D33535"
         }
       ],
-      colors: ['#6e9c90', '#D33535'],
       chart: {
         height: 350,
-        type: "bar"
+        type: "bar",
       },
       xaxis: {
-        categories: ['Janeiro', 'Fevereiro', 'Março'],
+        categories: ['Janeiro'],
         title: {
           text: 'Meses',
         },
