@@ -13,6 +13,9 @@ import { provideIcons } from '@ng-icons/core';
 import { iconsConfig } from './constants/icons.config';
 import { registerLocaleData } from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
+import moment from "moment";
+import 'moment/locale/pt-br';
+moment.locale('pt-br');
 
 
 registerLocaleData(ptBr);
