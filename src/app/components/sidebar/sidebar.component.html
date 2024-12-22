@@ -14,12 +14,12 @@
 
         <!-- Menu -->
     <div class="">
-        <label class="text-md px-[2rem]">GERAL</label>
-        <ul class="mt-2">
+        <label class="text-md px-[3.2rem]">GERAL</label>
+        <ul class="flex flex-col gap-2 mt-2 px-[1.6rem]">
             @for (item of menu; track $index) {
-                <li class="flex items-center gap-4 px-[2rem] py-[1.2rem] font-semibold hover:bg-gray-200 text- transition cursor-pointer" 
+                <li class="flex items-center px-[1.6rem] gap-4 py-[1.2rem] font-semibold  border border-transparent hover:text-greenColor hover:border-greenColor rounded transition cursor-pointer" 
                     [routerLink]="item.rota"
-                    [ngClass]="{'text-greenColor bg-[#E9F4F1]': router.url === item.rota}"
+                    [ngClass]="{'text-greenColor bg-[#E9F4F1] hover:border-transparent': router.url === item.rota}"
                 >
                     <ng-icon [name]="item.icon" size="1.8rem" ></ng-icon>
                     {{item.txt}}
