@@ -65,26 +65,14 @@ export class TransitionsComponent implements OnInit {
         const receitasResponse = this.utilsService.convertGetFirebase(transitions_response.receitas);
         const despesasResponse = this.utilsService.convertGetFirebase(transitions_response.despesas);
 
-        this.incomings = this.filterTransitionByDate(receitasResponse);
-        this.expenses = this.filterTransitionByDate(despesasResponse);          
+        this.incomings = this.utilsService.filterTransitionByDate(receitasResponse);
+        this.expenses = this.utilsService.filterTransitionByDate(despesasResponse);          
 
-        this.totalIncomings = this.totalTransitionAccumulator(this.incomings);
-        this.totalExpenses = this.totalTransitionAccumulator(this.expenses);
+        this.totalIncomings = this.utilsService.totalTransitionAccumulator(this.incomings);
+        this.totalExpenses = this.utilsService.totalTransitionAccumulator(this.expenses);
         this.initChart();
       }
     })
-  }
-
-  totalTransitionAccumulator = (transitions: Transition[]) => {
-    return transitions.reduce((previuValue, currentValue) => {
-      return previuValue + currentValue.valor;
-    }, 0);
-  }
-
-  filterTransitionByDate = (transitions: Transition[]) => {
-    return transitions.filter(transition => {      
-      return moment(transition.data).format('MM/YYYY') == this.dataPickerService.currentDateSignal().format('MM/YYYY')
-    });    
   }
 
   initChart = () => {
