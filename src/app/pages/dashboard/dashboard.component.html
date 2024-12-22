@@ -2,3 +2,23 @@
     [title]="pageItem.txt"
     [icon]="pageItem.icon"
 ></app-page-header>
+
+<div class="grid gap-6">
+    <div class="grid grid-cols-3 gap-6">
+        <app-card title="Balanço" [value]="totalIncomings - totalExpenses" description="Balanço total do mês de x" [typeRef]="'BALANCO'"/>
+        <app-card title="Receitas" [value]="totalIncomings" description="Receita total do mês de x" [typeRef]="'RECEITA'"/>
+        <app-card title="Despesas" [value]="totalExpenses" description="Despesa total do mês de x" [typeRef]="'DESPESA'"/>
+    </div>
+    
+    <div class="box">
+        <apx-chart
+            [series]="chartOptions.series"
+            [chart]="chartOptions.chart"
+            [xaxis]="chartOptions.xaxis"
+            [stroke]="chartOptions.stroke"
+            [tooltip]="chartOptions.tooltip"
+            [dataLabels]="chartOptions.dataLabels"
+            [grid]="chartOptions.grid"
+      ></apx-chart>
+    </div>
+</div>
