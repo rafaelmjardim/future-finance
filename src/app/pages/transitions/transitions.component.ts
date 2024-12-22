@@ -82,8 +82,8 @@ export class TransitionsComponent implements OnInit {
   }
 
   filterTransitionByDate = (transitions: Transition[]) => {
-    return transitions.filter(transition => {
-      return moment(transition.data).month() == this.dataPickerService.currentDateSignal().month()
+    return transitions.filter(transition => {      
+      return moment(transition.data).format('MM/YYYY') == this.dataPickerService.currentDateSignal().format('MM/YYYY')
     });    
   }
 
