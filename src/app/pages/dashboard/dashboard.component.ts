@@ -1,7 +1,8 @@
+import { DataPickerService } from './../../components/data-picker/data-picker.service';
 import { UtilsService } from './../../services/utils/utils.service';
 import { User } from '../../services/user/user';
 import { UserService } from './../../services/user/user.service';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit } from '@angular/core';
 import { PageHeaderComponent } from '../../components/pageheader/page-header.component';
 import { pagesItems } from '../../constants/menu';
 import { ApiService } from '../../services/api/api.service';
@@ -20,12 +21,20 @@ export class DashboardComponent implements OnInit {
   private apiService = inject(ApiService)
   private utilsService = inject(UtilsService);
   private userService = inject(UserService);
+  private dataPickerService = inject(DataPickerService);
 
   protected user: User = this.userService.getUserStorge();
   protected pageItem = pagesItems['dashboard'];
   protected totalIncomings!: number;
   protected totalExpenses!: number;
   protected chartOptions!: Partial<ChartOptions>;
+
+  constructor() {
+    effect(() => {
+      this.dataPickerService.currentDateSignal();
+      this.getTransitions();
+    });
+  }
   
   ngOnInit(): void {
     this.getTransitions();
@@ -37,8 +46,12 @@ export class DashboardComponent implements OnInit {
       next: (transitions_res) => {
         const { receitas, despesas } = transitions_res;
 
-        const incomings = this.utilsService.convertGetFirebase(receitas);
-        const expenses = this.utilsService.convertGetFirebase(despesas);
+        let incomings = this.utilsService.convertGetFirebase(receitas);
+        let expenses = this.utilsService.convertGetFirebase(despesas);
+
+        incomings = this.utilsService.filterTransitionByDate(incomings);
+        expenses = this.utilsService.filterTransitionByDate(expenses);
+
         this.totalExpenses = this.utilsService.totalTransitionAccumulator(expenses);
         this.totalIncomings = this.utilsService.totalTransitionAccumulator(incomings);
       }
