@@ -70,6 +70,8 @@ export class TransitionsComponent implements OnInit {
 
         this.totalIncomings = this.utilsService.totalTransitionAccumulator(this.incomings);
         this.totalExpenses = this.utilsService.totalTransitionAccumulator(this.expenses);
+        
+        this.utilsService.loaders.showTransition.set(true);
         this.initChart();
       }
     })
@@ -81,7 +83,7 @@ export class TransitionsComponent implements OnInit {
         {
           name: "Receita",
           data: [this.totalIncomings],
-          color: "#6e9c90"
+          color: "#09BC8A"
         },
         {
           name: "Despesa",
@@ -95,14 +97,14 @@ export class TransitionsComponent implements OnInit {
       },
       xaxis: {
         categories: ['Janeiro'],
-        title: {
-          text: 'Meses',
-        },
+        // title: {
+        //   text: 'Meses',
+        // },
       },
       yaxis: {
-        title: {
-          text: 'Valores (R$)',
-        },
+        // title: {
+        //   text: 'Valores (R$)',
+        // },
       },
     }
   }
