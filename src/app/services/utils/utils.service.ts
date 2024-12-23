@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Transition } from '../../pages/transitions/transitions';
 import moment from 'moment';
 import { DataPickerService } from '../../components/data-picker/data-picker.service';
@@ -8,6 +8,10 @@ import { DataPickerService } from '../../components/data-picker/data-picker.serv
 })
 export class UtilsService {
   private dataPickerService = inject(DataPickerService);
+
+  public loaders = {
+    showTransition: signal(false)
+  }
 
   constructor() { }
 
