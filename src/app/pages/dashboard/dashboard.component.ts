@@ -37,6 +37,7 @@ export class DashboardComponent implements OnInit {
   }
   
   ngOnInit(): void {
+    this.utilsService.loaders.showTransition.set(false);
     this.getTransitions();
     this.initChart();
   } 

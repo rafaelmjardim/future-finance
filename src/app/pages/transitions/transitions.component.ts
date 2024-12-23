@@ -23,7 +23,7 @@ import moment from 'moment';
 export class TransitionsComponent implements OnInit {
   private userService = inject(UserService);
   private api = inject(ApiService);
-  private utilsService = inject(UtilsService);
+  protected utilsService = inject(UtilsService);
   private sheetService = inject(SheetService);
   protected dataPickerService = inject(DataPickerService);
   
@@ -54,6 +54,7 @@ export class TransitionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.utilsService.loaders.showTransition.set(false);
     this.getTransitions();
   }
 
@@ -82,12 +83,12 @@ export class TransitionsComponent implements OnInit {
       series: [
         {
           name: "Receita",
-          data: [this.totalIncomings],
+          data: [200],
           color: "#09BC8A"
         },
         {
           name: "Despesa",
-          data: [this.totalExpenses],
+          data: [200],
           color: "#D33535"
         }
       ],
