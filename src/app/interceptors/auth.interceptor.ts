@@ -8,10 +8,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const user: User = userService.getUserStorge();
   
   const modifiedUrl = req.url.replace('/usuarios', `/usuarios/${user.uid}`);
-  const token = localStorage.getItem('token');
-
-  console.log('url', modifiedUrl);
-  
+  const token = localStorage.getItem('token');  
   
   if (!token) return next(req);
 
