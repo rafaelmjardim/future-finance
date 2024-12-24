@@ -3,7 +3,7 @@
     <ul class="flex flex-col gap-6">
         @for (transition of transitions; track $index) {
             @if (utilsService.loaders.showTransition()) {
-                <li class="box">
+                <li class="box hover:bg-hoverColor transition cursor-pointer" (click)="handleEditTransition(transition)">
                     <div class="flex gap-4 items-center justify-between font-medium">
                         <div class="flex gap-4 items-center">
                             <!-- icon -->

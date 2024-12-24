@@ -4,6 +4,8 @@ import { NgIcon } from '@ng-icons/core';
 import { Transition } from '../transitions';
 import { ItemLoaderComponent } from './item-loader/item-loader.component';
 import { UtilsService } from '../../../services/utils/utils.service';
+import { Dialog } from '@angular/cdk/dialog';
+import { SheetComponent } from '../../../components/sheet/sheet.component';
 
 @Component({
   selector: 'app-transitions-list',
@@ -18,5 +20,12 @@ export class TransitionsListComponent {
   @Input() transitions!: Transition[];
 
   protected utilsService = inject(UtilsService);
+  private dialog = inject(Dialog);
+
+  protected handleEditTransition = (transition: Transition) => {
+    this.dialog.open(SheetComponent, {
+      data: transition
+    })
+  }
 
 }

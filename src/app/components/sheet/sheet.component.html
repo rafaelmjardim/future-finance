@@ -30,22 +30,35 @@
 
             <div class="flex items-center gap-6">
                 <label class="flex items-center gap-2">
-                    <input class="accent-primaryColor" type="radio" value="despesas" formControlName="typeRef">
+                    <input class="accent-primaryColor" type="radio" value="despesa" formControlName="typeRef">
                     <span class="text-md font-medium">Despesa</span>
                 </label>
 
                 <label class="flex items-center gap-2">
-                    <input class="accent-primaryColor" type="radio" value="receitas"  formControlName="typeRef">
+                    <input class="accent-primaryColor" type="radio" value="receita"  formControlName="typeRef">
                     <span class="text-md font-medium">Receita</span>
                 </label>
             </div>
         </div>
 
-        <app-button 
-            txt="Adicionar Transação" 
-            icon="ionAddOutlined"
-            (actionEvent)="handleSubmit()"
-        />
+        <!-- Actions -->
+        <div class="grid grid-flow-col gap-4 items-center">
+            <app-button 
+                [txt]="transitionData ? 'Editar Transação' : 'Adicionar Transação'" 
+                [icon]="transitionData ? 'ionCreateOutline' : 'ionAddOutlined'"
+                (actionEvent)="transitionData ? handleUpdateTransition(transitionData.id) : handleSubmit()"
+            />
+
+            @if (transitionData) {
+                <app-button 
+                    txt="Excluir" 
+                    icon="ionTrashOutline"
+                    [iconType]="'DELETE'"
+                    (actionEvent)="handleDeleteTransition(transitionData.id)"
+                />
+            }
+        </div>
+
     </form>
 
 </div>

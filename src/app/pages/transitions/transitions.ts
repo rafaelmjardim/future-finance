@@ -6,12 +6,14 @@ export type GET_TRANSITIONS = {
 }
 
 export type Transition = {
+    id: string
     nome: string
     data: string
     valor: number
     descricao: string
     icon?: string
     status?: boolean
+    tipo: string
 }
 
 export type ChartOptions = {

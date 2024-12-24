@@ -12,14 +12,15 @@ const API_KEY = environment.API_KEY;
 export class ApiService {
   private http = inject(HttpClient);
 
-  postTransition = (transitionData: any) => {
+  postTransition = (transitionData: any, rota: 'despesas' | 'receitas') => {
     const { date, value, description, name, typeRef } = transitionData;
 
-    return this.http.post(`${API_KEY}/${typeRef}.json`, {
+    return this.http.post(`${API_KEY}/${rota}.json`, {
       valor: value,
       data: date,
       nome: name,
-      descricao: description
+      descricao: description,
+      tipo: typeRef
     });
   }
 
