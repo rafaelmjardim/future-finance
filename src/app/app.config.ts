@@ -7,7 +7,7 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { environment } from '../environments/environment.development'; //Verificar se precisa remover (development)
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
 import { provideIcons } from '@ng-icons/core';
 import { iconsConfig } from './constants/icons.config';
@@ -15,6 +15,7 @@ import { registerLocaleData } from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
 import moment from "moment";
 import 'moment/locale/pt-br';
+import { authInterceptor } from './interceptors/auth.interceptor';
 moment.locale('pt-br');
 
 
@@ -28,7 +29,10 @@ export const appConfig: ApplicationConfig = {
     provideIcons(iconsConfig),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)), 
     provideAuth(() => getAuth()),
-    provideHttpClient(withFetch()),
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([authInterceptor]),
+    ),
     { provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig },
     { provide: LOCALE_ID, useValue: 'pt' },
   ]
