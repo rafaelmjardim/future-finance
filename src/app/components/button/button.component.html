@@ -1,6 +1,6 @@
-<button class="flex items-center justify-center gap-4 w-full bg-primaryColor hover:bg-[#303030] text-white text-base h-[4rem] px-6 rounded transition" (click)="handleAction()">
+<button class="flex items-center justify-center gap-4 w-full bg-primaryColor hover:bg-[#303030] text-white text-base h-[4rem] px-6 rounded transition" [ngClass]="{'bg-accentColor hover:bg-[#bd3030]': iconType === 'DELETE'}" (click)="handleAction()">
     @if (icon) {
-        <ng-icon name="ionAddOutline" size="2rem"></ng-icon>
+        <ng-icon [name]="icon" size="1.8rem"></ng-icon>
     }
     {{ txt }}
 </button>
