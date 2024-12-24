@@ -83,12 +83,12 @@ export class TransitionsComponent implements OnInit {
       series: [
         {
           name: "Receita",
-          data: [200],
+          data: [this.totalIncomings],
           color: "#09BC8A"
         },
         {
           name: "Despesa",
-          data: [200],
+          data: [this.totalExpenses],
           color: "#D33535"
         }
       ],
