@@ -13,6 +13,7 @@ module.exports = {
         grayDarkColor: '#444444',
         backgroundColor: '#F3F3F3',
         surfaceColor: '#FFFFFF',
+        hoverColor: '#f4f4f5',
         borderColor: '#DDDDDD',
         textColor: '#191919',
       }
