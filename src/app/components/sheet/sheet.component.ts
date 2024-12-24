@@ -20,10 +20,7 @@ import { SheetService } from './sheet.service';
 export class SheetComponent {
   protected dialogRef = inject(DialogRef<SheetComponent>);
   private apiService = inject(ApiService);
-  private userService = inject(UserService);
   private sheetService = inject(SheetService);
-
-  private user: User = this.userService.getUserStorge();
 
   protected transitionForm = new FormGroup({
     value: new FormControl(''),
@@ -36,7 +33,7 @@ export class SheetComponent {
   handleSubmit = () => {
     const transitionData = this.transitionForm.value;
   
-    this.apiService.postTransition(this.user.uid, transitionData).subscribe({
+    this.apiService.postTransition(transitionData).subscribe({
       next: (transition_response) => {
         this.sheetService.reloadTransitionsSignal.set(true);
         this.dialogRef.close();

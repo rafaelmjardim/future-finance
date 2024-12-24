@@ -11,12 +11,11 @@ const API_KEY = environment.API_KEY;
 })
 export class ApiService {
   private http = inject(HttpClient);
-  token = typeof window === 'undefined' || !window.localStorage ? null : localStorage.getItem('token'); //Melhor isso
 
-  postTransition = (userID: string, transitionData: any) => {
+  postTransition = (transitionData: any) => {
     const { date, value, description, name, typeRef } = transitionData;
 
-    return this.http.post(`${API_KEY}/${userID}/${typeRef}.json?auth=${this.token}`, {
+    return this.http.post(`${API_KEY}/${typeRef}.json`, {
       valor: value,
       data: date,
       nome: name,
@@ -24,7 +23,7 @@ export class ApiService {
     });
   }
 
-  getTransitions = (userID: string): Observable<GET_TRANSITIONS> => {
-    return this.http.get<GET_TRANSITIONS>(`${API_KEY}/${userID}.json?auth=${this.token}`);   
+  getTransitions = (): Observable<GET_TRANSITIONS> => {
+    return this.http.get<GET_TRANSITIONS>(`${API_KEY}.json`);   
   }
 }

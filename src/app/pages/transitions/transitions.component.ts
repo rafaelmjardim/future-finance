@@ -21,14 +21,11 @@ import moment from 'moment';
   styleUrl: './transitions.component.scss'
 })
 export class TransitionsComponent implements OnInit {
-  private userService = inject(UserService);
   private api = inject(ApiService);
   protected utilsService = inject(UtilsService);
   private sheetService = inject(SheetService);
   protected dataPickerService = inject(DataPickerService);
   
-  protected user: User = this.userService.getUserStorge();
-
   protected pageItem = pagesItems['transacoes'];
 
   protected incomings: Transition[] = [];
@@ -38,8 +35,6 @@ export class TransitionsComponent implements OnInit {
   protected totalExpenses!: number;
 
   protected chartOptions!: Partial<ChartOptions>;
-
-  private todayDate = moment();
   
   constructor() {
     effect(() => {
@@ -59,9 +54,7 @@ export class TransitionsComponent implements OnInit {
   }
 
   getTransitions = () => {
-    if (!this.user) return;
-
-    this.api.getTransitions(this.user.uid).subscribe({
+    this.api.getTransitions().subscribe({
       next: (transitions_response) => {
         const receitasResponse = this.utilsService.convertGetFirebase(transitions_response.receitas);
         const despesasResponse = this.utilsService.convertGetFirebase(transitions_response.despesas);

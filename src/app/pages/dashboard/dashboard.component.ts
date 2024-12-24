@@ -20,10 +20,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 export class DashboardComponent implements OnInit {
   private apiService = inject(ApiService)
   private utilsService = inject(UtilsService);
-  private userService = inject(UserService);
   private dataPickerService = inject(DataPickerService);
 
-  protected user: User = this.userService.getUserStorge();
   protected pageItem = pagesItems['dashboard'];
   protected totalIncomings!: number;
   protected totalExpenses!: number;
@@ -43,7 +41,7 @@ export class DashboardComponent implements OnInit {
   } 
 
   private getTransitions = () => {
-    this.apiService.getTransitions(this.user.uid).subscribe({
+    this.apiService.getTransitions().subscribe({
       next: (transitions_res) => {
         const { receitas, despesas } = transitions_res;
 
