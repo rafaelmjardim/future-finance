@@ -46,7 +46,7 @@
             <app-button 
                 [txt]="transitionData ? 'Editar Transação' : 'Adicionar Transação'" 
                 [icon]="transitionData ? 'ionCreateOutline' : 'ionAddOutlined'"
-                (actionEvent)="transitionData ? handleUpdateTransition(transitionData.id) : handleSubmit()"
+                (actionEvent)="handleSubmit()"
             />
 
             @if (transitionData) {
@@ -54,7 +54,7 @@
                     txt="Excluir" 
                     icon="ionTrashOutline"
                     [iconType]="'DELETE'"
-                    (actionEvent)="handleDeleteTransition(transitionData.id)"
+                    (actionEvent)="deleteTransition()"
                 />
             }
         </div>

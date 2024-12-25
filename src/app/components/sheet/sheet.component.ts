@@ -1,12 +1,10 @@
 import { DIALOG_DATA, DialogModule, DialogRef } from '@angular/cdk/dialog';
 import { NgClass } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NgIcon } from '@ng-icons/core';
 import { ButtonComponent } from '../button/button.component';
-import { FormControl, FormGroup, ReactiveFormsModule, RequiredValidator } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from '../../services/api/api.service';
-import { User } from '../../services/user/user';
-import { UserService } from '../../services/user/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SheetService } from './sheet.service';
 import { Transition } from '../../pages/transitions/transitions';
@@ -33,11 +31,20 @@ export class SheetComponent {
   });
 
   protected handleSubmit = () => {
-    const transitionData = this.transitionForm.value;
-  
-    this.apiService.postTransition(transitionData, transitionData.typeRef === 'despesa' ? 'despesas' : 'receitas').subscribe({
+    if (this.transitionData) {
+      this.updateTransition();
+      return
+    }
+
+    this.postTransition();
+  }
+
+  private postTransition = () => {    
+    const transitionFormData = this.transitionForm.value;
+
+    this.apiService.postTransition(transitionFormData, this.selectRoteRequest()).subscribe({
       next: (transition_response) => {
-        this.sheetService.reloadTransitionsSignal.set(true);
+        this.sheetService.reloadTransitions();
         this.dialogRef.close();
       },
       error: (transition_error: HttpErrorResponse) => {
@@ -46,14 +53,28 @@ export class SheetComponent {
     })
   }
 
-  protected handleUpdateTransition = (id: string) => {
-    console.log('UPDATE', id);
-    
+  protected updateTransition = () => {
+    this.apiService.putTransition(this.transitionData.id, this.transitionForm.value, this.selectRoteRequest()).subscribe({
+      next: (edit_response) => {
+        this.sheetService.reloadTransitions();
+        this.dialogRef.close();
+      }
+    })
   }
 
-  protected handleDeleteTransition = (id: string) => {
-    console.log('DELETE', id);
-    
+  protected deleteTransition = () => {
+    console.log('DELETE', this.transitionData.id);
+
+    this.apiService.deleteTransition(this.transitionData.id, this.selectRoteRequest()).subscribe({
+      next: (delete_response) => {
+        this.sheetService.reloadTransitions();
+        this.dialogRef.close();        
+      }
+    })
+  }
+
+  selectRoteRequest = () => {
+    return this.transitionForm.value.typeRef === 'despesa' ? 'despesas' : 'receitas';
   }
 
 }

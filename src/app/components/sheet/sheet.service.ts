@@ -10,6 +10,12 @@ export class SheetService {
 
   public reloadTransitionsSignal = signal(false);
 
+
+  public reloadTransitions = () => {
+    this.reloadTransitionsSignal.set(true);
+    this.reloadTransitionsSignal.update(value => !value);
+  }
+
   public openSheetDialog = () => {
     this.dialog.open(SheetComponent);
   }

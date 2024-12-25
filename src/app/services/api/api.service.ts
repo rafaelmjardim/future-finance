@@ -12,8 +12,12 @@ const API_KEY = environment.API_KEY;
 export class ApiService {
   private http = inject(HttpClient);
 
-  postTransition = (transitionData: any, rota: 'despesas' | 'receitas') => {
-    const { date, value, description, name, typeRef } = transitionData;
+  getTransitions = (): Observable<GET_TRANSITIONS> => {
+    return this.http.get<GET_TRANSITIONS>(`${API_KEY}.json`);   
+  }
+
+  postTransition = (transitionFormData: any, rota: 'despesas' | 'receitas') => {
+    const { date, value, description, name, typeRef } = transitionFormData;
 
     return this.http.post(`${API_KEY}/${rota}.json`, {
       valor: value,
@@ -24,7 +28,20 @@ export class ApiService {
     });
   }
 
-  getTransitions = (): Observable<GET_TRANSITIONS> => {
-    return this.http.get<GET_TRANSITIONS>(`${API_KEY}.json`);   
+  putTransition = (id: string, transitionFormData: any, rota: 'despesas' | 'receitas') => {
+    const { date, value, description, name, typeRef } = transitionFormData;
+    
+    return this.http.put(`${API_KEY}/${rota}/${id}.json`, {
+      valor: value,
+      data: date,
+      nome: name,
+      descricao: description,
+      tipo: typeRef
+    })
+  }  
+
+  deleteTransition = (id: string, rota: 'despesas' | 'receitas') => {
+    return this.http.delete(`${API_KEY}/${rota}/${id}.json`)
   }
+  
 }
