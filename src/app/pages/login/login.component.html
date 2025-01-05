@@ -1,22 +1,33 @@
 <div class="h-full flex flex-col items-center justify-center">
-    <form class="" [formGroup]="form">
+    <form class="" [formGroup]="form" >
         <h1 class="text-gray-800 dark:text-white text-[6rem]">Bem-vindo!</h1>
 
         <!-- <input type="text"> -->
         <div class="mb-6">
             <label class="block mb-2 text-md font-medium text-gray-900 dark:text-white">Email</label>
-            <input type="text" id="default-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-md rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            formControlName="email">
+            <input type="email" id="default-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-md rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            formControlName="email"
+            (focus)="formError = false || formEmpty = false">
+            <!-- @if (form.controls.email.errors) {
+                <p class="text-red-600 text-sm mt-2">Email invalida</p>
+            } -->
         </div>
         
         <div class="mb-10">
             <label class="block mb-2 text-md font-medium text-gray-900 dark:text-white">Senha</label>
             <input type="password" id="default-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-md rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             formControlName="senha">
+            @if (formError || formEmpty) {
+                <p class="text-red-600 text-sm mt-2">{{formEmpty ? 'Informe seu email e senha.' : 'Usuário ou senha invalidos.'}}</p>
+            }
         </div>
     
-        <button class="bg-black dark:bg-white rounded p-4 text-white w-full" (click)="submitLogin()">
+        <button class="flex items-center justify-center gap-4 bg-black dark:bg-white rounded p-4 text-white w-full" (click)="submitLogin()">
           Fazer Login
+
+          @if (showLoader) {
+            <app-loader></app-loader>
+          }
         </button>
     </form>
 </div>

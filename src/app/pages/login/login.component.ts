@@ -1,38 +1,40 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { NgClass } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, RequiredValidator, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 import { UserService } from '../../services/user/user.service';
 import { Router, RouterState } from '@angular/router';
+import { LoaderComponent } from '../../components/loader/loader.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [NgClass, FormsModule, ReactiveFormsModule],
+  imports: [NgClass, FormsModule, ReactiveFormsModule, LoaderComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit{
   isDark = signal<boolean>(false);
 
-  protected form!: FormGroup;
-  protected formBuilder = inject(FormBuilder);
+  protected formError: boolean = false;
+  protected formEmpty: boolean = false;
+  protected form = new FormGroup({
+    email: new FormControl('', Validators.email),
+    senha: new FormControl('', Validators.required)
+  });
+
+  // protected formBuilder = inject(FormBuilder);
+  // protected formErrors!: {email: any, senha: any}
 
   protected authService = inject(AuthService);
   protected userService = inject(UserService);
 
   private router = inject(Router);
 
-  ngOnInit(): void {
-    this.initForm();
-    this.checkLoggedRoute();
-  }
+  protected showLoader = false;
 
-  initForm = () => {
-    this.form = this.formBuilder.group({
-      email: [''],
-      senha: ['']
-    })
+  ngOnInit(): void {
+    this.checkLoggedRoute();
   }
 
   //Melhorar esse redirect (está muito lento)
@@ -65,14 +67,28 @@ export class LoginComponent implements OnInit{
         this.router.navigateByUrl('/dashboard');
       }
     }).catch(error => {
+      this.formError = true;
+      this.showLoader = false;
+      this.form.controls.email.setValue('');
+      this.form.controls.senha.setValue('');
+
       console.log('error', error);
     })
   }
 
-  submitLogin = () => {
-    const email = this.form.controls['email'].value;
-    const senha = this.form.controls['senha'].value;    
-    this.onSigIn(email, senha);
-  }
+  submitLogin = () => {    
+    const { email, senha } = this.form.value;
+    
+    if (email && senha) {
+      this.showLoader = true;
+      this.onSigIn(email, senha);
+    } else {
+      this.formEmpty = true;
+    }
 
+    // this.formErrors = {
+    //   email: this.form.controls.email.errors,
+    //   senha: this.form.controls.senha.errors
+    // }
+  }
 }
