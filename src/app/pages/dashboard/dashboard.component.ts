@@ -84,9 +84,6 @@ export class DashboardComponent implements OnInit {
       },
       xaxis: {
         categories: this.getNextFourMonths(),
-        title: {
-          text: "Meses"
-        }
       },
       yaxis: {
         title: {
@@ -112,9 +109,10 @@ export class DashboardComponent implements OnInit {
     const months = [];
     for (let i = 0; i < 4; i++) {
       //Verificar se esse add('month') vira no ano para evitar bugs
-      const nextDate = this.dataPickerService.currentDateSignal().clone().add(i, 'month').format('MM/YYYY');
+      const nextDate = this.dataPickerService.currentDateSignal().clone().add(i, 'month').format('MMM / YYYY');
+      const nexDateFormat = nextDate.charAt(0).toUpperCase() + nextDate.slice(1).toLowerCase();
       months.push(
-        nextDate
+        nexDateFormat
       );
     }
     return months;
