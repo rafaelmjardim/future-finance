@@ -3,9 +3,6 @@ import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { UserService } from '../services/user/user.service';
 import { User } from '../services/user/user';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Router } from '@angular/router';
-import moment from 'moment';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const userService = inject(UserService);
