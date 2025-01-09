@@ -3,6 +3,7 @@ import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { BehaviorSubject } from 'rxjs';
 import moment from 'moment';
 import { Router } from '@angular/router';
+import {  } from "@angular/cdk/";
 
 @Injectable({
   providedIn: 'root'
@@ -31,13 +32,14 @@ export class AuthService {
   checkTokenExpired = () => {
     this.fireAuth.authState.subscribe(async (user) => {
       const tokenResult = await user?.getIdTokenResult();    
-      const expirationTime = moment(tokenResult?.expirationTime).diff(moment());
-      const isExpired = expirationTime < 0;
+      const authTime = moment(tokenResult?.authTime).format(); //Horario que usuario logou
+      const isExpired = authTime > moment(authTime).add(1, 'h').format(); //Caso o horario do usuario logado passe de 1hora ele expirai      
   
       if (isExpired) {
         this.signOut()
         .then(logout_response => {
           console.log('Token expirado', logout_response);
+          alert('Login expirado, faça login novamente!')
           this.router.navigateByUrl('/login');
         })
         .catch(error_response => {
