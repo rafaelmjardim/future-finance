@@ -8,6 +8,7 @@ import { ApiService } from '../../services/api/api.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SheetService } from './sheet.service';
 import { Transition } from '../../pages/transitions/transitions';
+import moment from 'moment';
 
 @Component({
   selector: 'app-sheet',
@@ -24,7 +25,7 @@ export class SheetComponent {
 
   protected transitionForm = new FormGroup({
     value: new FormControl(this.transitionData?.valor ?? ''),
-    date: new FormControl(this.transitionData?.data ?? ''),
+    date: new FormControl(this.transitionData?.data ?? moment().format('YYYY-MM-DD')),
     name: new FormControl(this.transitionData?.nome ?? ''),
     description: new FormControl(this.transitionData?.descricao ?? ''),
     typeRef: new FormControl(this.transitionData?.tipo ?? 'despesa'),
