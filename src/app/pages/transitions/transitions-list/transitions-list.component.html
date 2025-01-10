@@ -22,7 +22,7 @@
                             <h2 class="text-greenColor" [ngClass]="{'text-greenColor': typeRef === 'INCOME', 'text-accentColor': typeRef === 'EXPENSE'}">
                                 {{transition.valor | currency: 'BRL'}}
                             </h2>
-                            <p class="text-sm text-secundaryColor">Status</p>
+                            <p class="text-sm text-secundaryColor">{{!transition.status ? 'Falta pagar' : 'Pago'}}</p>
                         </div>
                     </div>
                 </li>
