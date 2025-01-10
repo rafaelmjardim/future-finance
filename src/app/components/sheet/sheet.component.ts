@@ -27,6 +27,7 @@ export class SheetComponent {
     value: new FormControl(this.transitionData?.valor ?? '', Validators.required),
     date: new FormControl(this.transitionData?.data ?? moment().format('YYYY-MM-DD'), Validators.required),
     name: new FormControl(this.transitionData?.nome ?? '', Validators.required),
+    category: new FormControl(this.transitionData?.categoria ?? '', Validators.required),
     description: new FormControl(this.transitionData?.descricao ?? ''),
     typeRef: new FormControl(this.transitionData?.tipo ?? 'despesa', Validators.required),
   });

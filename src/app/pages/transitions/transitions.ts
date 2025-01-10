@@ -8,6 +8,7 @@ export type GET_TRANSITIONS = {
 export type Transition = {
     id: string
     nome: string
+    categoria: string
     data: string
     valor: number
     descricao: string
