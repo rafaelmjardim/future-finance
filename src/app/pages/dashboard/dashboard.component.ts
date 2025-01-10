@@ -19,7 +19,7 @@ import moment from 'moment';
 })
 export class DashboardComponent implements OnInit {
   private apiService = inject(ApiService)
-  private utilsService = inject(UtilsService);
+  protected utilsService = inject(UtilsService);
   private dataPickerService = inject(DataPickerService);
 
   protected pageItem = pagesItems['dashboard'];
@@ -30,6 +30,8 @@ export class DashboardComponent implements OnInit {
   protected totalIncomings!: number;
   protected totalExpenses!: number;
   protected chartOptions!: Partial<ChartOptions>;
+
+  public showLoader = true;
 
   constructor() {
     effect(() => {
@@ -55,6 +57,8 @@ export class DashboardComponent implements OnInit {
         this.expenses = this.utilsService.convertGetFirebase(despesas);
         let expensesFiltered = this.utilsService.filterTransitionByDate(this.expenses);
         this.totalExpenses = this.utilsService.totalTransitionAccumulator(expensesFiltered);
+        
+        this.showLoader = false;
 
         this.initChart();
       }

@@ -11,14 +11,26 @@
     </div>
     
     <div class="box">
-        <apx-chart
-            [series]="chartOptions.series"
-            [chart]="chartOptions.chart"
-            [xaxis]="chartOptions.xaxis"
-            [stroke]="chartOptions.stroke"
-            [tooltip]="chartOptions.tooltip"
-            [dataLabels]="chartOptions.dataLabels"
-            [grid]="chartOptions.grid"
-      ></apx-chart>
+
+        @if (!showLoader) {
+            <apx-chart
+                [series]="chartOptions.series"
+                [chart]="chartOptions.chart"
+                [xaxis]="chartOptions.xaxis"
+                [stroke]="chartOptions.stroke"
+                [tooltip]="chartOptions.tooltip"
+                [dataLabels]="chartOptions.dataLabels"
+                [grid]="chartOptions.grid"
+          ></apx-chart>
+        } @else {
+            <div class="relative w-full h-[35rem] bg-gray-100 rounded-md overflow-hidden animate-pulse">
+                <div class="absolute  inset-0 flex flex-col gap-4 p-6">
+                    <div class="flex justify-end">
+                        <div class="w-28 h-8 bg-gray-300 rounded"></div>
+                    </div>
+                    <div class="flex-1 bg-gray-200 rounded"></div>
+                </div>
+            </div>
+        }
     </div>
 </div>
