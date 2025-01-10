@@ -19,6 +19,20 @@
             <span>Nome da transação</span>
             <input type="text" placeholder="Adicione um nome para a transação" formControlName="name">
         </label>
+
+        <!-- TESTE SELECT PERSONALIZADO -->
+        <label>
+            <span for="countries" class="block mb-[.5rem] text-md font-medium text-textColor dark:text-white">Select an option</span>
+            <select id="countries" class="bg-gray-50 border border-gray-300 text-base text-secundaryColor rounded focus:ring-blue-500 focus:border-primaryColor focus:outline-none block w-full h-[4rem] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option selected>Selecione a categoria</option>
+            <option value="cartao">Cartão</option>
+            <option value="veiculo">Veículo</option>
+            <option value="pagamento">Pagamento</option>
+            <option value="compras">Compras</option>
+            <option value="alimentacao">Alimentação</option>
+            </select>
+        </label>
+        <!--  -->
        
         <label class="input">
             <span>Descrição</span>
