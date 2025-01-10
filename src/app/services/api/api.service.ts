@@ -17,7 +17,7 @@ export class ApiService {
   }
 
   postTransition = (transitionFormData: any, rota: 'despesas' | 'receitas') => {
-    const { date, value, description, name, category, typeRef } = transitionFormData;
+    const { date, value, description, name, category, typeRef, status } = transitionFormData;
 
     return this.http.post(`${API_KEY}/${rota}.json`, {
       valor: value,
@@ -25,12 +25,13 @@ export class ApiService {
       nome: name,
       categoria: category,
       descricao: description,
-      tipo: typeRef
+      tipo: typeRef,
+      status
     });
   }
 
   putTransition = (id: string, transitionFormData: any, rota: 'despesas' | 'receitas') => {
-    const { date, value, description, name, category, typeRef } = transitionFormData;
+    const { date, value, description, name, category, typeRef, status } = transitionFormData;
     
     return this.http.put(`${API_KEY}/${rota}/${id}.json`, {
       valor: value,
@@ -38,7 +39,8 @@ export class ApiService {
       nome: name,
       categoria: category,
       descricao: description,
-      tipo: typeRef
+      tipo: typeRef,
+      status
     })
   }  
 

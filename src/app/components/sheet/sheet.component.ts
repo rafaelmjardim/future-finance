@@ -30,6 +30,7 @@ export class SheetComponent {
     category: new FormControl(this.transitionData?.categoria ?? '', Validators.required),
     description: new FormControl(this.transitionData?.descricao ?? ''),
     typeRef: new FormControl(this.transitionData?.tipo ?? 'despesa', Validators.required),
+    status: new FormControl(this.transitionData?.status ?? false)
   });
 
   protected handleSubmit = () => {
