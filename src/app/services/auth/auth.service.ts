@@ -33,13 +33,12 @@ export class AuthService {
     this.fireAuth.authState.subscribe(async (user) => {
       const tokenResult = await user?.getIdTokenResult();    
       const authTime = moment(tokenResult?.authTime).format(); //Horario que usuario logou
-      const isExpired = authTime > moment(authTime).add(1, 'h').format(); //Caso o horario do usuario logado passe de 1hora ele expirai      
-  
+      const isExpired = moment().format() > moment(authTime).add(1, 'h').format(); //Caso o horario do usuario logado passe de 1hora ele expirai            
+
       if (isExpired) {
         this.signOut()
         .then(logout_response => {
-          console.log('Token expirado', logout_response);
-          alert('Login expirado, faça login novamente!')
+          console.log('Login expirado', logout_response);
           this.router.navigateByUrl('/login');
         })
         .catch(error_response => {

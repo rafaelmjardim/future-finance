@@ -3,7 +3,7 @@ import { NgClass } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { NgIcon } from '@ng-icons/core';
 import { ButtonComponent } from '../button/button.component';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiService } from '../../services/api/api.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SheetService } from './sheet.service';
@@ -24,14 +24,22 @@ export class SheetComponent {
   protected transitionData: Transition = inject(DIALOG_DATA);
 
   protected transitionForm = new FormGroup({
-    value: new FormControl(this.transitionData?.valor ?? ''),
-    date: new FormControl(this.transitionData?.data ?? moment().format('YYYY-MM-DD')),
-    name: new FormControl(this.transitionData?.nome ?? ''),
+    value: new FormControl(this.transitionData?.valor ?? '', Validators.required),
+    date: new FormControl(this.transitionData?.data ?? moment().format('YYYY-MM-DD'), Validators.required),
+    name: new FormControl(this.transitionData?.nome ?? '', Validators.required),
     description: new FormControl(this.transitionData?.descricao ?? ''),
-    typeRef: new FormControl(this.transitionData?.tipo ?? 'despesa'),
+    typeRef: new FormControl(this.transitionData?.tipo ?? 'despesa', Validators.required),
   });
 
   protected handleSubmit = () => {
+
+    if (!this.transitionForm.valid) {
+      console.log('invalidos', this.transitionForm.controls.value.valid);
+      
+      alert('Preencha todos os campos obrigatórios!')
+      return
+    }
+
     if (this.transitionData) {
       this.updateTransition();
       return
