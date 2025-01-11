@@ -1,4 +1,5 @@
-import { TitleCasePipe } from '@angular/common';
+import { MediaQueryService } from './../../services/media-query/media-query.service';
+import { NgClass, TitleCasePipe } from '@angular/common';
 import { Component, effect, inject, OnInit } from '@angular/core';
 import { NgIcon } from '@ng-icons/core';
 import { DataPickerService } from './data-picker.service';
@@ -6,12 +7,13 @@ import { DataPickerService } from './data-picker.service';
 @Component({
   selector: 'app-data-picker',
   standalone: true,
-  imports: [NgIcon, TitleCasePipe],
+  imports: [NgIcon, NgClass, TitleCasePipe],
   templateUrl: './data-picker.component.html',
   styleUrl: './data-picker.component.scss'
 })
 export class DataPickerComponent {
   public dataPickerService = inject(DataPickerService);
+  protected mediaQueryService = inject(MediaQueryService);
 
   changeMouth = (direction: 'PREV' | 'NEXT') => {
     if (direction === 'PREV') {

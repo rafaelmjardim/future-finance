@@ -1,4 +1,4 @@
-<div class="box flex items-center gap-6 h-[4.2rem] px-3">
+<div class="box flex justify-between gap-6 h-[4.2rem] px-3 py-0" [ngClass]="{'w-[25rem]': !mediaQueryService.isMobile()}">
     <button class="flex items-center text-secundaryColor hover:text-textColor transition" (click)="changeMouth('PREV')">
         <ng-icon name="ionChevronBackOutline" size="2rem"></ng-icon>
     </button>
