@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { SheetService } from './sheet.service';
 import { Transition } from '../../pages/transitions/transitions';
 import moment from 'moment';
+import { MediaQueryService } from '../../services/media-query/media-query.service';
 
 @Component({
   selector: 'app-sheet',
@@ -19,6 +20,7 @@ import moment from 'moment';
 })
 export class SheetComponent {
   protected dialogRef = inject(DialogRef<SheetComponent>);
+  protected mediaQueryService = inject(MediaQueryService);
   private apiService = inject(ApiService);
   private sheetService = inject(SheetService);
   protected transitionData: Transition = inject(DIALOG_DATA);

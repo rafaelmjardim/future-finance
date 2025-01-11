@@ -1,4 +1,4 @@
-<div class="sheet" [ngClass]="{'sheet--active': true}">
+<div class="sheet" [ngClass]="{'sheet--active': true, 'sheet--mobile': mediaQueryService.isMobile()}">
     <div class="flex items-center gap-4 cursor-pointer hover:text-gray-700 mb-8" (click)="dialogRef.close()">
         <ng-icon name="ionArrowBack" size="2rem"></ng-icon>
         <span>Adicionar transação</span>
