@@ -5,11 +5,12 @@ import { AuthService } from '../../services/auth/auth.service';
 import { UserService } from '../../services/user/user.service';
 import { Router, RouterState } from '@angular/router';
 import { LoaderComponent } from '../../components/loader/loader.component';
+import { ButtonComponent } from '../../components/button/button.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [NgClass, FormsModule, ReactiveFormsModule, LoaderComponent],
+  imports: [NgClass, FormsModule, ReactiveFormsModule, LoaderComponent, ButtonComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -79,7 +80,7 @@ export class LoginComponent implements OnInit{
   submitLogin = () => {    
     const { email, senha } = this.form.value;
     
-    if (email && senha) {
+    if (email && senha && !this.showLoader) {
       this.showLoader = true;
       this.onSigIn(email, senha);
     } else {

@@ -22,12 +22,10 @@
             }
         </div>
     
-        <button class="flex items-center justify-center gap-4 bg-black dark:bg-white rounded p-4 text-white w-full" (click)="submitLogin()">
-          Fazer Login
-
-          @if (showLoader) {
-            <app-loader></app-loader>
-          }
-        </button>
+        <app-button
+            txt="Fazer Login"
+            [loader]="showLoader"
+            (actionEvent)="submitLogin()"
+        ></app-button>
     </form>
 </div>
