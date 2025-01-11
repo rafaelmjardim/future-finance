@@ -9,6 +9,11 @@
 
     &__sidebar {
         width: 28.0rem;
+        transition: .2s ease;
+
+        &--close {
+            width: 8rem;
+        }
     }
     
     &__main{

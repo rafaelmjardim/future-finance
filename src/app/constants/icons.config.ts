@@ -22,5 +22,5 @@ export const iconsConfig = {
     ionBarcodeOutline,
     ionCashOutline,
     ionCalendarOutline,
-    ionTrashOutline
+    ionTrashOutline,
 }

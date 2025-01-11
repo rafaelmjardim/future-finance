@@ -1,7 +1,7 @@
 <div class="app" [ngClass]="{'app--authenticated': authService.isAuthenticated$ | async}">
 
   @if (authService.isAuthenticated$ | async) {
-    <div class="app__sidebar">
+    <div class="app__sidebar" [ngClass]="{'app__sidebar--close': sidebarService.closeSidebarSignal()}">
       <app-sidebar></app-sidebar>
     </div>
   }

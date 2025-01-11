@@ -1,4 +1,4 @@
-<div class="h-full border-r px-[1.6rem] border-borderColor bg-surfaceColor">
+<div class="h-full border-r px-[1.6rem] border-borderColor bg-surfaceColor" [ngClass]="{'px-[1rem]': sidebarService.closeSidebarSignal()}">
         <!-- Logo -->
     <div class="h-[6.4rem] flex justify-center items-center">
         <img src="assets/logo.png" alt="Logo do sistema">
@@ -6,7 +6,7 @@
 
     <div class="py-[3rem]">
         <app-button 
-            txt="Adicionar Transação"
+            [txt]="!sidebarService.closeSidebarSignal() ? 'Adicionar Transação' : ''"
             icon="ionAddOutline"
             (actionEvent)="sheetService.openSheetDialog()"
         ></app-button>
@@ -22,11 +22,19 @@
                     [ngClass]="{'text-greenColor bg-[#E9F4F1] hover:border-transparent hover:bg-[#E9F4F1]': router.url === item.rota}"
                 >
                     <ng-icon [name]="item.icon" size="1.8rem" ></ng-icon>
-                    {{item.txt}}
+
+                    @if (!sidebarService.closeSidebarSignal()) {
+                        {{item.txt}}
+                    }
                 </li>
             }
         </ul>
     </div>
 
     <!-- Logout -->
+     <div class="fixed bottom-6 left-[24rem] cursor-pointer text-secundaryColor hover:text-primaryColor transition"
+     [ngClass]="{'left-[4rem] rotate-180': sidebarService.closeSidebarSignal()}"
+     (click)="sidebarService.closeSidebarSignal.set(!sidebarService.closeSidebarSignal())">
+        <ng-icon name="ionChevronBackOutline"></ng-icon>
+     </div>
 </div>

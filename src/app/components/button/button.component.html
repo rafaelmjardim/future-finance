@@ -1,5 +1,5 @@
 <button class="flex items-center justify-center gap-4 w-full bg-primaryColor hover:bg-[#303030] text-white text-base h-[4rem] px-6 rounded transition" [ngClass]="{'bg-red-700 hover:bg-red-800': iconType === 'DELETE'}" (click)="handleAction()">
-    <div class="flex items-center gap-4">
+    <div class="flex items-center gap-4 text-nowrap">
         @if (icon) {
             <ng-icon [name]="icon" size="1.8rem"></ng-icon>
         }
