@@ -1,3 +1,4 @@
+import { MediaQueryService } from './../../services/media-query/media-query.service';
 import { Transition } from './../transitions/transitions';
 import { DataPickerService } from './../../components/data-picker/data-picker.service';
 import { UtilsService } from './../../services/utils/utils.service';
@@ -9,16 +10,18 @@ import { CardComponent } from '../../components/card/card.component';
 import { ChartOptions } from '../transitions/transitions';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import moment from 'moment';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [PageHeaderComponent, CardComponent, NgApexchartsModule],
+  imports: [PageHeaderComponent, CardComponent, NgApexchartsModule, NgClass],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit {
   private apiService = inject(ApiService)
+  protected mediaQueryService = inject(MediaQueryService);
   protected utilsService = inject(UtilsService);
   protected dataPickerService = inject(DataPickerService);
 

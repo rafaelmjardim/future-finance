@@ -1,3 +1,4 @@
+import { MediaQueryService } from './../../services/media-query/media-query.service';
 import { TransitionsListComponent } from './transitions-list/transitions-list.component';
 import { Component, effect, inject, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api/api.service';
@@ -9,16 +10,18 @@ import { CardComponent } from '../../components/card/card.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { SheetService } from '../../components/sheet/sheet.service';
 import { DataPickerService } from '../../components/data-picker/data-picker.service';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-transitions',
   standalone: true,
-  imports: [PageHeaderComponent, TransitionsListComponent, CardComponent, NgApexchartsModule],
+  imports: [PageHeaderComponent, TransitionsListComponent, CardComponent, NgApexchartsModule, NgClass],
   templateUrl: './transitions.component.html',
   styleUrl: './transitions.component.scss'
 })
 export class TransitionsComponent implements OnInit {
   private api = inject(ApiService);
+  protected mediaQueryService = inject(MediaQueryService);
   protected utilsService = inject(UtilsService);
   private sheetService = inject(SheetService);
   protected dataPickerService = inject(DataPickerService);
