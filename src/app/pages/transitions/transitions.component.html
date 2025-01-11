@@ -24,13 +24,13 @@
     </div>
 
     <div class="flex flex-col gap-[1.6rem]">
-        <div class="box order-1">
+        <div class="order-1" [ngClass]="{'box': !mediaQueryService.isMobile()}">
             <h2 class="box__title">Resumo</h2>
 
             <div class="grid grid-cols-3 gap-4 sm:gap-6">
-                <app-card title="Balanço" [value]="totalIncomings - totalExpenses" [description]="'Total mês de ' + dataPickerService.currentDateSignal().format('MMM')" [typeRef]="'BALANCO'"/>
-                <app-card title="Receitas" [value]="totalIncomings" [description]="'Total mês de ' + dataPickerService.currentDateSignal().format('MMM')" [typeRef]="'RECEITA'"/>
-                <app-card title="Despesas" [value]="totalExpenses" [description]="'Total mês de ' + dataPickerService.currentDateSignal().format('MMM')" [typeRef]="'DESPESA'"/>
+                <app-card title="Balanço" [value]="totalIncomings - totalExpenses" [description]="'Total de ' + dataPickerService.currentDateSignal().format('MMM')" [typeRef]="'BALANCO'"/>
+                <app-card title="Receitas" [value]="totalIncomings" [description]="'Total de ' + dataPickerService.currentDateSignal().format('MMM')" [typeRef]="'RECEITA'"/>
+                <app-card title="Despesas" [value]="totalExpenses" [description]="'Total de ' + dataPickerService.currentDateSignal().format('MMM')" [typeRef]="'DESPESA'"/>
             </div>
         </div>
 
