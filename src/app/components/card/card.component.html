@@ -1,7 +1,7 @@
 @if (value || value == 0) {
-    <div class="box py-4">
+    <div class="box py-4" [ngClass]="{'p-[1rem]': mediaQueryService.isMobile()}">
         <p class="text-md font-medium mb-2">{{ title }}</p>
-        <h2 class="text-[2.2rem] font-bold mb-1" [ngStyle]="{'font-size': mediaQueryService.isMobile() ? '1.8rem' : ''}" [ngClass]="{'text-grayColor': typeRef === 'BALANCO', 'text-greenColor': typeRef === 'RECEITA', 'text-accentColor': typeRef === 'DESPESA'}">
+        <h2 class="text-[2.2rem] font-bold mb-1" [ngStyle]="{'font-size': mediaQueryService.isMobile() ? '1.6rem' : ''}" [ngClass]="{'text-grayColor': typeRef === 'BALANCO', 'text-greenColor': typeRef === 'RECEITA', 'text-accentColor': typeRef === 'DESPESA'}">
             {{ value | currency: 'BRL' }}
         </h2>
         <p class="text-sm text-secundaryColor">{{ description }}</p>
