@@ -1,9 +1,7 @@
 import { TransitionsListComponent } from './transitions-list/transitions-list.component';
 import { Component, effect, inject, OnInit } from '@angular/core';
-import { UserService } from '../../services/user/user.service';
 import { ApiService } from '../../services/api/api.service';
 import { UtilsService } from '../../services/utils/utils.service';
-import { User } from '../../services/user/user';
 import { PageHeaderComponent } from '../../components/pageheader/page-header.component';
 import { pagesItems } from '../../constants/menu';
 import { ChartOptions, Transition } from './transitions';
@@ -11,7 +9,6 @@ import { CardComponent } from '../../components/card/card.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { SheetService } from '../../components/sheet/sheet.service';
 import { DataPickerService } from '../../components/data-picker/data-picker.service';
-import moment from 'moment';
 
 @Component({
   selector: 'app-transitions',
@@ -59,8 +56,13 @@ export class TransitionsComponent implements OnInit {
         const receitasResponse = this.utilsService.convertGetFirebase(transitions_response.receitas);
         const despesasResponse = this.utilsService.convertGetFirebase(transitions_response.despesas);
 
+        
         this.incomings = this.utilsService.filterTransitionByDate(receitasResponse);
-        this.expenses = this.utilsService.filterTransitionByDate(despesasResponse);          
+        this.expenses = this.utilsService.filterTransitionByDate(despesasResponse);
+
+        // Seta icones conforme categoria
+        this.incomings = this.setIconCategoryInTransition(this.incomings);
+        this.expenses = this.setIconCategoryInTransition(this.expenses);
 
         this.totalIncomings = this.utilsService.totalTransitionAccumulator(this.incomings);
         this.totalExpenses = this.utilsService.totalTransitionAccumulator(this.expenses);
@@ -69,6 +71,29 @@ export class TransitionsComponent implements OnInit {
         this.initChart();
       }
     })
+  }
+
+  setIconCategoryInTransition = (transitions: Transition[]) => {
+    const transitionsFormatted = transitions.map(transition => {
+      return {
+        ...transition, 
+        icon: transition.tipo === 'despesa' ? this.setIconByCetegory(transition.categoria) : 'lucideDollarSign'
+      }
+    })
+
+    return transitionsFormatted;
+  }
+
+  setIconByCetegory = (categoryKey: string) => {
+    const icons: { [ket: string]: string } = {
+      'cartao': 'ionCardOutline',
+      'veiculo': 'ionCarOutline',
+      'pagamento': 'ionBarcodeOutline',
+      'compras': 'ionPricetagOutline',
+      'alimentacao': 'ionFastFoodOutline',
+    }
+
+    return icons[categoryKey] ?? 'ionPricetagOutline';
   }
 
   initChart = () => {
