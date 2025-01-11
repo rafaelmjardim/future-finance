@@ -1,10 +1,13 @@
 <div class="app" [ngClass]="{'app--authenticated': authService.isAuthenticated$ | async}">
 
   @if (authService.isAuthenticated$ | async) {
-    <div class="app__sidebar" [ngClass]="{'app__sidebar--close': sidebarService.closeSidebarSignal()}">
-      <app-sidebar></app-sidebar>
-    </div>
+    @if (!mediaQueryService.isMobile()) {
+      <div class="app__sidebar" [ngClass]="{'app__sidebar--close': sidebarService.closeSidebarSignal()}">
+        <app-sidebar></app-sidebar>
+      </div>
+    }
   }
+
   <div class="app__main" [ngClass]="{'app__main--authenticated': authService.isAuthenticated$ | async}">
     @if (authService.isAuthenticated$ | async) {
       <app-header></app-header>
@@ -14,4 +17,12 @@
       <router-outlet></router-outlet>
     </div>
   </div>
+
+  @if (authService.isAuthenticated$ | async) {
+    @if (mediaQueryService.isMobile()) {
+      <div class="app__navbar-mobile">
+        <app-navbar-mobile></app-navbar-mobile>
+      </div>
+    }
+  }
 </div>
