@@ -5,9 +5,9 @@
 
 <div class="grid gap-6">
     <div class="grid grid-cols-3 gap-6">
-        <app-card title="Balanço" [value]="totalIncomings - totalExpenses" description="Balanço total do mês de x" [typeRef]="'BALANCO'"/>
-        <app-card title="Receitas" [value]="totalIncomings" description="Receita total do mês de x" [typeRef]="'RECEITA'"/>
-        <app-card title="Despesas" [value]="totalExpenses" description="Despesa total do mês de x" [typeRef]="'DESPESA'"/>
+        <app-card title="Balanço" [value]="totalIncomings - totalExpenses" [description]="'Total mês de ' + dataPickerService.currentDateSignal().format('MMM')" [typeRef]="'BALANCO'"/>
+        <app-card title="Receitas" [value]="totalIncomings" [description]="'Total mês de ' + dataPickerService.currentDateSignal().format('MMM')" [typeRef]="'RECEITA'"/>
+        <app-card title="Despesas" [value]="totalExpenses" [description]="'Total mês de ' + dataPickerService.currentDateSignal().format('MMM')" [typeRef]="'DESPESA'"/>
     </div>
     
     <div class="box">

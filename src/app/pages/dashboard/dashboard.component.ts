@@ -20,7 +20,7 @@ import moment from 'moment';
 export class DashboardComponent implements OnInit {
   private apiService = inject(ApiService)
   protected utilsService = inject(UtilsService);
-  private dataPickerService = inject(DataPickerService);
+  protected dataPickerService = inject(DataPickerService);
 
   protected pageItem = pagesItems['dashboard'];
   
