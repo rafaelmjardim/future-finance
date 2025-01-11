@@ -1,4 +1,4 @@
-import { AsyncPipe, NgClass } from '@angular/common';
+import { AsyncPipe, NgClass, NgStyle } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
@@ -18,6 +18,7 @@ import { MediaQueryService } from './services/media-query/media-query.service';
     HeaderComponent,
     SidebarComponent,
     NavbarMobileComponent,
+    NgStyle
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
