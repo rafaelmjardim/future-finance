@@ -1,4 +1,4 @@
-<div class="app" [ngClass]="{'app--authenticated': authService.isAuthenticated$ | async}">
+<div class="app" [ngClass]="{'app--authenticated': !mediaQueryService.isMobile() && (authService.isAuthenticated$ | async)}">
 
   @if (authService.isAuthenticated$ | async) {
     @if (!mediaQueryService.isMobile()) {
