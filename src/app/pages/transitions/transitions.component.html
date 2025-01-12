@@ -5,7 +5,7 @@
 />
 
 <!-- Main -->
-<div class="grid grid-cols-2 gap-[1.6rem]" [ngClass]="{'grid-cols-1': mediaQueryService.isMobile()}">
+<div class="grid gap-[1.6rem]" [ngClass]="!mediaQueryService.isMobile() ? 'grid-cols-2' : 'grid-cols-1'">
     <div class="box order-2">
         <h2 class="box__title">Transações</h2>
 
