@@ -38,5 +38,7 @@
         position: fixed;
         bottom: 0;
         background-color: #fff;
+        transform: translateZ(0); /* Hack para corrigir problemas de fixed no mobile */
+        will-change: transform; /* Otimização para navegadores móveis */      
     }
 }
