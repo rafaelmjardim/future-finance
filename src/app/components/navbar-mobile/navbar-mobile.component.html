@@ -1,10 +1,10 @@
 <ul class="grid items-center grid-cols-5 w-full py-4 px-6 border-t border-borderColor">
-    <li class="flex flex-col items-center gap-2 text-grayDarkColor text-md cursor-pointer" routerLink="/dashboard">
+    <li class="flex flex-col items-center gap-2 text-grayDarkColor text-md cursor-pointer transition" [ngClass]="{'text-greenColor': this.router.url === '/dashboard'}" routerLink="/dashboard">
         <ng-icon name="lucideLayoutPanelLeft" size="2.2rem"></ng-icon>
         <!-- <span>Dashboard</span> -->
     </li>
 
-    <li class="flex flex-col items-center gap-2 text-grayDarkColor text-md cursor-pointer" routerLink="/transacoes">
+    <li class="flex flex-col items-center gap-2 text-grayDarkColor text-md cursor-pointer transition" [ngClass]="{'text-greenColor': this.router.url === '/transacoes'}" routerLink="/transacoes">
         <ng-icon name="ionSwapHorizontalOutline" size="2.2rem"></ng-icon>
         <!-- <span>Transições</span> -->
     </li>
