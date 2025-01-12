@@ -6,7 +6,7 @@
 
 <!-- Main -->
 <div class="grid gap-[1.6rem]" [ngClass]="!mediaQueryService.isMobile() ? 'grid-cols-2' : 'grid-cols-1'">
-    <div class="box order-2">
+    <div class="box" [ngClass]="{'order-2': mediaQueryService.isMobile()}">
         <h2 class="box__title">Transações</h2>
 
         <div class="box__content flex flex-col gap-8">
@@ -24,7 +24,7 @@
     </div>
 
     <div class="flex flex-col gap-[1.6rem]">
-        <div class="order-1" [ngClass]="{'box': !mediaQueryService.isMobile()}">
+        <div class="" [ngClass]="{'box': !mediaQueryService.isMobile(), 'order-2': mediaQueryService.isMobile()}">
             <h2 class="box__title">Resumo</h2>
 
             <div class="grid grid-cols-3 gap-4 sm:gap-6">
