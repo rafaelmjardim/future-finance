@@ -7,6 +7,7 @@ import { Router, RouterState } from '@angular/router';
 import { LoaderComponent } from '../../components/loader/loader.component';
 import { ButtonComponent } from '../../components/button/button.component';
 import { NgIcon } from '@ng-icons/core';
+import { MediaQueryService } from '../../services/media-query/media-query.service';
 
 @Component({
   selector: 'app-login',
@@ -30,6 +31,7 @@ export class LoginComponent implements OnInit{
 
   protected authService = inject(AuthService);
   protected userService = inject(UserService);
+  protected mediaQueryService = inject(MediaQueryService);
 
   private router = inject(Router);
 
