@@ -1,31 +1,60 @@
-<div class="h-full flex flex-col items-center justify-center">
-    <form class="" [formGroup]="form" >
-        <h1 class="text-gray-800 dark:text-white text-[6rem]">Bem-vindo!</h1>
+<div class="h-full grid grid-cols-2">
 
-        <!-- <input type="text"> -->
-        <div class="mb-6">
-            <label class="block mb-2 text-md font-medium text-gray-900 dark:text-white">Email</label>
-            <input type="email" id="default-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-md rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            formControlName="email"
-            (focus)="formError = false || formEmpty = false">
-            <!-- @if (form.controls.email.errors) {
-                <p class="text-red-600 text-sm mt-2">Email invalida</p>
-            } -->
+    <!-- Left -->
+     <!-- https://images.unsplash.com/photo-1737265396686-00377dcd99d0?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D -->
+    <div class="bg-cover bg-center text-primaryColor flex flex-col justify-between p-[3.5rem]" style="background-image: url(https://images.unsplash.com/photo-1737265396678-a7dac6fcdff2?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);">
+        <div class="flex items-center gap-3 text-[2.4rem] text-white">
+            <img src="assets/logo-branca.png" alt="Logo do sistema">
+            <h1 class="font-medium">Future Finance</h1>
         </div>
+
+        <p class="text-white font-light">
+            "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptates sunt officiis nobis, facilis ipsam excepturi nulla illum eligendi commodi porro mollitia at autem nostrum maiores distinctio pariatur aliquid praesentium consectetur."
+        </p>
+
+    </div>
+
+    <!-- Rigth -->
+    <div class="flex flex-col items-center justify-center bg-surfaceColor">
+        <p class="absolute top-[3.5rem] right-[3.5rem] flex items-center gap-3 acursor-pointer hover:text-greenColor transition">
+            Registrar-se
+            <ng-icon name="ionArrowForward"></ng-icon>
+        </p>
+
+        <div class="text-center mb-6">
+            <h1 class="text-gray-800 font-bold dark:text-white text-[3rem]">Bem-vindo</h1>
+            <p class="text-sm text-grayColor">Entre com seu e email e senha para acessar o aplicativo</p>
+        </div>
+
+        <form class="text-center w-[34rem]" [formGroup]="form">
+            <!-- <input type="text"> -->
+            <div class="mb-6 text-start ng">
+                <label class="block mb-2 text-md font-medium text-gray-900 dark:text-white">Email</label>
+                <input type="email" id="default-input" class="bg-white border border-gray-300 text-gray-900 text-md rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="nome@exemplo.com"
+                formControlName="email"
+                (focus)="formError = false || formEmpty = false">
+                <!-- @if (form.controls.email.errors) {
+                    <p class="text-red-600 text-sm mt-2">Email invalida</p>
+                } -->
+            </div>
+            
+            <div class="mb-10 text-start">
+                <label class="block mb-2 text-md font-medium text-gray-900 dark:text-white">Senha</label>
+                <input type="password" id="default-input" class="bg-white border border-gray-300 text-gray-900 text-md rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Sua senha"
+                formControlName="senha">
+                @if (formError || formEmpty) {
+                    <p class="text-red-600 text-sm mt-2">{{formEmpty ? 'Informe seu email e senha.' : 'Usuário ou senha invalidos.'}}</p>
+                }
+            </div>
         
-        <div class="mb-10">
-            <label class="block mb-2 text-md font-medium text-gray-900 dark:text-white">Senha</label>
-            <input type="password" id="default-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-md rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            formControlName="senha">
-            @if (formError || formEmpty) {
-                <p class="text-red-600 text-sm mt-2">{{formEmpty ? 'Informe seu email e senha.' : 'Usuário ou senha invalidos.'}}</p>
-            }
-        </div>
-    
-        <app-button
-            txt="Fazer Login"
-            [loader]="showLoader"
-            (actionEvent)="submitLogin()"
-        ></app-button>
-    </form>
+            <app-button
+                txt="Fazer Login"
+                [loader]="showLoader"
+                (actionEvent)="submitLogin()"
+            ></app-button>
+        </form>
+    </div>
+
 </div>

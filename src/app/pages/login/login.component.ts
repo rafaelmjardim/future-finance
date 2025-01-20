@@ -6,11 +6,12 @@ import { UserService } from '../../services/user/user.service';
 import { Router, RouterState } from '@angular/router';
 import { LoaderComponent } from '../../components/loader/loader.component';
 import { ButtonComponent } from '../../components/button/button.component';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [NgClass, FormsModule, ReactiveFormsModule, LoaderComponent, ButtonComponent],
+  imports: [NgClass, FormsModule, ReactiveFormsModule, NgIcon, ButtonComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
