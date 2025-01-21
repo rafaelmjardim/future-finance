@@ -67,15 +67,7 @@ export class LoginComponent implements OnInit{
           console.log('Erro ao pegar token! ', error);
         })
 
-        const { uid, email, displayName } = user_response.user;
-        const userData = {
-          uid,
-          email,
-          displayName
-        }
-
-        this.userService.setUserStorge(userData);
-        this.router.navigateByUrl('/dashboard');
+        this.setUserStorgeAndNavigate(user_response.user);
       }
     }).catch(error => {
       this.formError = true;
@@ -92,7 +84,35 @@ export class LoginComponent implements OnInit{
 
     if (nome && email && senha) {
       this.authService.register(nome, email, senha)
+      .then(user_response => {
+        if (user_response.user) {
+
+          console.log('user', user_response.user);
+          
+          user_response.user.getIdToken()
+          .then(token => {
+            localStorage.setItem('token', token);
+          });
+
+         this.setUserStorgeAndNavigate(user_response.user);
+        }
+      })
+      .catch(error => {
+        this.showLoader = false;
+      })
     }
+  }
+
+  private setUserStorgeAndNavigate = (user: any) => {
+    const { uid, email, displayName } = user;
+      const userData = {
+        uid,
+        email,
+        displayName
+      }
+
+      this.userService.setUserStorge(userData);
+      this.router.navigateByUrl('/dashboard');
   }
 
   protected submitLogin = () => {    
@@ -106,6 +126,7 @@ export class LoginComponent implements OnInit{
         this.isDiferentePassword = true;
         return
       } 
+      this.showLoader = true;
       this.onRegistration();
     }
     
