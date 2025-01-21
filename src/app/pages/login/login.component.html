@@ -86,7 +86,7 @@
             }
         
             <app-button
-                [txt]="isRegistration ? 'Cadastrar' : 'Fazer Login'"
+                [txt]="isRegistration && showLoader ? 'Entrando' : isRegistration ? 'Cadastrar' : 'Fazer Login'"
                 [loader]="showLoader"
                 (actionEvent)="submitLogin()"
             ></app-button>
