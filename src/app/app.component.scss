@@ -28,6 +28,10 @@
 
     &__content {
         padding: 1.6rem;
+        
+        &--login-page {
+            padding: 0;
+        }
     }
 
     &__navbar-mobile {

@@ -25,6 +25,10 @@ export class AuthService {
     return this.fireAuth.signInWithEmailAndPassword(email, senha);
   }
 
+  register = async (nome: string, email: string, senha: string) => {
+    return this.fireAuth.createUserWithEmailAndPassword(email, senha);
+  }
+
   signOut = () => {
     return this.fireAuth.signOut();
   }

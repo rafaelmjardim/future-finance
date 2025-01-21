@@ -6,16 +6,19 @@ import { UserService } from '../../services/user/user.service';
 import { Router, RouterState } from '@angular/router';
 import { LoaderComponent } from '../../components/loader/loader.component';
 import { ButtonComponent } from '../../components/button/button.component';
+import { NgIcon } from '@ng-icons/core';
+import { MediaQueryService } from '../../services/media-query/media-query.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [NgClass, FormsModule, ReactiveFormsModule, LoaderComponent, ButtonComponent],
+  imports: [NgClass, FormsModule, ReactiveFormsModule, NgIcon, ButtonComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit{
-  isDark = signal<boolean>(false);
+  isRegistration = false;
+  isDiferentePassword = false;
 
   protected formError: boolean = false;
   protected formEmpty: boolean = false;
@@ -23,12 +26,19 @@ export class LoginComponent implements OnInit{
     email: new FormControl('', Validators.email),
     senha: new FormControl('', Validators.required)
   });
+  protected registerForm = new FormGroup({
+    nome: new FormControl('', Validators.email),
+    email: new FormControl('', Validators.email),
+    senha: new FormControl('', Validators.required),
+    confirmacaoSenha: new FormControl('', Validators.required)
+  });
 
   // protected formBuilder = inject(FormBuilder);
   // protected formErrors!: {email: any, senha: any}
 
   protected authService = inject(AuthService);
   protected userService = inject(UserService);
+  protected mediaQueryService = inject(MediaQueryService);
 
   private router = inject(Router);
 
@@ -45,7 +55,7 @@ export class LoginComponent implements OnInit{
     }
   }
 
-  onSigIn = (email: string, senha: string) => {
+  private onSigIn = (email: string, senha: string) => {
     this.authService.signIn(email, senha)
     .then( user_response => {      
       if (user_response.user) {
@@ -57,15 +67,7 @@ export class LoginComponent implements OnInit{
           console.log('Erro ao pegar token! ', error);
         })
 
-        const { uid, email, displayName } = user_response.user;
-        const userData = {
-          uid,
-          email,
-          displayName
-        }
-
-        this.userService.setUserStorge(userData);
-        this.router.navigateByUrl('/dashboard');
+        this.setUserStorgeAndNavigate(user_response.user);
       }
     }).catch(error => {
       this.formError = true;
@@ -77,10 +79,58 @@ export class LoginComponent implements OnInit{
     })
   }
 
-  submitLogin = () => {    
+  private onRegistration = () => {
+    const { nome, email, senha} = this.registerForm.value;
+
+    if (nome && email && senha) {
+      this.authService.register(nome, email, senha)
+      .then(user_response => {
+        if (user_response.user) {
+
+          console.log('user', user_response.user);
+          
+          user_response.user.getIdToken()
+          .then(token => {
+            localStorage.setItem('token', token);
+          });
+
+         this.setUserStorgeAndNavigate(user_response.user);
+        }
+      })
+      .catch(error => {
+        this.showLoader = false;
+      })
+    }
+  }
+
+  private setUserStorgeAndNavigate = (user: any) => {
+    const { uid, email, displayName } = user;
+      const userData = {
+        uid,
+        email,
+        displayName
+      }
+
+      this.userService.setUserStorge(userData);
+      this.router.navigateByUrl('/dashboard');
+  }
+
+  protected submitLogin = () => {    
     const { email, senha } = this.form.value;
+    this.isDiferentePassword = false;
+
+    if (this.isRegistration) {
+      const { senha,  confirmacaoSenha } = this.registerForm.value;
+
+      if (senha !== confirmacaoSenha) {
+        this.isDiferentePassword = true;
+        return
+      } 
+      this.showLoader = true;
+      this.onRegistration();
+    }
     
-    if (email && senha && !this.showLoader) {
+    if (email && senha && !this.showLoader && !this.isRegistration) {
       this.showLoader = true;
       this.onSigIn(email, senha);
     } else {
@@ -91,5 +141,9 @@ export class LoginComponent implements OnInit{
     //   email: this.form.controls.email.errors,
     //   senha: this.form.controls.senha.errors
     // }
+  }
+
+  protected changeLoginForm = () => {
+    this.isRegistration = !this.isRegistration;
   }
 }
