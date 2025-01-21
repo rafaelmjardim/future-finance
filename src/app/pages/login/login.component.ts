@@ -17,13 +17,20 @@ import { MediaQueryService } from '../../services/media-query/media-query.servic
   styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit{
-  isDark = signal<boolean>(false);
+  isRegistration = false;
+  isDiferentePassword = false;
 
   protected formError: boolean = false;
   protected formEmpty: boolean = false;
   protected form = new FormGroup({
     email: new FormControl('', Validators.email),
     senha: new FormControl('', Validators.required)
+  });
+  protected registerForm = new FormGroup({
+    nome: new FormControl('', Validators.email),
+    email: new FormControl('', Validators.email),
+    senha: new FormControl('', Validators.required),
+    confirmacaoSenha: new FormControl('', Validators.required)
   });
 
   // protected formBuilder = inject(FormBuilder);
@@ -48,7 +55,7 @@ export class LoginComponent implements OnInit{
     }
   }
 
-  onSigIn = (email: string, senha: string) => {
+  private onSigIn = (email: string, senha: string) => {
     this.authService.signIn(email, senha)
     .then( user_response => {      
       if (user_response.user) {
@@ -80,10 +87,29 @@ export class LoginComponent implements OnInit{
     })
   }
 
-  submitLogin = () => {    
+  private onRegistration = () => {
+    const { nome, email, senha} = this.registerForm.value;
+
+    if (nome && email && senha) {
+      this.authService.register(nome, email, senha)
+    }
+  }
+
+  protected submitLogin = () => {    
     const { email, senha } = this.form.value;
+    this.isDiferentePassword = false;
+
+    if (this.isRegistration) {
+      const { senha,  confirmacaoSenha } = this.registerForm.value;
+
+      if (senha !== confirmacaoSenha) {
+        this.isDiferentePassword = true;
+        return
+      } 
+      this.onRegistration();
+    }
     
-    if (email && senha && !this.showLoader) {
+    if (email && senha && !this.showLoader && !this.isRegistration) {
       this.showLoader = true;
       this.onSigIn(email, senha);
     } else {
@@ -94,5 +120,9 @@ export class LoginComponent implements OnInit{
     //   email: this.form.controls.email.errors,
     //   senha: this.form.controls.senha.errors
     // }
+  }
+
+  protected changeLoginForm = () => {
+    this.isRegistration = !this.isRegistration;
   }
 }

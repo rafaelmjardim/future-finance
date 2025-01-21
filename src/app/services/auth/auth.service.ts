@@ -25,6 +25,26 @@ export class AuthService {
     return this.fireAuth.signInWithEmailAndPassword(email, senha);
   }
 
+  register = async (nome: string, email: string, senha: string) => {
+    try {
+      const userCredential = await this.fireAuth.createUserWithEmailAndPassword(email, senha);
+
+      console.log('Credencial', userCredential);
+      
+
+      // const updatedUser: any = {
+      //   ...userCredential.user,
+      //   displayName: nome
+      // }
+      
+      // if (userCredential) {
+      //   await this.fireAuth.updateCurrentUser(updatedUser);
+      // }
+    } catch (error) {
+      console.log('erro', error);
+    }
+  }
+
   signOut = () => {
     return this.fireAuth.signOut();
   }

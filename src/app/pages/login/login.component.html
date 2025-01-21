@@ -22,22 +22,38 @@
 
     <!-- Rigth -->
     <div class="flex flex-col items-center justify-center bg-surfaceColor">
-        <p class="absolute top-[3.5rem] right-[3.5rem] flex items-center gap-3 acursor-pointer hover:text-greenColor transition cursor-pointer">
-            Registrar-se
+        <p class="absolute top-[3.5rem] right-[3.5rem] flex items-center gap-3 acursor-pointer hover:text-greenColor transition cursor-pointer"
+        (click)="changeLoginForm()">
+            {{isRegistration ? 'Login' : 'Registrar-se'}}
             <ng-icon name="ionArrowForward"></ng-icon>
         </p>
 
         <div class="text-center mb-6">
-            <h1 class="text-gray-800 font-bold dark:text-white text-[3rem]">Bem-vindo</h1>
-            <p class="text-sm text-grayColor">Entre com seu e email e senha para acessar o aplicativo</p>
+            <h1 class="text-gray-800 font-bold dark:text-white text-[3rem]">{{isRegistration ? 'Cadastre-se' : 'Bem-vindo'}}</h1>
+            <p class="text-sm text-grayColor max-w-[33rem]">
+                {{isRegistration ? 
+                    'Você está pronto para a próxima estapa do seu futuro? Registre-se agora.' : 
+                    'Entre com seu e email e senha para acessar o aplicativo'}}
+            </p>
         </div>
 
-        <form class="text-center w-[34rem]" [formGroup]="form">
-            <!-- <input type="text"> -->
+        <form class="text-center w-[34rem]" [formGroup]="!isRegistration ? form : registerForm">
+            @if (isRegistration) {
+                <div class="mb-6 text-start ng">
+                    <label class="block mb-2 text-md font-medium text-gray-900 dark:text-white">Nome</label>
+                    <input type="text" class="bg-white border border-gray-300 text-gray-900 text-md rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Nome completo"
+                    formControlName="nome"
+                    autocomplete="username"
+                    (focus)="formError = false || formEmpty = false">
+                </div>
+            }
+            
             <div class="mb-6 text-start ng">
                 <label class="block mb-2 text-md font-medium text-gray-900 dark:text-white">Email</label>
-                <input type="email" id="default-input" class="bg-white border border-gray-300 text-gray-900 text-md rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                <input type="email" class="bg-white border border-gray-300 text-gray-900 text-md rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="nome@exemplo.com"
+                autocomplete="email"
                 formControlName="email"
                 (focus)="formError = false || formEmpty = false">
                 <!-- @if (form.controls.email.errors) {
@@ -47,16 +63,30 @@
             
             <div class="mb-10 text-start">
                 <label class="block mb-2 text-md font-medium text-gray-900 dark:text-white">Senha</label>
-                <input type="password" id="default-input" class="bg-white border border-gray-300 text-gray-900 text-md rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                <input type="password" class="bg-white border border-gray-300 text-gray-900 text-md rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Sua senha"
+                autocomplete="current-password"
                 formControlName="senha">
-                @if (formError || formEmpty) {
+                @if (formError || formEmpty && !isRegistration) {
                     <p class="text-red-600 text-sm mt-2">{{formEmpty ? 'Informe seu email e senha.' : 'Usuário ou senha invalidos.'}}</p>
                 }
             </div>
+
+            @if (isRegistration) {                
+                <div class="mb-10 text-start">
+                    <label class="block mb-2 text-md font-medium text-gray-900 dark:text-white">Repita a senha</label>
+                    <input type="password" class="bg-white border border-gray-300 text-gray-900 text-md rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Confirmar senha"
+                    autocomplete="current-password"
+                    formControlName="confirmacaoSenha">
+                    @if (isDiferentePassword) {
+                        <p class="text-red-600 text-sm mt-2">Senhas diferentes. Tente novamente!</p>
+                    }
+                </div>
+            }
         
             <app-button
-                txt="Fazer Login"
+                [txt]="isRegistration ? 'Cadastrar' : 'Fazer Login'"
                 [loader]="showLoader"
                 (actionEvent)="submitLogin()"
             ></app-button>
