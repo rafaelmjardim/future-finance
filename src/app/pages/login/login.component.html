@@ -37,21 +37,21 @@
             </p>
         </div>
 
-        <form class="text-center w-[34rem]" [formGroup]="!isRegistration ? form : registerForm">
+        <form class="flex flex-col gap-6 w-[34rem]" [formGroup]="!isRegistration ? form : registerForm">
             @if (isRegistration) {
-                <div class="mb-6 text-start ng">
-                    <label class="block mb-2 text-md font-medium text-gray-900 dark:text-white">Nome</label>
-                    <input type="text" class="bg-white border border-gray-300 text-gray-900 text-md rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                <label class="input">
+                    <span>Nome</span>
+                    <input type="text"
                     placeholder="Nome completo"
                     formControlName="nome"
                     autocomplete="username"
                     (focus)="formError = false || formEmpty = false">
-                </div>
+                </label>
             }
             
-            <div class="mb-6 text-start ng">
-                <label class="block mb-2 text-md font-medium text-gray-900 dark:text-white">Email</label>
-                <input type="email" class="bg-white border border-gray-300 text-gray-900 text-md rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            <label class="input">
+                <span>Email</span>
+                <input type="email"
                 placeholder="nome@exemplo.com"
                 autocomplete="email"
                 formControlName="email"
@@ -59,30 +59,30 @@
                 <!-- @if (form.controls.email.errors) {
                     <p class="text-red-600 text-sm mt-2">Email invalida</p>
                 } -->
-            </div>
+            </label>
             
-            <div class="mb-10 text-start">
-                <label class="block mb-2 text-md font-medium text-gray-900 dark:text-white">Senha</label>
-                <input type="password" class="bg-white border border-gray-300 text-gray-900 text-md rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            <label class="input">
+                <span>Senha</span>
+                <input type="password"
                 placeholder="Sua senha"
                 autocomplete="current-password"
                 formControlName="senha">
                 @if (formError || formEmpty && !isRegistration) {
                     <p class="text-red-600 text-sm mt-2">{{formEmpty ? 'Informe seu email e senha.' : 'Usuário ou senha invalidos.'}}</p>
                 }
-            </div>
+            </label>
 
             @if (isRegistration) {                
-                <div class="mb-10 text-start">
-                    <label class="block mb-2 text-md font-medium text-gray-900 dark:text-white">Repita a senha</label>
-                    <input type="password" class="bg-white border border-gray-300 text-gray-900 text-md rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                <label class="input">
+                    <span>Repita a senha</span>
+                    <input type="password"
                     placeholder="Confirmar senha"
                     autocomplete="current-password"
                     formControlName="confirmacaoSenha">
                     @if (isDiferentePassword) {
                         <p class="text-red-600 text-sm mt-2">Senhas diferentes. Tente novamente!</p>
                     }
-                </div>
+                </label>
             }
         
             <app-button
