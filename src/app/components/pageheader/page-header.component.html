@@ -1,6 +1,6 @@
 
 <div class="flex items-center justify-between mb-[1.6rem]" [ngClass]="{'flex-col items-baseline gap-4': mediaQueryService.isMobile()}">
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-2 dark:text-white">
         <ng-icon [name]="icon" [size]="mediaQueryService.isMobile() ? '1.6rem' : '2.4rem'"></ng-icon>
         <h1 class="text-[2.4rem] font-bold" [ngStyle]="{'font-size': mediaQueryService.isMobile() ? '1.6rem' : ''}">{{title}}</h1>
     </div>
