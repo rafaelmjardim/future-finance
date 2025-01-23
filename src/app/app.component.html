@@ -15,7 +15,7 @@
       <app-header></app-header>
     }
 
-    <div class="app__content h-full bg-backgroundColor" [ngClass]="{'mb-[6.2rem]': mediaQueryService.isMobile(), 'app__content--login-page': !(authService.isAuthenticated$ | async)}" [ngStyle]="{'padding': mediaQueryService.isMobile() ? '.8rem' : ''}">
+    <div class="app__content scroll h-full bg-backgroundColor" [ngClass]="{'mb-[6.2rem]': mediaQueryService.isMobile(), 'app__content--login-page': !(authService.isAuthenticated$ | async)}" [ngStyle]="{'padding': mediaQueryService.isMobile() ? '.8rem' : ''}">
       <router-outlet></router-outlet>
     </div>
   </div>
