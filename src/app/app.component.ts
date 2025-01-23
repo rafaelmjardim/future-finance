@@ -1,3 +1,4 @@
+import { UtilsService } from './services/utils/utils.service';
 import { AsyncPipe, NgClass, NgStyle } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
@@ -27,6 +28,7 @@ export class AppComponent implements OnInit {
   protected authService = inject(AuthService);  
   protected mediaQueryService = inject(MediaQueryService);
   protected sidebarService = inject(SidebarService);
+  protected utilsService = inject(UtilsService);
 
   ngOnInit(): void {
   }
