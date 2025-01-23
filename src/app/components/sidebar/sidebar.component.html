@@ -1,7 +1,15 @@
-<div class="h-full border-r px-[1.6rem] border-borderColor bg-surfaceColor" [ngClass]="{'px-[1rem]': sidebarService.closeSidebarSignal()}">
+<div class="h-full border-r px-[1.6rem] border-borderColor bg-surfaceColor dark:bg-primaryColor" [ngClass]="{'px-[1rem]': sidebarService.closeSidebarSignal()}">
         <!-- Logo -->
-    <div class="h-[6.4rem] flex justify-center items-center">
-        <img src="assets/logo.png" alt="Logo do sistema">
+    <div class="h-[6.4rem] flex items-center justify-center gap-3 text-[2.4rem] text-primaryColor dark:text-white">
+        @if (utilsService.darkModeSignal()) {
+            <img src="assets/logo-branca.png" alt="Logo do sistema">
+        } @else {
+            <img src="assets/logo-preta.png" alt="Logo do sistema">
+        }
+
+        @if (!sidebarService.closeSidebarSignal()) {
+            <h1 class="font-medium">Future Finance</h1>
+        }
     </div>
 
     <div class="py-[3rem]">
@@ -13,13 +21,13 @@
     </div>
 
         <!-- Menu -->
-    <div class="">
+    <div class="dark:text-white">
         <label class="text-md">GERAL</label>
         <ul class="flex flex-col gap-2 mt-2">
             @for (item of menu; track $index) {
-                <li class="flex items-center gap-4 px-[2rem] py-[1.2rem] rounded font-semibold hover:bg-[#F1F1F1] text- transition cursor-pointer" 
+                <li class="flex items-center gap-4 px-[2rem] py-[1.2rem] rounded font-semibold hover:bg-[#F1F1F1] dark:hover:bg-[#1f2626] text- transition cursor-pointer" 
                     [routerLink]="item.rota"
-                    [ngClass]="{'text-greenColor bg-[#E9F4F1] hover:border-transparent hover:bg-[#E9F4F1]': router.url === item.rota}"
+                    [ngClass]="{'text-greenColor bg-[#E9F4F1] dark:bg-[#1B2121] dark:text-[#4A8374] hover:border-transparent hover:bg-[#E9F4F1]': router.url === item.rota}"
                 >
                     <ng-icon [name]="item.icon" size="1.8rem" ></ng-icon>
 
