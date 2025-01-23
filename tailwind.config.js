@@ -20,8 +20,8 @@ module.exports = {
         borderColorDark: '#303741',
         surfaceColorDark: '#22272D',
         backgroundColorDark: '#15161B',
-        textColorDark: '#FFF'
-
+        textColorDark: '#FFF',
+        labelColorDark: '#ADB0BF'
       }
     },
     borderRadius: {
