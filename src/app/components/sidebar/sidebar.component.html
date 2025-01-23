@@ -40,7 +40,7 @@
     </div>
 
     <!-- Logout -->
-     <div class="fixed bottom-6 left-[24rem] cursor-pointer text-secundaryColor hover:text-primaryColor transition"
+     <div class="fixed bottom-6 left-[24rem] cursor-pointer text-secundaryColor hover:text-primaryColor dark:hover:text-white transition"
      [ngClass]="{'left-[4rem] rotate-180': sidebarService.closeSidebarSignal()}"
      (click)="sidebarService.closeSidebarSignal.set(!sidebarService.closeSidebarSignal())">
         <ng-icon name="ionChevronBackOutline"></ng-icon>
