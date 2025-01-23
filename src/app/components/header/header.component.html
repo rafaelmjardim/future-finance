@@ -8,7 +8,12 @@
     <!-- Actions -->
     <div class="flex items-center gap-6">
         @if (!mediaQueryService.isMobile()) {
-            <ng-icon class="cursor-pointer text-grayDarkColor hover:text-greenColor transition" name="ionSettings" size="2.2rem"></ng-icon>
+            <!-- Mudança para darkmode temporario -->
+            <ng-icon class="cursor-pointer text-grayDarkColor hover:text-greenColor transition" 
+                [name]="utilsService.darkModeSignal() ? 'ionSettings' : 'ionSettingsOutline' " 
+                size="2.2rem"
+                (click)="changeDarkMode()"
+            ></ng-icon>
         }
         <ng-icon class="cursor-pointer text-grayDarkColor hover:text-greenColor transition" name="lucideLogOut" size="2.2rem" (click)="handleLogout()"></ng-icon>
 
