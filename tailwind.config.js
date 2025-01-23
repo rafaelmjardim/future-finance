@@ -16,6 +16,12 @@ module.exports = {
         hoverColor: '#f4f4f5',
         borderColor: '#DDDDDD',
         textColor: '#191919',
+        
+        borderColorDark: '#303741',
+        surfaceColorDark: '#22272D',
+        backgroundColorDark: '#15161B',
+        textColorDark: '#FFF'
+
       }
     },
     borderRadius: {
