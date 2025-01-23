@@ -1,4 +1,4 @@
-<div class="flex items-center justify-end px-10 bg-white h-[6rem] border-b border-borderColor" [ngClass]="{'justify-between': mediaQueryService.isMobile()}">
+<div class="flex items-center justify-end px-10 bg-surfaceColor dark:bg-primaryColor h-[6rem] border-b border-borderColor dark:border-borderColorDark" [ngClass]="{'justify-between': mediaQueryService.isMobile()}">
     @if (mediaQueryService.isMobile()) {
         <div class="w-[16rem] flex justify-center items-center">
             <img src="assets/logo.png" alt="Logo do sistema">
@@ -9,13 +9,17 @@
     <div class="flex items-center gap-6">
         @if (!mediaQueryService.isMobile()) {
             <!-- Mudança para darkmode temporario -->
-            <ng-icon class="cursor-pointer text-grayDarkColor hover:text-greenColor transition" 
-                [name]="utilsService.darkModeSignal() ? 'ionSettings' : 'ionSettingsOutline' " 
+            <ng-icon class="cursor-pointer text-grayDarkColor dark:text-white hover:text-greenColor transition" 
+                [name]="!utilsService.darkModeSignal() ? 'ionSettings' : 'ionSettingsOutline' " 
                 size="2.2rem"
                 (click)="changeDarkMode()"
             ></ng-icon>
         }
-        <ng-icon class="cursor-pointer text-grayDarkColor hover:text-greenColor transition" name="lucideLogOut" size="2.2rem" (click)="handleLogout()"></ng-icon>
+        
+        <ng-icon class="cursor-pointer text-grayDarkColor dark:text-white hover:text-greenColor transition" 
+            name="lucideLogOut" size="2.2rem" 
+            (click)="handleLogout()"
+        ></ng-icon>
 
         <img 
             class="size-[4.5rem] object-cover rounded-full cursor-pointer"
