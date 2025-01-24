@@ -28,6 +28,24 @@ body {
     font-size: 1.6rem;
 }
 
+.scroll {
+    //scrollbar personalizada para casos de overflow
+    &::-webkit-scrollbar{
+        width: 1rem;
+        height: 1rem;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: #ddd;
+        border-radius: 2rem;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background-color: #a0acbe70;
+        border-radius: 2rem;
+    }
+}
+
 .cdk-overlay-dark-backdrop {
     // background-color: #ffffffcc;
     background-color: #44444415;

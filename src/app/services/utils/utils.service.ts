@@ -8,6 +8,8 @@ import { DataPickerService } from '../../components/data-picker/data-picker.serv
 })
 export class UtilsService {
   private dataPickerService = inject(DataPickerService);
+  
+  darkModeSignal = signal(false);
 
   public loaders = {
     showTransition: signal(false)

@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class',
+  darkMode: 'selector',
   content: ["./src/**/*.{html,js}"],
   theme: {
     extend: { 
@@ -16,6 +16,12 @@ module.exports = {
         hoverColor: '#f4f4f5',
         borderColor: '#DDDDDD',
         textColor: '#191919',
+        
+        borderColorDark: '#303741',
+        surfaceColorDark: '#22272D',
+        backgroundColorDark: '#15161B',
+        textColorDark: '#FFF',
+        labelColorDark: '#ADB0BF'
       }
     },
     borderRadius: {

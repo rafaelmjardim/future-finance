@@ -1,3 +1,4 @@
+import { UtilsService } from './../../services/utils/utils.service';
 import { MediaQueryService } from './../../services/media-query/media-query.service';
 import { Component, inject } from '@angular/core';
 import { UserService } from '../../services/user/user.service';
@@ -15,6 +16,7 @@ import { NgClass } from '@angular/common';
 })
 export class HeaderComponent {
   protected mediaQueryService = inject(MediaQueryService);
+  protected utilsService = inject(UtilsService);
   private userService = inject(UserService);
   private autService = inject(AuthService);
   private router = inject(Router);
@@ -29,5 +31,9 @@ export class HeaderComponent {
     .catch(error_response => {
       console.log('Error: ', error_response);
     })
+  }
+
+  protected changeDarkMode = () => {
+    this.utilsService.darkModeSignal.update(value => !value);
   }
 }

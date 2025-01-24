@@ -1,4 +1,6 @@
-<div class="app" [ngClass]="{'app--authenticated': !mediaQueryService.isMobile() && (authService.isAuthenticated$ | async)}">
+<div class="app" [ngClass]="{
+  'app--authenticated': !mediaQueryService.isMobile() && (authService.isAuthenticated$ | async),
+  'dark': utilsService.darkModeSignal()}">
 
   @if (authService.isAuthenticated$ | async) {
     @if (!mediaQueryService.isMobile()) {
@@ -13,7 +15,7 @@
       <app-header></app-header>
     }
 
-    <div class="app__content h-full bg-backgroundColor" [ngClass]="{'mb-[6.2rem]': mediaQueryService.isMobile(), 'app__content--login-page': !(authService.isAuthenticated$ | async)}" [ngStyle]="{'padding': mediaQueryService.isMobile() ? '.8rem' : ''}">
+    <div class="app__content scroll h-full bg-backgroundColor dark:bg-backgroundColorDark" [ngClass]="{'mb-[6.2rem]': mediaQueryService.isMobile(), 'app__content--login-page': !(authService.isAuthenticated$ | async)}" [ngStyle]="{'padding': mediaQueryService.isMobile() ? '.8rem' : ''}">
       <router-outlet></router-outlet>
     </div>
   </div>

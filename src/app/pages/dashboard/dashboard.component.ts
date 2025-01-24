@@ -79,6 +79,7 @@ export class DashboardComponent implements OnInit {
       chart: {
         type: "area",
         height: 350,
+
         zoom: {
           enabled: false
         }

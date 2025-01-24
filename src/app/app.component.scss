@@ -2,6 +2,7 @@
     height: 100dvh;
     display: grid;
     grid-template-columns: 1fr;
+    overflow: hidden;
     
     &--authenticated {
         grid-template-columns: auto 1fr;
@@ -20,6 +21,7 @@
         display: grid;
         width: 100%;
         grid-template-rows: 1fr;
+        overflow: hidden;
         
         &--authenticated {
             grid-template-rows: auto 1fr;
@@ -28,6 +30,7 @@
 
     &__content {
         padding: 1.6rem;
+        overflow: auto;
         
         &--login-page {
             padding: 0;
