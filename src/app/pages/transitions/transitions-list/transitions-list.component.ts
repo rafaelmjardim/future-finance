@@ -18,6 +18,7 @@ export class TransitionsListComponent {
   @Input() label!: string;
   @Input() typeRef!: 'EXPENSE' | 'INCOME';
   @Input() transitions!: Transition[];
+  @Input() transitionsFixes!: Transition[];
 
   protected utilsService = inject(UtilsService);
   private dialog = inject(Dialog);

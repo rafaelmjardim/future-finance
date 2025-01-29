@@ -31,6 +31,8 @@ export class TransitionsComponent implements OnInit {
   protected incomings: Transition[] = [];
   protected expenses: Transition[] = [];
 
+  protected expensesFixes: Transition[] = [];
+
   protected totalIncomings!: number;
   protected totalExpenses!: number;
 
@@ -51,6 +53,19 @@ export class TransitionsComponent implements OnInit {
   ngOnInit(): void {
     this.utilsService.loaders.showTransition.set(false);
     this.getTransitions();
+
+    this.expensesFixes = [
+      {
+        categoria: 'Cartao',
+        data: String(new Date()),
+        descricao: 'Descrição despesa fixa',
+        id: '255552222',
+        nome: 'Despesa Fixa',
+        tipo: 'despesa',
+        valor: 200,
+        status: false        
+      },
+    ]
   }
 
   getTransitions = () => {
