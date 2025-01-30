@@ -3,6 +3,8 @@ import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexFill, ApexGrid, Ape
 export type GET_TRANSITIONS = {
   receitas: Transition[]
   despesas: Transition[]
+  despesasFixas: Transition[]
+  receitasFixas: Transition[]
 }
 
 export type Transition = {
@@ -14,6 +16,7 @@ export type Transition = {
     descricao: string
     icon?: string
     status?: boolean
+    recorrente: boolean
     tipo: string
 }
 
