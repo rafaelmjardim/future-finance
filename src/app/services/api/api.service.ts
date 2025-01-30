@@ -4,6 +4,8 @@ import { environment } from '../../../environments/environment.development';
 import { Observable } from 'rxjs';
 import { GET_TRANSITIONS } from '../../pages/transitions/transitions';
 
+export type Rota = 'despesas' | 'receitas' | 'despesasFixas' | 'receitasFixas';
+
 const API_KEY = environment.API_KEY;
 
 @Injectable({
@@ -16,8 +18,8 @@ export class ApiService {
     return this.http.get<GET_TRANSITIONS>(`${API_KEY}.json`);   
   }
 
-  postTransition = (transitionFormData: any, rota: 'despesas' | 'receitas') => {
-    const { date, value, description, name, category, typeRef, status } = transitionFormData;
+  postTransition = (transitionFormData: any, rota: Rota) => {
+    const { date, value, description, name, category, typeRef, status, recorrente } = transitionFormData;
 
     return this.http.post(`${API_KEY}/${rota}.json`, {
       valor: value,
@@ -26,12 +28,13 @@ export class ApiService {
       categoria: category,
       descricao: description,
       tipo: typeRef,
+      recorrente,
       status
     });
   }
 
-  putTransition = (id: string, transitionFormData: any, rota: 'despesas' | 'receitas') => {
-    const { date, value, description, name, category, typeRef, status } = transitionFormData;
+  putTransition = (id: string, transitionFormData: any, rota: Rota) => {
+    const { date, value, description, name, category, typeRef, status, recorrente } = transitionFormData;
     
     return this.http.put(`${API_KEY}/${rota}/${id}.json`, {
       valor: value,
@@ -40,11 +43,12 @@ export class ApiService {
       categoria: category,
       descricao: description,
       tipo: typeRef,
+      recorrente,
       status
     })
   }  
 
-  deleteTransition = (id: string, rota: 'despesas' | 'receitas') => {
+  deleteTransition = (id: string, rota: Rota) => {
     return this.http.delete(`${API_KEY}/${rota}/${id}.json`)
   }
   

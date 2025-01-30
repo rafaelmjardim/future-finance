@@ -1,5 +1,5 @@
 import { MediaQueryService } from './../../services/media-query/media-query.service';
-import { Transition } from './../transitions/transitions';
+import { ChartOptionsCategory, Transition } from './../transitions/transitions';
 import { DataPickerService } from './../../components/data-picker/data-picker.service';
 import { UtilsService } from './../../services/utils/utils.service';
 import { Component, effect, inject, OnInit } from '@angular/core';
@@ -33,6 +33,7 @@ export class DashboardComponent implements OnInit {
   protected totalIncomings!: number;
   protected totalExpenses!: number;
   protected chartOptions!: Partial<ChartOptions>;
+  protected chartOptionsCategory!: Partial<ChartOptionsCategory>;
 
   public showLoader = true;
 
@@ -51,15 +52,27 @@ export class DashboardComponent implements OnInit {
   private getTransitions = () => {
     this.apiService.getTransitions().subscribe({
       next: (transitions_res) => {
-        const { receitas, despesas } = transitions_res;
+        const { receitas, despesas, receitasFixas, despesasFixas } = transitions_res;
 
         this.incomings = this.utilsService.convertGetFirebase(receitas);
-        let incomingsFiltered = this.utilsService.filterTransitionByDate(this.incomings);
-        this.totalIncomings = this.utilsService.totalTransitionAccumulator(incomingsFiltered);
-
         this.expenses = this.utilsService.convertGetFirebase(despesas);
+
+        const incomingsFixed = this.utilsService.convertGetFirebase(receitasFixas);
+        const expensesFixed = this.utilsService.convertGetFirebase(despesasFixas);
+
+        if (incomingsFixed) {
+          this.incomings.push(...incomingsFixed);
+        }
+
+        if (expensesFixed) {
+          this.expenses.push(...expensesFixed);
+        }
+        let incomingsFiltered = this.utilsService.filterTransitionByDate(this.incomings);
         let expensesFiltered = this.utilsService.filterTransitionByDate(this.expenses);
+        
+        this.totalIncomings = this.utilsService.totalTransitionAccumulator(incomingsFiltered);
         this.totalExpenses = this.utilsService.totalTransitionAccumulator(expensesFiltered);
+
         
         this.showLoader = false;
 
@@ -110,6 +123,30 @@ export class DashboardComponent implements OnInit {
         text: "Previsão de Saldos para os Próximos 4 Meses",
         align: "center"
       }
+    };
+
+    this.chartOptionsCategory = {
+      series: [44, 55, 13, 43, 22],
+      chart: {
+        type: "donut"
+      },
+      labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
+      legend: {
+        position: "bottom"
+      },
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: "bottom"
+            }
+          }
+        }
+      ]
     };
   }
 

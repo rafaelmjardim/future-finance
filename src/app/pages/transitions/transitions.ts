@@ -1,8 +1,10 @@
-import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexFill, ApexGrid, ApexLegend, ApexPlotOptions, ApexStroke, ApexTheme, ApexTitleSubtitle, ApexTooltip, ApexXAxis, ApexYAxis } from "ng-apexcharts"
+import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexFill, ApexGrid, ApexLegend, ApexNonAxisChartSeries, ApexPlotOptions, ApexResponsive, ApexStroke, ApexTheme, ApexTitleSubtitle, ApexTooltip, ApexXAxis, ApexYAxis } from "ng-apexcharts"
 
 export type GET_TRANSITIONS = {
   receitas: Transition[]
   despesas: Transition[]
+  despesasFixas: Transition[]
+  receitasFixas: Transition[]
 }
 
 export type Transition = {
@@ -14,6 +16,7 @@ export type Transition = {
     descricao: string
     icon?: string
     status?: boolean
+    recorrente: boolean
     tipo: string
 }
 
@@ -31,4 +34,12 @@ export type ChartOptions = {
   legend: ApexLegend
   grid: ApexGrid
   theme: ApexTheme
+};
+
+export type ChartOptionsCategory = {
+  series: ApexNonAxisChartSeries;
+  chart: ApexChart;
+  responsive: ApexResponsive[];
+  labels: any;
+  legend: ApexLegend
 };

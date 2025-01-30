@@ -31,8 +31,13 @@ export class TransitionsComponent implements OnInit {
   protected incomings: Transition[] = [];
   protected expenses: Transition[] = [];
 
+  protected incomingsFixes: Transition[] = [];
+  protected expensesFixes: Transition[] = [];
+
   protected totalIncomings!: number;
   protected totalExpenses!: number;
+  protected totalIncomingsFixes!: number;
+  protected totalExpensesFixes!: number;
 
   protected chartOptions!: Partial<ChartOptions>;
   
@@ -56,19 +61,33 @@ export class TransitionsComponent implements OnInit {
   getTransitions = () => {
     this.api.getTransitions().subscribe({
       next: (transitions_response) => {
-        const receitasResponse = this.utilsService.convertGetFirebase(transitions_response.receitas);
-        const despesasResponse = this.utilsService.convertGetFirebase(transitions_response.despesas);
+        const receitasResponse = this.utilsService.convertGetFirebase(transitions_response?.receitas);
+        const despesasResponse = this.utilsService.convertGetFirebase(transitions_response?.despesas);
+        const receitasFixasResponse = this.utilsService.convertGetFirebase(transitions_response?.receitasFixas);
+        const despesasFixasResponse = this.utilsService.convertGetFirebase(transitions_response?.despesasFixas);
 
         
         this.incomings = this.utilsService.filterTransitionByDate(receitasResponse);
         this.expenses = this.utilsService.filterTransitionByDate(despesasResponse);
 
+        if (receitasFixasResponse) {
+          this.incomings = [...this.incomings, ...receitasFixasResponse];
+        }
+
+        if (despesasFixasResponse) {
+          this.expenses = [...this.expenses, ...despesasFixasResponse];
+        }
+
         // Seta icones conforme categoria
         this.incomings = this.setIconCategoryInTransition(this.incomings);
         this.expenses = this.setIconCategoryInTransition(this.expenses);
+        this.incomingsFixes = this.setIconCategoryInTransition(this.incomingsFixes);
+        this.expensesFixes = this.setIconCategoryInTransition(this.expensesFixes);
 
         this.totalIncomings = this.utilsService.totalTransitionAccumulator(this.incomings);
         this.totalExpenses = this.utilsService.totalTransitionAccumulator(this.expenses);
+        this.totalIncomingsFixes = this.utilsService.totalTransitionAccumulator(this.incomingsFixes);
+        this.totalExpensesFixes = this.utilsService.totalTransitionAccumulator(this.expensesFixes);
         
         this.utilsService.loaders.showTransition.set(true);
         this.initChart();
