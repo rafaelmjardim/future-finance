@@ -61,10 +61,10 @@ export class TransitionsComponent implements OnInit {
   getTransitions = () => {
     this.api.getTransitions().subscribe({
       next: (transitions_response) => {
-        const receitasResponse = this.utilsService.convertGetFirebase(transitions_response.receitas);
-        const despesasResponse = this.utilsService.convertGetFirebase(transitions_response.despesas);
-        const receitasFixasResponse = this.utilsService.convertGetFirebase(transitions_response.receitasFixas);
-        const despesasFixasResponse = this.utilsService.convertGetFirebase(transitions_response.despesasFixas);
+        const receitasResponse = this.utilsService.convertGetFirebase(transitions_response?.receitas);
+        const despesasResponse = this.utilsService.convertGetFirebase(transitions_response?.despesas);
+        const receitasFixasResponse = this.utilsService.convertGetFirebase(transitions_response?.receitasFixas);
+        const despesasFixasResponse = this.utilsService.convertGetFirebase(transitions_response?.despesasFixas);
 
         
         this.incomings = this.utilsService.filterTransitionByDate(receitasResponse);
