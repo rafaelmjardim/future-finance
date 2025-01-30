@@ -19,6 +19,7 @@ export class UtilsService {
 
   //Função que converte objetos do get em array de objetos.
   public convertGetFirebase = (objects: any) => {
+    if (!objects) return [];
     return Object.keys(objects).map(key => {
       return {
         ...objects[key],
