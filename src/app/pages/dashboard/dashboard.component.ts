@@ -125,7 +125,29 @@ export class DashboardComponent implements OnInit {
       }
     };
 
-   
+    this.chartOptionsCategory = {
+      series: [44, 55, 13, 43, 22],
+      chart: {
+        type: "donut"
+      },
+      labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
+      legend: {
+        position: "bottom"
+      },
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: "bottom"
+            }
+          }
+        }
+      ]
+    };
   }
 
   getNextFourMonths(): string[] {
