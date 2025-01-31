@@ -9,22 +9,65 @@
     <div class="flex items-center gap-6">
         @if (!mediaQueryService.isMobile()) {
             <!-- Mudança para darkmode temporario -->
-            <ng-icon class="cursor-pointer text-grayDarkColor dark:text-white hover:text-greenColor transition" 
+            <!-- <ng-icon class="cursor-pointer text-grayDarkColor dark:text-white hover:text-greenColor transition" 
                 [name]="!utilsService.darkModeSignal() ? 'ionSettings' : 'ionSettingsOutline' " 
                 size="2.2rem"
                 (click)="changeDarkMode()"
-            ></ng-icon>
+            ></ng-icon> -->
         }
         
-        <ng-icon class="cursor-pointer text-grayDarkColor dark:text-white hover:text-greenColor transition" 
+        <!-- <ng-icon class="cursor-pointer text-grayDarkColor dark:text-white hover:text-greenColor transition" 
             name="lucideLogOut" size="2.2rem" 
             (click)="handleLogout()"
-        ></ng-icon>
+        ></ng-icon> -->
 
-        <img 
-            class="size-[4.5rem] object-cover rounded-full cursor-pointer"
-            [ngClass]="{'size-[3.5rem]': mediaQueryService.isMobile()}"
-            src="https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        >
+        <div class="flex items-center gap-4 cursor-pointer border border-transparent hover:border-secundaryColor rounded-lg transition-all py-2 px-3" 
+            [cdkMenuTriggerFor]="menu">
+            <img 
+                class="size-[3.8rem] object-cover rounded cursor-pointer"
+                [ngClass]="{'size-[3.5rem]': mediaQueryService.isMobile()}"
+                src="../../../assets/avatars/lorelei-1738289187655.png"
+            >
+
+            <div>
+                <h2 class="text-md font-medium">Usuário</h2>
+                <p class="text-sm text-secundaryColor">exemple&#64;email.com</p>
+            </div>
+
+            <ng-icon name="ionChevronDown"></ng-icon>
+        </div>
+
+        <ng-template #menu>
+            <ul class="flex flex-col mt-2 w-[28rem] bg-white border border-borderColor shadow-md rounded">
+                <li class="flex items-center gap-4 p-5 border-b border-borderColor">
+                    <img 
+                        class="size-[3.8rem] object-cover rounded cursor-pointer"
+                        [ngClass]="{'size-[3.5rem]': mediaQueryService.isMobile()}"
+                        src="../../../assets/avatars/lorelei-1738289187655.png"
+                    >
+
+                    <div>
+                        <h2 class="text-md font-medium">Usuário</h2>
+                        <p class="text-sm text-secundaryColor">exemple&#64;email.com</p>
+                    </div>
+                </li>
+    
+                <li class="flex items-center gap-2 p-5 cursor-pointer hover:bg-[#f4f4f5] transition" (click)="changeDarkMode()">
+                    <ng-icon class="cursor-pointer text-grayDarkColor dark:text-white" 
+                        [name]="'ionSettingsOutline'" 
+                        size="2rem"
+                    ></ng-icon>
+                    <span class="text-md">Config</span>
+                </li>
+
+                <li class="flex items-center gap-2 p-5 cursor-pointer hover:bg-[#f4f4f5] transition" (click)="handleLogout()">
+                    <ng-icon class="cursor-pointer text-grayDarkColor dark:text-white" 
+                        name="lucideLogOut" size="2rem" 
+                    ></ng-icon>
+                    <span class="text-md">Sair</span>
+                </li>
+            </ul>
+        </ng-template>
+
     </div>
 </div>

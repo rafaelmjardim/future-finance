@@ -1,7 +1,7 @@
 <button class="flex items-center justify-center gap-4 w-full bg-primaryColor dark:bg-[#303030] hover:bg-[#303030] dark:hover:bg-[#252525] text-white text-base h-[4rem] px-6 rounded transition" [ngClass]="{'bg-red-700 hover:bg-red-800': iconType === 'DELETE'}" (click)="handleAction()">
     <div class="flex items-center gap-4 text-nowrap">
         @if (icon) {
-            <ng-icon [name]="icon" size="1.8rem"></ng-icon>
+            <ng-icon class="text-white" [name]="icon" size="2.1rem"></ng-icon>
         }
         {{ txt }}
     </div>

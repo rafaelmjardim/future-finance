@@ -124,12 +124,14 @@ export class TransitionsComponent implements OnInit {
         {
           name: "Receita",
           data: [this.totalIncomings],
-          color: "#09BC8A"
+          // color: "#09BC8A"
+          color: "#34d399"
         },
         {
           name: "Despesa",
           data: [this.totalExpenses],
-          color: "#D33535"
+          // color: "#D33535"
+          color: "#dc2626"
         }
       ],
       chart: {

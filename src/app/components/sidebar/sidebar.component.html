@@ -1,4 +1,4 @@
-<div class="h-full border-r px-[1.6rem] border-borderColor dark:border-borderColorDark bg-surfaceColor dark:bg-surfaceColorDark" [ngClass]="{'px-[1rem]': sidebarService.closeSidebarSignal()}">
+<div class="h-full border-r px-[1.6rem] border-borderColor dark:border-borderColorDark bg-surfaceColor dark:bg-surfaceColorDark" [ngClass]="{'px-[1.4rem]': sidebarService.closeSidebarSignal()}">
         <!-- Logo -->
     <div class="h-[6.4rem] flex items-center justify-center gap-3 text-[2.4rem] text-primaryColor dark:text-white">
         @if (utilsService.darkModeSignal()) {
@@ -22,17 +22,17 @@
 
         <!-- Menu -->
     <div class="dark:text-white">
-        <label class="text-md">GERAL</label>
+        <label class="text-md ml-[1rem]">MENU</label>
         <ul class="flex flex-col gap-2 mt-2">
             @for (item of menu; track $index) {
-                <li class="flex items-center gap-4 px-[2rem] py-[1.2rem] rounded font-semibold hover:bg-[#F1F1F1] dark:hover:bg-[#1f2626] text- transition cursor-pointer" 
+                <li class="flex items-center gap-4 px-[1.2rem] py-[.8rem] rounded font-semibold hover:text-greenColor dark:hover:bg-[#1f2626] transition cursor-pointer" 
                     [routerLink]="item.rota"
-                    [ngClass]="{'text-greenColor bg-[#E9F4F1] dark:bg-[#1B2121] dark:text-[#4A8374] hover:border-transparent hover:bg-[#E9F4F1]': router.url === item.rota}"
+                    [ngClass]="{'text-[#50a87c] bg-[#edf5fb] dark:bg-[#1B2121] dark:text-[#4A8374] hover:border-transparent': router.url === item.rota, 'justify-center': sidebarService.closeSidebarSignal()}"
                 >
-                    <ng-icon [name]="item.icon" size="1.8rem" ></ng-icon>
+                    <ng-icon [name]="item.icon" size="1.9rem" ></ng-icon>
 
                     @if (!sidebarService.closeSidebarSignal()) {
-                        {{item.txt}}
+                        <span class="text-[1.5rem] text-textColor hover:text-greenColor transition">{{ item.txt }}</span>
                     }
                 </li>
             }
@@ -40,8 +40,8 @@
     </div>
 
     <!-- Logout -->
-     <div class="fixed bottom-6 left-[24rem] cursor-pointer text-secundaryColor hover:text-primaryColor dark:hover:text-white transition"
-     [ngClass]="{'left-[4rem] rotate-180': sidebarService.closeSidebarSignal()}"
+     <div class="fixed bottom-6 left-[22rem] cursor-pointer text-secundaryColor hover:text-primaryColor dark:hover:text-white transition"
+     [ngClass]="{'left-[4.5rem] rotate-180': sidebarService.closeSidebarSignal()}"
      (click)="sidebarService.closeSidebarSignal.set(!sidebarService.closeSidebarSignal())">
         <ng-icon name="ionChevronBackOutline"></ng-icon>
      </div>

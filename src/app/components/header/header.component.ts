@@ -6,11 +6,12 @@ import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { NgIcon } from '@ng-icons/core';
 import { NgClass } from '@angular/common';
+import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from "@angular/cdk/menu";
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [NgIcon, NgClass],
+  imports: [NgIcon, NgClass, CdkMenu, CdkMenuItem, CdkMenuTrigger],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
