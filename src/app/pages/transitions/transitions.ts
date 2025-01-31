@@ -37,7 +37,7 @@ export type ChartOptions = {
 };
 
 export type ChartOptionsCategory = {
-  series: ApexNonAxisChartSeries;
+  series: any;
   chart: ApexChart;
   responsive: ApexResponsive[];
   labels: any;

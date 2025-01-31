@@ -52,13 +52,13 @@ export class DashboardComponent implements OnInit {
   private getTransitions = () => {
     this.apiService.getTransitions().subscribe({
       next: (transitions_res) => {
-        const { receitas, despesas, receitasFixas, despesasFixas } = transitions_res;
+        const receitasResponse = this.utilsService.convertGetFirebase(transitions_res?.receitas);
+        const despesasResponse = this.utilsService.convertGetFirebase(transitions_res?.despesas);
+        const incomingsFixed = this.utilsService.convertGetFirebase(transitions_res?.receitasFixas);
+        const expensesFixed = this.utilsService.convertGetFirebase(transitions_res?.despesasFixas);
 
-        this.incomings = this.utilsService.convertGetFirebase(receitas);
-        this.expenses = this.utilsService.convertGetFirebase(despesas);
-
-        const incomingsFixed = this.utilsService.convertGetFirebase(receitasFixas);
-        const expensesFixed = this.utilsService.convertGetFirebase(despesasFixas);
+        this.incomings = this.utilsService.filterTransitionByDate(receitasResponse);
+        this.expenses = this.utilsService.filterTransitionByDate(despesasResponse);
 
         if (incomingsFixed) {
           this.incomings.push(...incomingsFixed);
@@ -67,18 +67,19 @@ export class DashboardComponent implements OnInit {
         if (expensesFixed) {
           this.expenses.push(...expensesFixed);
         }
-        let incomingsFiltered = this.utilsService.filterTransitionByDate(this.incomings);
-        let expensesFiltered = this.utilsService.filterTransitionByDate(this.expenses);
         
-        this.totalIncomings = this.utilsService.totalTransitionAccumulator(incomingsFiltered);
-        this.totalExpenses = this.utilsService.totalTransitionAccumulator(expensesFiltered);
-
+        this.totalIncomings = this.utilsService.totalTransitionAccumulator(this.incomings);
+        this.totalExpenses = this.utilsService.totalTransitionAccumulator(this.expenses);
         
         this.showLoader = false;
 
         this.initChart();
       }
     })
+  }
+
+  private expensesByCategory = (values: 'CATEGORIA' | 'VALOR') => {
+    return this.expenses.map(expense => values === 'CATEGORIA' ? expense.categoria : expense.valor);
   }
 
   private initChart = () => {
@@ -126,11 +127,11 @@ export class DashboardComponent implements OnInit {
     };
 
     this.chartOptionsCategory = {
-      series: [44, 55, 13, 43, 22],
+      series: this.expensesByCategory('VALOR'),
       chart: {
         type: "donut"
       },
-      labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
+      labels: this.expensesByCategory('CATEGORIA'),
       legend: {
         position: "bottom"
       },
