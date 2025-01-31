@@ -7,7 +7,8 @@ module.exports = {
       colors: {
         primaryColor: '#191919',
         secundaryColor: '#777777',
-        accentColor: '#D33535',
+        // accentColor: '#D33535',
+        accentColor: '#dc2626',
         greenColor: '#6e9c90',
         grayColor: '#6e839c',
         grayDarkColor: '#444444',
