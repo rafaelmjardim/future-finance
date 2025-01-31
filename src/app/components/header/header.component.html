@@ -39,7 +39,7 @@
 
         <ng-template #menu>
             <ul class="flex flex-col mt-2 w-[28rem] bg-white border border-borderColor shadow-md rounded">
-                <li class="flex items-center gap-4 p-4 border-b border-borderColor">
+                <li class="flex items-center gap-4 p-5 border-b border-borderColor">
                     <img 
                         class="size-[3.8rem] object-cover rounded-full cursor-pointer"
                         [ngClass]="{'size-[3.5rem]': mediaQueryService.isMobile()}"
@@ -52,19 +52,19 @@
                     </div>
                 </li>
     
-                <li class="flex items-center gap-2 p-4 cursor-pointer hover:bg-[#f4f4f5] transition" (click)="changeDarkMode()">
-                    <ng-icon class="cursor-pointer text-grayDarkColor dark:text-white hover:text-greenColor transition" 
+                <li class="flex items-center gap-2 p-5 cursor-pointer hover:bg-[#f4f4f5] transition" (click)="changeDarkMode()">
+                    <ng-icon class="cursor-pointer text-grayDarkColor dark:text-white" 
                         [name]="'ionSettingsOutline'" 
-                        size="1.8rem"
+                        size="2rem"
                     ></ng-icon>
-                    <span class="text-sm">Config</span>
+                    <span class="text-md">Config</span>
                 </li>
 
-                <li class="flex items-center gap-2 p-4 cursor-pointer hover:bg-[#f4f4f5] transition" (click)="handleLogout()">
-                    <ng-icon class="cursor-pointer text-grayDarkColor dark:text-white hover:text-greenColor transition" 
-                        name="lucideLogOut" size="1.8rem" 
+                <li class="flex items-center gap-2 p-5 cursor-pointer hover:bg-[#f4f4f5] transition" (click)="handleLogout()">
+                    <ng-icon class="cursor-pointer text-grayDarkColor dark:text-white" 
+                        name="lucideLogOut" size="2rem" 
                     ></ng-icon>
-                    <span class="text-sm">Sair</span>
+                    <span class="text-md">Sair</span>
                 </li>
             </ul>
         </ng-template>
