@@ -25,14 +25,14 @@
         <label class="text-md ml-[1rem]">MENU</label>
         <ul class="flex flex-col gap-2 mt-2">
             @for (item of menu; track $index) {
-                <li class="flex items-center gap-4 px-[1.2rem] py-[1rem] rounded font-semibold hover:text-greenColor dark:hover:bg-[#1f2626] transition cursor-pointer" 
+                <li class="flex items-center gap-4 px-[1.2rem] py-[.8rem] rounded font-semibold hover:text-greenColor dark:hover:bg-[#1f2626] transition cursor-pointer" 
                     [routerLink]="item.rota"
                     [ngClass]="{'text-[#50a87c] bg-[#edf5fb] dark:bg-[#1B2121] dark:text-[#4A8374] hover:border-transparent': router.url === item.rota, 'justify-center': sidebarService.closeSidebarSignal()}"
                 >
-                    <ng-icon [name]="item.icon" size="1.8rem" ></ng-icon>
+                    <ng-icon [name]="item.icon" size="1.9rem" ></ng-icon>
 
                     @if (!sidebarService.closeSidebarSignal()) {
-                        <span class="text-textColor hover:text-greenColor transition">{{ item.txt }}</span>
+                        <span class="text-[1.5rem] text-textColor hover:text-greenColor transition">{{ item.txt }}</span>
                     }
                 </li>
             }
