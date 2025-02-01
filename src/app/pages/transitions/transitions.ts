@@ -38,8 +38,13 @@ export type ChartOptions = {
 
 export type ChartOptionsCategory = {
   series: any;
+  stroke: ApexStroke;
+  dataLabels: ApexDataLabels;
+  yaxis: ApexYAxis;
+  xaxis: ApexXAxis;
+  plotOptions: ApexPlotOptions;
   chart: ApexChart;
   responsive: ApexResponsive[];
   labels: any;
-  legend: ApexLegend
+  legend: ApexLegend;
 };

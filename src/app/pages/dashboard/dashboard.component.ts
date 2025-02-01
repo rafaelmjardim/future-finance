@@ -129,11 +129,75 @@ export class DashboardComponent implements OnInit {
     this.chartOptionsCategory = {
       series: this.expensesByCategory('VALOR'),
       chart: {
-        type: "donut"
+        type: "donut",        
+      },
+      stroke: {
+        show: false
+      },
+      dataLabels: {
+        enabled: false
       },
       labels: this.expensesByCategory('CATEGORIA'),
       legend: {
-        position: "bottom"
+        position: "bottom",
+
+      },
+      plotOptions: {
+        pie: {
+          donut: {
+            labels: {
+              show: true,
+              name: {
+                show: true,
+                fontFamily: "Inter, sans-serif",
+                offsetY: 20,
+              },
+              total: {
+                showAlways: true,
+                show: true,
+                label: "Despesas totais",
+                // fontFamily: "Inter, sans-serif",
+                formatter: (w) => {
+                  const sum = w.globals.seriesTotals.reduce((a: any, b: any) => {
+                    return a + b
+                  }, 0)
+                  return 'R$' + sum + 'k';
+                },
+              },
+              value: {
+                show: true,
+                fontWeight: 600,
+                // fontFamily: "Inter, sans-serif",
+                offsetY: -20,
+                formatter: (value) => {
+                  return value + "k"
+                },
+              },
+            },
+            size: "80%",
+          },
+          
+        },
+      },
+      yaxis: {
+        labels: {
+          formatter: (value) => {
+            return "R$" + value
+          },
+        },
+      },
+      xaxis: {
+        labels: {
+          formatter: (value) => {
+            return "R$" + value
+          },
+        },
+        axisTicks: {
+          show: false,
+        },
+        axisBorder: {
+          show: false,
+        },
       },
       responsive: [
         {
