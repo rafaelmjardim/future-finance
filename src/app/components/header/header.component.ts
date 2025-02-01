@@ -22,6 +22,25 @@ export class HeaderComponent {
   private autService = inject(AuthService);
   private router = inject(Router);
 
+  protected menuList: {icon: string, txt: string, actionFunc: Function}[] = [
+    {
+      icon: 'ionSparklesOutline',
+      txt: 'Upgrade Premium',
+      actionFunc: () => ''
+    },
+    {
+      icon: 'ionSettingsOutline',
+      txt: 'Config',
+      actionFunc: () => this.changeDarkMode()
+    },
+    {
+      icon: 'lucideLogOut',
+      txt: 'Sair',
+      actionFunc: () => this.handleLogout()
+    },
+  ]
+
+
   protected handleLogout = () => {
     this.autService.signOut()
     .then(logout_response => {

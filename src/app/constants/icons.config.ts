@@ -1,4 +1,4 @@
-import { ionAddOutline, ionArrowBack, ionArrowForward, ionBarcodeOutline, ionCalendarOutline, ionCardOutline, ionCarOutline, ionCashOutline, ionChevronBackOutline, ionChevronDown, ionChevronForwardOutline, ionCreateOutline, ionFastFoodOutline, ionPencilOutline, ionPeopleOutline, ionPersonOutline, ionPricetagOutline, ionSettings, ionSettingsOutline, ionSwapHorizontalOutline, ionTrashOutline } from "@ng-icons/ionicons";
+import { ionAddOutline, ionArrowBack, ionArrowForward, ionBarcodeOutline, ionCalendarOutline, ionCardOutline, ionCarOutline, ionCashOutline, ionChevronBackOutline, ionChevronDown, ionChevronForwardOutline, ionCreateOutline, ionFastFoodOutline, ionPencilOutline, ionPeopleOutline, ionPersonOutline, ionPricetagOutline, ionSettings, ionSettingsOutline, ionSparklesOutline, ionSwapHorizontalOutline, ionTrashOutline } from "@ng-icons/ionicons";
 import { lucideDollarSign, lucideLayoutDashboard, lucideLayoutPanelLeft, lucideLogOut, lucidePencil } from "@ng-icons/lucide";
 
 export const iconsConfig = {
@@ -26,5 +26,6 @@ export const iconsConfig = {
     ionCashOutline,
     ionCalendarOutline,
     ionTrashOutline,
-    ionPersonOutline
+    ionPersonOutline,
+    ionSparklesOutline,
 }

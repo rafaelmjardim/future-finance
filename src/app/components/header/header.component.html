@@ -51,21 +51,16 @@
                         <p class="text-sm text-secundaryColor">exemple&#64;email.com</p>
                     </div>
                 </li>
-    
-                <li class="flex items-center gap-2 p-5 cursor-pointer hover:bg-[#f4f4f5] transition" (click)="changeDarkMode()">
-                    <ng-icon class="cursor-pointer text-grayDarkColor dark:text-white" 
-                        [name]="'ionSettingsOutline'" 
-                        size="2rem"
-                    ></ng-icon>
-                    <span class="text-md">Config</span>
-                </li>
 
-                <li class="flex items-center gap-2 p-5 cursor-pointer hover:bg-[#f4f4f5] transition" (click)="handleLogout()">
-                    <ng-icon class="cursor-pointer text-grayDarkColor dark:text-white" 
-                        name="lucideLogOut" size="2rem" 
-                    ></ng-icon>
-                    <span class="text-md">Sair</span>
-                </li>
+                @for (item of menuList; track $index) {
+                    <li class="flex items-center gap-2 p-5 cursor-pointer hover:bg-[#f4f4f5] transition" (click)="item.actionFunc()">
+                        <ng-icon class="cursor-pointer text-grayDarkColor dark:text-white" 
+                            [name]="item.icon" 
+                            size="1.7rem"
+                        ></ng-icon>
+                        <span class="text-md">{{item.txt}}</span>
+                    </li>
+                }    
             </ul>
         </ng-template>
 
