@@ -5,10 +5,13 @@ export type GET_TRANSITIONS = {
   despesas: Transition[]
   despesasFixas: Transition[]
   receitasFixas: Transition[]
+  receitasSobrescritas: Transition[]
+  despesasSobrescritas: Transition[]
 }
 
 export type Transition = {
     id: string
+    idSobrescrita?: string
     nome: string
     categoria: string
     data: string

@@ -73,7 +73,40 @@ export class SheetComponent implements OnInit {
     })
   }
 
-  protected updateTransition = () => {
+  private updateTransition = () => {
+    if (this.transitionForm.value.recorrente) {
+      console.log('é recorrente');
+
+      const rota = this.transitionForm.value.typeRef === 'despesa' ? 'despesasSobrescritas' : 'receitasSobrescritas';
+
+      const transitionFormData = {
+        idSobrescrita: this.transitionData?.idSobrescrita,
+        id: this.transitionData.id,
+        date: this.transitionForm.value.date,
+        value: this.transitionForm.value.value
+      } 
+
+      if (this.transitionData.idSobrescrita) {
+
+        //Falta enviar o id da transação sobrescrita verificar como descobrir o id
+        this.apiService.putTransitionSobrescrita(transitionFormData, rota).subscribe({
+          next: (transitionSobrescrita_response) => {
+            this.sheetService.reloadTransitions();
+            this.dialogRef.close();
+          }
+        })
+        return
+      }
+      
+      this.apiService.postTransitionSobrescrita(transitionFormData, rota).subscribe({
+        next: (transitionSobrescrita_response) => {
+          this.sheetService.reloadTransitions();
+          this.dialogRef.close();
+        }
+      })
+      return
+    }
+
     this.apiService.putTransition(this.transitionData.id, this.transitionForm.value, this.selectRoteRequest()).subscribe({
       next: (edit_response) => {
         this.sheetService.reloadTransitions();

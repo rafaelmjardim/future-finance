@@ -65,17 +65,31 @@ export class TransitionsComponent implements OnInit {
         const despesasResponse = this.utilsService.convertGetFirebase(transitions_response?.despesas);
         const receitasFixasResponse = this.utilsService.convertGetFirebase(transitions_response?.receitasFixas);
         const despesasFixasResponse = this.utilsService.convertGetFirebase(transitions_response?.despesasFixas);
-
+        const despesasSobrescritas = this.utilsService.convertGetFirebase(transitions_response?.despesasSobrescritas);
         
         this.incomings = this.utilsService.filterTransitionByDate(receitasResponse);
         this.expenses = this.utilsService.filterTransitionByDate(despesasResponse);
 
-        if (receitasFixasResponse) {
+        if (receitasFixasResponse) { 
           this.incomings = [...this.incomings, ...receitasFixasResponse];
         }
-
+        
         if (despesasFixasResponse) {
-          this.expenses = [...this.expenses, ...despesasFixasResponse];
+          const sobrescritas = this.utilsService.filterTransitionByDate(despesasSobrescritas);          
+
+          console.log('sobrescritas', sobrescritas);
+
+          // Se tiver despesasSobrescritas (despesas fixas editadas), vai ser feito a junção do valor editado com a despesa fixa correspondednte (com mesmo id)
+          if (sobrescritas.length) {
+            const despesasFixasAtualizadas = despesasFixasResponse.map(despesa => {
+              const sobrescrita = sobrescritas.find(s => s.idSobrescrita === despesa.id);
+              return sobrescrita ? { ...despesa, valor: sobrescrita.valor, idSobrescrita: sobrescrita.idSobrescrita } : despesa
+            });
+            
+            this.expenses = [...this.expenses, ...despesasFixasAtualizadas];
+          } else {
+            this.expenses = [...this.expenses, ...despesasFixasResponse];
+          }
         }
 
         // Seta icones conforme categoria
