@@ -77,31 +77,21 @@ export class SheetComponent implements OnInit {
     if (this.transitionForm.value.recorrente) {
       console.log('é recorrente');
 
-      const rota = this.transitionForm.value.typeRef === 'despesa' ? 'despesasSobrescritas' : 'receitasSobrescritas';
+      // const rota = this.transitionForm.value.typeRef === 'despesa' ? 'despesasSobrescritas' : 'receitasSobrescritas';
+      const rota = this.selectRoteRequest();
 
       const transitionFormData = {
-        idSobrescrita: this.transitionData?.idSobrescrita,
         id: this.transitionData.id,
-        date: this.transitionForm.value.date,
-        value: this.transitionForm.value.value
+        date: moment(this.transitionForm.value.date).format("YYYY-MM"),
+        value: this.transitionForm.value.value,
+        description: this.transitionForm.value.description
       } 
-
-      if (this.transitionData.idSobrescrita) {
-
-        //Falta enviar o id da transação sobrescrita verificar como descobrir o id
-        this.apiService.putTransitionSobrescrita(transitionFormData, rota).subscribe({
-          next: (transitionSobrescrita_response) => {
-            this.sheetService.reloadTransitions();
-            this.dialogRef.close();
-          }
-        })
-        return
-      }
       
-      this.apiService.postTransitionSobrescrita(transitionFormData, rota).subscribe({
-        next: (transitionSobrescrita_response) => {
+      // Vai ser preciso adicionar confirmacão para edicao do mes ou todas fixas
+      this.apiService.putTransitionSobrecrita(transitionFormData.id, transitionFormData, rota).subscribe({
+        next: (transitionFixe_response) => {
           this.sheetService.reloadTransitions();
-          this.dialogRef.close();
+          this.dialogRef.close()          
         }
       })
       return
