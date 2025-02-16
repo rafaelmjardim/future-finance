@@ -36,8 +36,6 @@ export class TransitionsComponent implements OnInit {
 
   protected totalIncomings!: number;
   protected totalExpenses!: number;
-  protected totalIncomingsFixes!: number;
-  protected totalExpensesFixes!: number;
 
   protected chartOptions!: Partial<ChartOptions>;
   
@@ -65,31 +63,29 @@ export class TransitionsComponent implements OnInit {
         const despesasResponse = this.utilsService.convertGetFirebase(transitions_response?.despesas);
         const receitasFixasResponse = this.utilsService.convertGetFirebase(transitions_response?.receitasFixas);
         const despesasFixasResponse = this.utilsService.convertGetFirebase(transitions_response?.despesasFixas);
-        const despesasSobrescritas = this.utilsService.convertGetFirebase(transitions_response?.despesasSobrescritas);
         
         this.incomings = this.utilsService.filterTransitionByDate(receitasResponse);
         this.expenses = this.utilsService.filterTransitionByDate(despesasResponse);
 
+        const currentMonthDataPicker = this.dataPickerService.currentDateSignal().format("YYYY-MM");
+
+        // Se tiver receitasFixas verifica ediçao (sobrescritas) conforme o mes
         if (receitasFixasResponse) { 
-          this.incomings = [...this.incomings, ...receitasFixasResponse];
+          const receitasFixasFormatted = receitasFixasResponse.map(receita => 
+            receita.sobrescrita?.[currentMonthDataPicker] ? { ...receita, ...receita.sobrescrita[currentMonthDataPicker] } : receita
+          );
+
+          this.incomings = [...this.incomings, ...receitasFixasFormatted];
         }
         
+        // Se tiver despesasFixas verifica ediçao (sobrescritas) conforme o mes
         if (despesasFixasResponse) {
-          const sobrescritas = this.utilsService.filterTransitionByDate(despesasSobrescritas);          
-
-          console.log('sobrescritas', sobrescritas);
-
-          // Se tiver despesasSobrescritas (despesas fixas editadas), vai ser feito a junção do valor editado com a despesa fixa correspondednte (com mesmo id)
-          if (sobrescritas.length) {
-            const despesasFixasAtualizadas = despesasFixasResponse.map(despesa => {
-              const sobrescrita = sobrescritas.find(s => s.idSobrescrita === despesa.id);
-              return sobrescrita ? { ...despesa, valor: sobrescrita.valor, idSobrescrita: sobrescrita.idSobrescrita } : despesa
-            });
-            
-            this.expenses = [...this.expenses, ...despesasFixasAtualizadas];
-          } else {
-            this.expenses = [...this.expenses, ...despesasFixasResponse];
-          }
+          const despesasFixasFormatted = despesasFixasResponse.map(despesa => {
+            return despesa.sobrescrita?.[currentMonthDataPicker] ? 
+              {...despesa, ...despesa.sobrescrita[currentMonthDataPicker] } : despesa
+          });
+          
+          this.expenses = [...this.expenses, ...despesasFixasFormatted];
         }
 
         // Seta icones conforme categoria
@@ -100,8 +96,6 @@ export class TransitionsComponent implements OnInit {
 
         this.totalIncomings = this.utilsService.totalTransitionAccumulator(this.incomings);
         this.totalExpenses = this.utilsService.totalTransitionAccumulator(this.expenses);
-        this.totalIncomingsFixes = this.utilsService.totalTransitionAccumulator(this.incomingsFixes);
-        this.totalExpensesFixes = this.utilsService.totalTransitionAccumulator(this.expensesFixes);
         
         this.utilsService.loaders.showTransition.set(true);
         this.initChart();
