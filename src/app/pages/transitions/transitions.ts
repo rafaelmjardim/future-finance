@@ -9,7 +9,7 @@ export type GET_TRANSITIONS = {
 
 export type Transition = {
     id: string
-    sobrescricao?: any
+    sobrescrita?: any
     nome: string
     categoria: string
     data: string

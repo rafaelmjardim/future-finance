@@ -35,9 +35,17 @@ export class UtilsService {
     }, 0);
   }
   
-  public filterTransitionByDate = (transitions: Transition[]) => {
+  public filterTransitionByDate = (transitions: Transition[], transitionType?: "FIXE") => {
     return transitions.filter(transition => {      
-      return moment(transition.data).format('MM/YYYY') == this.dataPickerService.currentDateSignal().format('MM/YYYY')
+      const transitionDate = moment(transition.data).format('MM/YYYY');
+      const transitioYear = moment(transition.data).format('YYYY');
+      const currentMonthDataPicker = this.dataPickerService.currentDateSignal().format('MM/YYYY');
+      const currentYearDataPicker = this.dataPickerService.currentDateSignal().format('YYYY');      
+
+      if (transitionType === "FIXE") {
+        return transitionDate <= currentMonthDataPicker && transitioYear === currentYearDataPicker;
+      }
+      return transitionDate == currentMonthDataPicker;
     });    
   }
 }
