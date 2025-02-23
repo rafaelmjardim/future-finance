@@ -25,6 +25,8 @@ export class TransitionsComponent implements OnInit {
   protected utilsService = inject(UtilsService);
   private sheetService = inject(SheetService);
   protected dataPickerService = inject(DataPickerService);
+
+  private currentMonthDataPicker!: any;
   
   protected pageItem = pagesItems['transacoes'];
 
@@ -69,26 +71,10 @@ export class TransitionsComponent implements OnInit {
         this.expensesFixes = this.utilsService.filterTransitionByDate(despesasFixasResponse, "FIXE");
         this.incomingsFixes = this.utilsService.filterTransitionByDate(receitasFixasResponse, "FIXE");
 
-        const currentMonthDataPicker = this.dataPickerService.currentDateSignal().format("YYYY-MM");
+        this.currentMonthDataPicker = this.dataPickerService.currentDateSignal().format("YYYY-MM");
 
-        // Se tiver receitasFixas verifica ediçao (sobrescritas) conforme o mes
-        if (this.incomingsFixes) { 
-          const receitasFixasFormatted = this.incomingsFixes.map(receita => 
-            receita.sobrescrita?.[currentMonthDataPicker] ? { ...receita, ...receita.sobrescrita[currentMonthDataPicker] } : receita
-          );
-
-          this.incomings = [...this.incomings, ...receitasFixasFormatted];
-        }
-        
-        // Se tiver despesasFixas verifica ediçao (sobrescritas) conforme o mes
-        if (this.expensesFixes) {
-          const despesasFixasFormatted = this.expensesFixes.map(despesa => {
-            return despesa.sobrescrita?.[currentMonthDataPicker] ? 
-              {...despesa, ...despesa.sobrescrita[currentMonthDataPicker] } : despesa
-          });
-          
-          this.expenses = [...this.expenses, ...despesasFixasFormatted];
-        }
+        this.incomings = this.utilsService.checkAndSetTransitionsFixes(this.incomingsFixes, this.incomings, this.currentMonthDataPicker);
+        this.expenses = this.utilsService.checkAndSetTransitionsFixes(this.expensesFixes, this.expenses, this.currentMonthDataPicker);
 
         // Seta icones conforme categoria
         this.incomings = this.setIconCategoryInTransition(this.incomings);
@@ -102,6 +88,7 @@ export class TransitionsComponent implements OnInit {
       }
     })
   }
+
 
   setIconCategoryInTransition = (transitions: Transition[]) => {
     const transitionsFormatted = transitions.map(transition => {

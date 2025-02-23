@@ -60,13 +60,10 @@ export class DashboardComponent implements OnInit {
         this.incomings = this.utilsService.filterTransitionByDate(receitasResponse);
         this.expenses = this.utilsService.filterTransitionByDate(despesasResponse);
 
-        if (incomingsFixed) {
-          this.incomings.push(...incomingsFixed);
-        }
+        const currentMonthDataPicker = this.dataPickerService.currentDateSignal().format("YYYY-MM");
 
-        if (expensesFixed) {
-          this.expenses.push(...expensesFixed);
-        }
+        this.incomings = this.utilsService.checkAndSetTransitionsFixes(incomingsFixed, this.incomings, currentMonthDataPicker);
+        this.expenses = this.utilsService.checkAndSetTransitionsFixes(expensesFixed, this.expenses, currentMonthDataPicker);
         
         this.totalIncomings = this.utilsService.totalTransitionAccumulator(this.incomings);
         this.totalExpenses = this.utilsService.totalTransitionAccumulator(this.expenses);
