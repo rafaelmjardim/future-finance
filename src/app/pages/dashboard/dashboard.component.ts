@@ -10,12 +10,11 @@ import { CardComponent } from '../../components/card/card.component';
 import { ChartOptions } from '../transitions/transitions';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import moment from 'moment';
-import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [PageHeaderComponent, CardComponent, NgApexchartsModule, NgClass],
+  imports: [PageHeaderComponent, CardComponent, NgApexchartsModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
