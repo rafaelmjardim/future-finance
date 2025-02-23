@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { Observable } from 'rxjs';
-import { GET_TRANSITIONS } from '../../pages/transitions/transitions';
+import { GET_TRANSITIONS, Transition } from '../../pages/transitions/transitions';
 
-export type Rota = 'despesas' | 'receitas' | 'despesasFixas' | 'receitasFixas';
+export type Rota = 'despesas' | 'receitas' | 'despesasFixas' | 'receitasFixas' | 'despesasSobrescritas' | 'receitasSobrescritas';
 
 const API_KEY = environment.API_KEY;
 
@@ -34,7 +34,7 @@ export class ApiService {
   }
 
   putTransition = (id: string, transitionFormData: any, rota: Rota) => {
-    const { date, value, description, name, category, typeRef, status, recorrente } = transitionFormData;
+    const { date, value, description, name, category, typeRef, status, recorrente, sobrescricoes } = transitionFormData;
     
     return this.http.put(`${API_KEY}/${rota}/${id}.json`, {
       valor: value,
@@ -44,9 +44,19 @@ export class ApiService {
       descricao: description,
       tipo: typeRef,
       recorrente,
-      status
+      status,
+      sobrescricoes: sobrescricoes ?? null
     })
-  }  
+  }
+
+  putTransitionSobrecrita = (id: string, transitionFormData: any, rota: Rota) => {
+    const { date, value, description } = transitionFormData;
+
+    return this.http.patch(`${API_KEY}/${rota}/${id}/sobrescrita/${date}.json`, {
+      valor: value,
+      descricao: description
+    })
+  } 
 
   deleteTransition = (id: string, rota: Rota) => {
     return this.http.delete(`${API_KEY}/${rota}/${id}.json`)

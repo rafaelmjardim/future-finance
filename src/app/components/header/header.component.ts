@@ -34,6 +34,11 @@ export class HeaderComponent {
       actionFunc: () => this.changeDarkMode()
     },
     {
+      icon: 'ionPersonOutline',
+      txt: 'Conta',
+      actionFunc: () => {} 
+    },
+    {
       icon: 'lucideLogOut',
       txt: 'Sair',
       actionFunc: () => this.handleLogout()

@@ -1,6 +1,6 @@
 import { DIALOG_DATA, DialogModule, DialogRef } from '@angular/cdk/dialog';
 import { NgClass } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { NgIcon } from '@ng-icons/core';
 import { ButtonComponent } from '../button/button.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -18,12 +18,14 @@ import { MediaQueryService } from '../../services/media-query/media-query.servic
   templateUrl: './sheet.component.html',
   styleUrl: './sheet.component.scss',
 })
-export class SheetComponent {
+export class SheetComponent implements OnInit {
   protected dialogRef = inject(DialogRef<SheetComponent>);
   protected mediaQueryService = inject(MediaQueryService);
   private apiService = inject(ApiService);
   private sheetService = inject(SheetService);
   protected transitionData: Transition = inject(DIALOG_DATA);
+
+  protected categories: {value: string, txt: string}[] = [];
 
   protected transitionForm = new FormGroup({
     value: new FormControl(this.transitionData?.valor ?? '', Validators.required),
@@ -35,6 +37,10 @@ export class SheetComponent {
     status: new FormControl(this.transitionData?.status ?? false),
     recorrente: new FormControl(this.transitionData?.recorrente ?? false),
   });
+
+  ngOnInit(): void {
+    this.changeCategoryByType();
+  }
 
   protected handleSubmit = () => {
 
@@ -67,7 +73,30 @@ export class SheetComponent {
     })
   }
 
-  protected updateTransition = () => {
+  private updateTransition = () => {
+    if (this.transitionForm.value.recorrente) {
+      console.log('é recorrente');
+
+      // const rota = this.transitionForm.value.typeRef === 'despesa' ? 'despesasSobrescritas' : 'receitasSobrescritas';
+      const rota = this.selectRoteRequest();
+
+      const transitionFormData = {
+        id: this.transitionData.id,
+        date: moment(this.transitionForm.value.date).format("YYYY-MM"),
+        value: this.transitionForm.value.value,
+        description: this.transitionForm.value.description
+      } 
+      
+      // Vai ser preciso adicionar confirmacão para edicao do mes ou todas fixas
+      this.apiService.putTransitionSobrecrita(transitionFormData.id, transitionFormData, rota).subscribe({
+        next: (transitionFixe_response) => {
+          this.sheetService.reloadTransitions();
+          this.dialogRef.close()          
+        }
+      })
+      return
+    }
+
     this.apiService.putTransition(this.transitionData.id, this.transitionForm.value, this.selectRoteRequest()).subscribe({
       next: (edit_response) => {
         this.sheetService.reloadTransitions();
@@ -94,6 +123,26 @@ export class SheetComponent {
       return rote === 'despesas' ? 'despesasFixas' : 'receitasFixas';
     }
     return rote;
+  }
+
+  protected changeCategoryByType = () => {
+    console.log('change', this.transitionForm.value.typeRef);
+    if (this.transitionForm.value.typeRef === 'receita') {
+      this.categories = [
+        { value: '', txt: 'Selecione a categoria' },
+        { value: 'salario', txt: 'Salário' },
+        { value: 'investimento', txt: 'Investimento' },
+        { value: 'outros', txt: 'Outros' },
+      ];
+    } else {
+      this.categories = [
+        { value: '', txt: 'Selecione a categoria'},
+        { value: 'cartao', txt: 'Cartão' },
+        { value: 'veiculo', txt: 'Veículo' },
+        { value: 'compras',txt: 'Compras' },
+        { value: 'alimentacao', txt: 'Alimentação' },
+      ]
+    }
   }
 
 }

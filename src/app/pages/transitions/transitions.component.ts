@@ -36,8 +36,6 @@ export class TransitionsComponent implements OnInit {
 
   protected totalIncomings!: number;
   protected totalExpenses!: number;
-  protected totalIncomingsFixes!: number;
-  protected totalExpensesFixes!: number;
 
   protected chartOptions!: Partial<ChartOptions>;
   
@@ -65,29 +63,39 @@ export class TransitionsComponent implements OnInit {
         const despesasResponse = this.utilsService.convertGetFirebase(transitions_response?.despesas);
         const receitasFixasResponse = this.utilsService.convertGetFirebase(transitions_response?.receitasFixas);
         const despesasFixasResponse = this.utilsService.convertGetFirebase(transitions_response?.despesasFixas);
-
         
         this.incomings = this.utilsService.filterTransitionByDate(receitasResponse);
         this.expenses = this.utilsService.filterTransitionByDate(despesasResponse);
+        this.expensesFixes = this.utilsService.filterTransitionByDate(despesasFixasResponse, "FIXE");
+        this.incomingsFixes = this.utilsService.filterTransitionByDate(receitasFixasResponse, "FIXE");
 
-        if (receitasFixasResponse) {
-          this.incomings = [...this.incomings, ...receitasFixasResponse];
+        const currentMonthDataPicker = this.dataPickerService.currentDateSignal().format("YYYY-MM");
+
+        // Se tiver receitasFixas verifica ediçao (sobrescritas) conforme o mes
+        if (this.incomingsFixes) { 
+          const receitasFixasFormatted = this.incomingsFixes.map(receita => 
+            receita.sobrescrita?.[currentMonthDataPicker] ? { ...receita, ...receita.sobrescrita[currentMonthDataPicker] } : receita
+          );
+
+          this.incomings = [...this.incomings, ...receitasFixasFormatted];
         }
-
-        if (despesasFixasResponse) {
-          this.expenses = [...this.expenses, ...despesasFixasResponse];
+        
+        // Se tiver despesasFixas verifica ediçao (sobrescritas) conforme o mes
+        if (this.expensesFixes) {
+          const despesasFixasFormatted = this.expensesFixes.map(despesa => {
+            return despesa.sobrescrita?.[currentMonthDataPicker] ? 
+              {...despesa, ...despesa.sobrescrita[currentMonthDataPicker] } : despesa
+          });
+          
+          this.expenses = [...this.expenses, ...despesasFixasFormatted];
         }
 
         // Seta icones conforme categoria
         this.incomings = this.setIconCategoryInTransition(this.incomings);
         this.expenses = this.setIconCategoryInTransition(this.expenses);
-        this.incomingsFixes = this.setIconCategoryInTransition(this.incomingsFixes);
-        this.expensesFixes = this.setIconCategoryInTransition(this.expensesFixes);
 
         this.totalIncomings = this.utilsService.totalTransitionAccumulator(this.incomings);
         this.totalExpenses = this.utilsService.totalTransitionAccumulator(this.expenses);
-        this.totalIncomingsFixes = this.utilsService.totalTransitionAccumulator(this.incomingsFixes);
-        this.totalExpensesFixes = this.utilsService.totalTransitionAccumulator(this.expensesFixes);
         
         this.utilsService.loaders.showTransition.set(true);
         this.initChart();

@@ -11,6 +11,35 @@
             <input type="number" placeholder="R$ 0.00" formControlName="value">
         </label>
 
+        <div class="flex items-end justify-between">
+            <div class="flex flex-col gap-2">
+                <span>Tipo</span>
+    
+                <div class="flex items-center gap-6">
+                    <label class="flex items-center gap-2">
+                        <input class="accent-primaryColor" type="radio" value="despesa" formControlName="typeRef" (change)="changeCategoryByType()">
+                        <span class="text-md font-medium">Despesa</span>
+                    </label>
+    
+                    <label class="flex items-center gap-2">
+                        <input class="accent-primaryColor" type="radio" value="receita"  formControlName="typeRef" (change)="changeCategoryByType()">
+                        <span class="text-md font-medium">Receita</span>
+                    </label>
+                </div>
+            </div>
+
+            <label class="inline-flex h-[1.8rem] items-center cursor-pointer">
+                <input type="checkbox" [value]="false" class="sr-only peer" formControlName="status">
+                <div class="relative w-11 h-[1.8rem] bg-gray-200 peer-focus:outline-none  dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                <span class="ms-3 text-md font-medium dark:text-gray-300">Foi pago?</span>
+            </label>
+        </div>
+
+        <label class="input">
+            <span>Nome da transação</span>
+            <input type="text" placeholder="Adicione um nome para a transação" formControlName="name">
+        </label>
+
         <div class="grid items-end grid-cols-3">
             <label class="input col-span-2">
                 <span>Data</span>
@@ -24,21 +53,15 @@
             </label>
         </div>
         
-        <label class="input">
-            <span>Nome da transação</span>
-            <input type="text" placeholder="Adicione um nome para a transação" formControlName="name">
-        </label>
-
         <!-- TESTE SELECT PERSONALIZADO -->
         <label>
-            <span for="countries" class="block mb-[.5rem] text-md font-medium text-textColor dark:text-white">Select an option</span>
+            <span for="countries" class="block mb-[.5rem] text-md font-medium text-textColor dark:text-white">Categoria</span>
             <select id="countries" class="bg-gray-50 border border-gray-300 text-base text-secundaryColor rounded focus:ring-blue-500 focus:border-primaryColor focus:outline-none block w-full h-[4rem] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" formControlName="category">
-            <option value="" selected>Selecione a categoria</option>
-            <option value="cartao">Cartão</option>
-            <option value="veiculo">Veículo</option>
-            <option value="pagamento">Pagamento</option>
-            <option value="compras">Compras</option>
-            <option value="alimentacao">Alimentação</option>
+            
+            @for (option of categories; track $index) {
+                <option [value]="option.value">{{option.txt}}</option>
+            }
+            
             </select>
         </label>
         <!--  -->
@@ -47,30 +70,6 @@
             <span>Descrição</span>
             <textarea rows="3" placeholder="Adicione uma descrição" formControlName="description"></textarea>
         </label>
-
-        <div class="flex items-end justify-between">
-            <div class="flex flex-col gap-2">
-                <span>Tipo</span>
-    
-                <div class="flex items-center gap-6">
-                    <label class="flex items-center gap-2">
-                        <input class="accent-primaryColor" type="radio" value="despesa" formControlName="typeRef">
-                        <span class="text-md font-medium">Despesa</span>
-                    </label>
-    
-                    <label class="flex items-center gap-2">
-                        <input class="accent-primaryColor" type="radio" value="receita"  formControlName="typeRef">
-                        <span class="text-md font-medium">Receita</span>
-                    </label>
-                </div>
-            </div>
-
-            <label class="inline-flex h-[1.8rem] items-center cursor-pointer">
-                <input type="checkbox" [value]="false" class="sr-only peer" formControlName="status">
-                <div class="relative w-11 h-[1.8rem] bg-gray-200 peer-focus:outline-none  dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                <span class="ms-3 text-md font-medium dark:text-gray-300">Foi pago?</span>
-            </label>
-        </div>
 
         <!-- Actions -->
         <div class="grid grid-flow-col gap-4 items-center min-[1550px]:absolute bottom-[1.6rem] left-[1.6rem] right-[1.6rem]">
