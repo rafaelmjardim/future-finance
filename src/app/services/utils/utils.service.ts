@@ -48,4 +48,14 @@ export class UtilsService {
       return transitionDate == currentMonthDataPicker;
     });    
   }
+
+  // Se tiver transitionFixes verifica ediçao (sobrescritas) conforme o mes
+  public checkAndSetTransitionsFixes = (transitionsFixes: Transition[], transitions: Transition[], currentMonthDataPicker: any) => {
+    const transitionsFixesFormatted = transitionsFixes.map(transition => {
+      return transition.sobrescrita?.[currentMonthDataPicker] ?
+      {...transition, ...transition.sobrescrita[currentMonthDataPicker]} : transition
+    });
+
+    return transitions = [...transitions, ...transitionsFixesFormatted];
+  }
 }
