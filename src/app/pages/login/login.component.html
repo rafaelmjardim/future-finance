@@ -1,24 +1,22 @@
-<div class="h-full grid grid-cols-1" [ngClass]="{'grid-cols-2': !mediaQueryService.isMobile()}">
+<div class="h-full grid grid-cols-1 md:grid-cols-2">
 
     <!-- Left -->
-     @if (!mediaQueryService.isMobile()) {
-         <!-- https://images.unsplash.com/photo-1737265396686-00377dcd99d0?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D -->
-        <div class="bg-cover bg-center text-primaryColor flex flex-col justify-between p-[3.5rem]" style="background-image: url(https://images.unsplash.com/photo-1737265396678-a7dac6fcdff2?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);">
-            <div class="flex items-center gap-3 text-[2.4rem] text-white">
-                <img src="assets/logo-branca.png" alt="Logo do sistema">
-                <h1 class="font-medium">Future Finance</h1>
-            </div>
-    
-            <section class="text-white font-light">
-                <p>
-                    "Não é o quanto você ganha, mas o quanto você economiza, como você investe e planeja o futuro que define sua liberdade."
-                </p>
-    
-                <p class="mt-1"> - Warren Buffett</p>
-            </section>
-    
+    <!-- https://images.unsplash.com/photo-1737265396686-00377dcd99d0?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D -->
+    <div class="hidden md:flex flex-col justify-between bg-cover bg-center text-primaryColor p-[3.5rem]" style="background-image: url(https://images.unsplash.com/photo-1737265396678-a7dac6fcdff2?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);">
+        <div class="flex items-center gap-3 text-[2.4rem] text-white">
+            <img src="assets/logo-branca.png" alt="Logo do sistema">
+            <h1 class="font-medium">Future Finance</h1>
         </div>
-     }
+
+        <section class="text-white font-light">
+            <p>
+                "Não é o quanto você ganha, mas o quanto você economiza, como você investe e planeja o futuro que define sua liberdade."
+            </p>
+
+            <p class="mt-1"> - Warren Buffett</p>
+        </section>
+
+    </div>
 
     <!-- Rigth -->
     <div class="flex flex-col items-center justify-center bg-surfaceColor">
