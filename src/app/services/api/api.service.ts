@@ -34,18 +34,17 @@ export class ApiService {
   }
 
   putTransition = (id: string, transitionFormData: any, rota: Rota) => {
-    const { date, value, description, name, category, typeRef, status, recorrente, sobrescricoes } = transitionFormData;
+    const { date, value, description, name, category, typeRef, status, recorrente } = transitionFormData;
     
-    return this.http.put(`${API_KEY}/${rota}/${id}.json`, {
+    return this.http.patch(`${API_KEY}/${rota}/${id}.json`, {
       valor: value,
-      data: date,
+      dataAt: date,
       nome: name,
       categoria: category,
       descricao: description,
       tipo: typeRef,
       recorrente,
       status,
-      sobrescricoes: sobrescricoes ?? null
     })
   }
 
@@ -60,6 +59,10 @@ export class ApiService {
 
   deleteTransition = (id: string, rota: Rota) => {
     return this.http.delete(`${API_KEY}/${rota}/${id}.json`)
+  }
+
+  deleteAllTransitionsSobrescritas = (id: string, rota: Rota) => {
+    return this.http.delete(`${API_KEY}/${rota}/${id}/sobrescrita.json`)
   }
   
 }

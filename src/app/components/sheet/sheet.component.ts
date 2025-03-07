@@ -10,6 +10,7 @@ import { SheetService } from './sheet.service';
 import { Transition } from '../../pages/transitions/transitions';
 import moment from 'moment';
 import { MediaQueryService } from '../../services/media-query/media-query.service';
+import { DataPickerService } from '../data-picker/data-picker.service';
 
 @Component({
   selector: 'app-sheet',
@@ -25,17 +26,22 @@ export class SheetComponent implements OnInit {
   private sheetService = inject(SheetService);
   protected transitionData: Transition = inject(DIALOG_DATA);
 
+  private dataPickerService = inject(DataPickerService);
+
   protected categories: {value: string, txt: string}[] = [];
+
+  protected isEditConfirm = false;
 
   protected transitionForm = new FormGroup({
     value: new FormControl(this.transitionData?.valor ?? '', Validators.required),
-    date: new FormControl(this.transitionData?.data ?? moment().format('YYYY-MM-DD'), Validators.required),
+    date: new FormControl((this.transitionData?.data && !this.transitionData?.recorrente) ? this.transitionData?.data : this.dataPickerService.currentDateSignal().format('YYYY-MM-DD'), Validators.required),
     name: new FormControl(this.transitionData?.nome ?? '', Validators.required),
     category: new FormControl(this.transitionData?.categoria ?? '', Validators.required),
     description: new FormControl(this.transitionData?.descricao ?? ''),
     typeRef: new FormControl(this.transitionData?.tipo ?? 'despesa', Validators.required),
     status: new FormControl(this.transitionData?.status ?? false),
     recorrente: new FormControl(this.transitionData?.recorrente ?? false),
+    typeMovimentation: new FormControl(1, Validators.required),
   });
 
   ngOnInit(): void {
@@ -75,9 +81,6 @@ export class SheetComponent implements OnInit {
 
   private updateTransition = () => {
     if (this.transitionForm.value.recorrente) {
-      console.log('é recorrente');
-
-      // const rota = this.transitionForm.value.typeRef === 'despesa' ? 'despesasSobrescritas' : 'receitasSobrescritas';
       const rota = this.selectRoteRequest();
 
       const transitionFormData = {
@@ -86,14 +89,32 @@ export class SheetComponent implements OnInit {
         value: this.transitionForm.value.value,
         description: this.transitionForm.value.description
       } 
+
       
-      // Vai ser preciso adicionar confirmacão para edicao do mes ou todas fixas
-      this.apiService.putTransitionSobrecrita(transitionFormData.id, transitionFormData, rota).subscribe({
-        next: (transitionFixe_response) => {
-          this.sheetService.reloadTransitions();
-          this.dialogRef.close()          
-        }
-      })
+      if (this.isEditConfirm && this.transitionForm.value.typeMovimentation === 1) {
+        this.apiService.putTransitionSobrecrita(transitionFormData.id, transitionFormData, rota).subscribe({
+          next: (transitionFixe_response) => {
+            this.sheetService.reloadTransitions();
+            this.dialogRef.close()          
+          }
+        })
+      }
+     
+      if (this.isEditConfirm && this.transitionForm.value.typeMovimentation === 2) {
+
+        this.apiService.deleteAllTransitionsSobrescritas(this.transitionData.id, this.selectRoteRequest()).subscribe({
+          next: (delete_sobrescrita_response) => {
+            this.apiService.putTransition(this.transitionData.id, this.transitionForm.value, this.selectRoteRequest()).subscribe({
+              next: (edit_response) => {
+                this.sheetService.reloadTransitions();
+                this.dialogRef.close();
+              }
+            })
+          }
+        })
+      }
+
+      this.isEditConfirm = true;      
       return
     }
 
@@ -103,6 +124,10 @@ export class SheetComponent implements OnInit {
         this.dialogRef.close();
       }
     })
+  }
+
+  protected backEdit = () => {
+    this.isEditConfirm = false;
   }
 
   protected deleteTransition = () => {
