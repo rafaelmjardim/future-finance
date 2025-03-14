@@ -164,7 +164,8 @@ export class SheetComponent implements OnInit {
         { value: '', txt: 'Selecione a categoria'},
         { value: 'cartao', txt: 'Cartão' },
         { value: 'veiculo', txt: 'Veículo' },
-        { value: 'compras',txt: 'Compras' },
+        { value: 'compras', txt: 'Compras' },
+        { value: 'pagamento', txt: 'Pagamento'},
         { value: 'alimentacao', txt: 'Alimentação' },
       ]
     }
