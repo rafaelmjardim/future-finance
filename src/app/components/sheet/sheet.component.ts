@@ -41,6 +41,7 @@ export class SheetComponent implements OnInit {
     typeRef: new FormControl(this.transitionData?.tipo ?? 'despesa', Validators.required),
     status: new FormControl(this.transitionData?.status ?? false),
     recorrente: new FormControl(this.transitionData?.recorrente ?? false),
+    typeRepetion: new FormControl('fixa'),
     typeMovimentation: new FormControl(1, Validators.required),
   });
 
