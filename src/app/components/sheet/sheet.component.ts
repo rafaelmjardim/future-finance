@@ -38,15 +38,25 @@ export class SheetComponent implements OnInit {
     name: new FormControl(this.transitionData?.nome ?? '', Validators.required),
     category: new FormControl(this.transitionData?.categoria ?? '', Validators.required),
     description: new FormControl(this.transitionData?.descricao ?? ''),
-    typeRef: new FormControl(this.transitionData?.tipo ?? 'despesa', Validators.required),
     status: new FormControl(this.transitionData?.status ?? false),
-    recorrente: new FormControl(this.transitionData?.recorrente ?? false),
-    typeRepetion: new FormControl('fixa'),
+    typeRef: new FormControl(this.transitionData?.tipo ?? 'despesa', Validators.required),
+    repeatType: new FormControl(this.transitionData?.repeticoes ? 'REPEAT' : 'FIXA'),
+    recorrente: new FormControl(this.transitionData?.recorrente ? true : false),
+    repeat: new FormControl(this.transitionData?.recorrente ?? false),
+    repeatTimes: new FormControl(2),
     typeMovimentation: new FormControl(1, Validators.required),
   });
 
+  protected isRecorrente =  false;
+
   ngOnInit(): void {
     this.changeCategoryByType();
+
+    if (this.transitionData.recorrente || this.transitionData.repete) {
+      this.isRecorrente = true;
+      this.changeRepeatType()
+    }
+
   }
 
   protected handleSubmit = () => {
@@ -68,7 +78,7 @@ export class SheetComponent implements OnInit {
 
   private postTransition = () => {    
     const transitionFormData = this.transitionForm.value;
-
+    
     this.apiService.postTransition(transitionFormData, this.selectRoteRequest()).subscribe({
       next: (transition_response) => {
         this.sheetService.reloadTransitions();
@@ -125,6 +135,23 @@ export class SheetComponent implements OnInit {
         this.dialogRef.close();
       }
     })
+  }
+
+  protected changeRecorrentePayment = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    this.isRecorrente = target.checked;
+    this.changeRepeatType();
+  }
+  protected changeRepeatType = () => {
+    const repeatType = this.transitionForm.value.repeatType;
+
+    if (!this.isRecorrente) {
+      this.transitionForm.controls['repeatType'].setValue(null);
+      this.transitionForm.controls['repeatTimes'].setValue(null);
+    }
+
+    this.transitionForm.controls['repeat'].setValue(repeatType === 'REPEAT' && this.isRecorrente ? true : false);
+    this.transitionForm.controls['recorrente'].setValue(repeatType === 'FIXA' && this.isRecorrente ? true : false);    
   }
 
   protected backEdit = () => {

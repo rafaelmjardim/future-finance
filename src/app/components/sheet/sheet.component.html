@@ -58,35 +58,34 @@
                             </div>
     
                             <label class="flex h-[1.8rem] items-center cursor-pointer justify-end">
-                                <input type="checkbox" [value]="false" class="sr-only peer" formControlName="recorrente">
+                                <input type="checkbox" [value]="false" class="sr-only peer" [checked]="isRecorrente" (change)="changeRecorrentePayment($event)">
                                 <div class="relative w-11 h-[1.8rem] bg-gray-200 peer-focus:outline-none  dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-textColor"></div>
                             </label>
                         </div>
 
-                        @if (transitionForm.value.recorrente) {
+                        @if (isRecorrente) {
                             <div class="flex flex-col gap-2">
                                 <span>Repetir</span>
                     
                                 <div class="flex items-center gap-6">
                                     <label class="flex items-center gap-2">
-                                        <input class="accent-primaryColor" type="radio" value="fixa" formControlName="typeRepetion">
+                                        <input class="accent-primaryColor" type="radio"  value="FIXA" formControlName="repeatType" (change)="changeRepeatType()">
                                         <span class="text-md font-medium">Despesa fixa</span>
                                     </label>
                     
                                     <label class="flex items-center gap-2">
-                                        <input class="accent-primaryColor" type="radio" value="parcelada" formControlName="typeRepetion">
+                                        <input class="accent-primaryColor" type="radio" value="REPEAT" formControlName="repeatType" (change)="changeRepeatType()">
                                         <span class="text-md font-medium">Despesa parcelada</span>
                                     </label>
                                 </div>
                             </div>
 
-                            @if (transitionForm.value.typeRepetion === 'parcelada') {
+                            @if (transitionForm.value.repeat) {
                                 <label class="input">
                                 <span>Parcelas</span>
-                                    <input type="number" [value]="2">
+                                    <input type="number" [value]="2" formControlName="repeatTimes">
                                 </label>
                             }
-    
                         }
 
                     </div>

@@ -19,7 +19,7 @@ export class ApiService {
   }
 
   postTransition = (transitionFormData: any, rota: Rota) => {
-    const { date, value, description, name, category, typeRef, status, recorrente } = transitionFormData;
+    const { date, value, description, name, category, typeRef, status, recorrente, repeat, repeatTimes } = transitionFormData;
 
     return this.http.post(`${API_KEY}/${rota}.json`, {
       valor: value,
@@ -29,12 +29,14 @@ export class ApiService {
       descricao: description,
       tipo: typeRef,
       recorrente,
-      status
+      status,
+      repete: repeat,
+      repeticoes: repeat ? repeatTimes : null
     });
   }
 
   putTransition = (id: string, transitionFormData: any, rota: Rota) => {
-    const { date, value, description, name, category, typeRef, status, recorrente } = transitionFormData;
+    const { date, value, description, name, category, typeRef, status, recorrente, repeat, repeatTimes } = transitionFormData;
     
     return this.http.patch(`${API_KEY}/${rota}/${id}.json`, {
       valor: value,
@@ -45,6 +47,8 @@ export class ApiService {
       tipo: typeRef,
       recorrente,
       status,
+      repete: repeat,
+      repeticoes: repeat ? repeatTimes : null
     })
   }
 

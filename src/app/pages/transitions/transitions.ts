@@ -18,6 +18,8 @@ export type Transition = {
     icon?: string
     status?: boolean
     recorrente: boolean
+    repete: boolean
+    repeticoes: number
     tipo: string
 }
 
