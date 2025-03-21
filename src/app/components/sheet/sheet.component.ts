@@ -43,7 +43,7 @@ export class SheetComponent implements OnInit {
     repeatType: new FormControl(this.transitionData?.repeticoes ? 'REPEAT' : 'FIXA'),
     recorrente: new FormControl(this.transitionData?.recorrente ? true : false),
     repeat: new FormControl(this.transitionData?.recorrente ?? false),
-    repeatTimes: new FormControl(2),
+    repeatTimes: new FormControl(this.transitionData?.repeticoes ?? 2),
     typeMovimentation: new FormControl(1, Validators.required),
   });
 
@@ -52,7 +52,7 @@ export class SheetComponent implements OnInit {
   ngOnInit(): void {
     this.changeCategoryByType();
 
-    if (this.transitionData.recorrente || this.transitionData.repete) {
+    if (this.transitionData?.recorrente || this.transitionData?.repete) {
       this.isRecorrente = true;
       this.changeRepeatType()
     }
