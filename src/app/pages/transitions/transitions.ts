@@ -20,6 +20,7 @@ export type Transition = {
     recorrente: boolean
     repete: boolean
     repeticoes: number
+    currentRepeat: number
     tipo: string
 }
 

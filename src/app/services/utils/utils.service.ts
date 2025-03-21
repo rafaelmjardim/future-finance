@@ -40,7 +40,12 @@ export class UtilsService {
       const transitionDate = moment(transition.data).format('MM/YYYY');
       const transitioYear = moment(transition.data).format('YYYY');
       const currentMonthDataPicker = this.dataPickerService.currentDateSignal().format('MM/YYYY');
-      const currentYearDataPicker = this.dataPickerService.currentDateSignal().format('YYYY');      
+      const currentYearDataPicker = this.dataPickerService.currentDateSignal().format('YYYY');
+
+      if (transition.repete) {
+        const endDate = moment(transition.data).add((transition.repeticoes - 1), "month").format('MM/YYYY');
+        return transitionDate <= currentMonthDataPicker && currentMonthDataPicker <= endDate && transitioYear === currentYearDataPicker;
+      }
 
       if (transitionType === "FIXE") {
         return transitionDate <= currentMonthDataPicker && transitioYear === currentYearDataPicker;
@@ -56,6 +61,14 @@ export class UtilsService {
       {...transition, ...transition.sobrescrita[currentMonthDataPicker]} : transition
     });
 
-    return transitions = [...transitions, ...transitionsFixesFormatted];
+    const transitionsFormatted = transitions.map((transition) => {
+      const initMonth = moment(transition.data).month();
+      const currentMonth = this.dataPickerService.currentDateSignal().month();
+      const currentRepeat = (currentMonth - initMonth) + 1
+
+      return transition.repete ? {...transition, currentRepeat} : transition;
+    })
+
+    return transitions = [...transitionsFormatted, ...transitionsFixesFormatted];
   }
 }
