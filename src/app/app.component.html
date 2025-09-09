@@ -1,31 +1,36 @@
-<div class="app" [ngClass]="{
+<div 
+  class="app" 
+  [class]="{
   'app--authenticated': !mediaQueryService.isMobile() && (authService.isAuthenticated$ | async),
   'dark': utilsService.darkModeSignal()}">
 
   @if (authService.isAuthenticated$ | async) {
     @if (!mediaQueryService.isMobile()) {
-      <div class="app__sidebar" [ngClass]="{'app__sidebar--close': sidebarService.closeSidebarSignal()}">
+      <div 
+        class="app__sidebar" 
+        [class]="{'app__sidebar--close': sidebarService.closeSidebarSignal()}">
         <app-sidebar></app-sidebar>
       </div>
     }
-  }
-
-  <div class="app__main" [ngClass]="{'app__main--authenticated': authService.isAuthenticated$ | async}">
-    @if (authService.isAuthenticated$ | async) {
+  
+    <div class="app__main">
       <app-header></app-header>
-    }
-
-    <div class="app__content scroll h-full bg-backgroundColor dark:bg-backgroundColorDark" [ngClass]="{'mb-[6.2rem]': mediaQueryService.isMobile(), 'app__content--login-page': !(authService.isAuthenticated$ | async)}" [ngStyle]="{'padding': mediaQueryService.isMobile() ? '.8rem' : ''}">
-      <router-outlet></router-outlet>
+    
+      <div  
+        class="app__content scroll h-full bg-backgroundColor dark:bg-backgroundColorDark" 
+        [class]="{'mb-[6.2rem]': mediaQueryService.isMobile()}" 
+        [style]="{'padding': mediaQueryService.isMobile() ? '.8rem' : ''}">
+        <router-outlet></router-outlet>
+      </div>
     </div>
-  </div>
-
-  @if (authService.isAuthenticated$ | async) {
+  
     @if (mediaQueryService.isMobile()) {
       <div class="app__navbar-mobile">
         <app-navbar-mobile></app-navbar-mobile>
       </div>
     }
+  } @else {
+    <router-outlet></router-outlet>
   }
 </div>
 

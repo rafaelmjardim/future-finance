@@ -1,10 +1,9 @@
 .app {
     height: 100dvh;
-    display: grid;
-    grid-template-columns: 1fr;
     overflow: hidden;
     
     &--authenticated {
+        display: grid;
         grid-template-columns: auto 1fr;
     }
 
@@ -20,12 +19,8 @@
     &__main{
         display: grid;
         width: 100%;
-        grid-template-rows: 1fr;
+        grid-template-rows: auto 1fr;
         overflow: hidden;
-        
-        &--authenticated {
-            grid-template-rows: auto 1fr;
-        }
     }
 
     &__content {

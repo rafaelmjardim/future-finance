@@ -1,6 +1,6 @@
 import { UtilsService } from './services/utils/utils.service';
-import { AsyncPipe, NgClass, NgStyle } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { AuthService } from './services/auth/auth.service';
@@ -15,22 +15,16 @@ import { MediaQueryService } from './services/media-query/media-query.service';
   imports: [
     RouterOutlet, 
     AsyncPipe,
-    NgClass, 
     HeaderComponent,
     SidebarComponent,
     NavbarMobileComponent,
-    NgStyle
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   protected authService = inject(AuthService);  
   protected mediaQueryService = inject(MediaQueryService);
   protected sidebarService = inject(SidebarService);
-  protected utilsService = inject(UtilsService);
-
-  ngOnInit(): void {
-  }
-  
+  protected utilsService = inject(UtilsService);  
 }
