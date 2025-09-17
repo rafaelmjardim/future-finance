@@ -1,94 +1,115 @@
 <div class="h-full grid grid-cols-1 md:grid-cols-2">
-
-    <!-- Left -->
-    <!-- https://images.unsplash.com/photo-1737265396686-00377dcd99d0?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D -->
-    <div class="hidden md:flex flex-col justify-between bg-cover bg-center text-primaryColor p-[3.5rem]" style="background-image: url(https://images.unsplash.com/photo-1737265396678-a7dac6fcdff2?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);">
-        <div class="flex items-center gap-3 text-[2.4rem] text-white">
-            <img src="assets/logo-branca.png" alt="Logo do sistema">
-            <h1 class="font-medium">Future Finance</h1>
-        </div>
-
-        <section class="text-white font-light">
-            <p>
-                "Não é o quanto você ganha, mas o quanto você economiza, como você investe e planeja o futuro que define sua liberdade."
-            </p>
-
-            <p class="mt-1"> - Warren Buffett</p>
-        </section>
-
+  <!-- Left -->
+  <!-- https://images.unsplash.com/photo-1737265396686-00377dcd99d0?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D -->
+  <div
+    class="hidden md:flex flex-col justify-between bg-cover bg-center text-primaryColor p-[3.5rem]"
+    style="
+      background-image: url(https://images.unsplash.com/photo-1737265396678-a7dac6fcdff2?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+    "
+  >
+    <div class="flex items-center gap-3 text-[2.4rem] text-white">
+      <img src="assets/logo-branca.png" alt="Logo do sistema" />
+      <h1 class="font-medium">Future Finance</h1>
     </div>
 
-    <!-- Rigth -->
-    <div class="flex flex-col items-center justify-center bg-surfaceColor">
-        <p class="absolute top-[3.5rem] right-[3.5rem] flex items-center gap-3 acursor-pointer hover:text-greenColor transition cursor-pointer"
-        (click)="changeLoginForm()">
-            {{isRegistration ? 'Login' : 'Registrar-se'}}
-            <ng-icon name="ionArrowForward"></ng-icon>
-        </p>
+    <section class="text-white font-light">
+      <p>
+        "Não é o quanto você ganha, mas o quanto você economiza, como você investe e planeja o
+        futuro que define sua liberdade."
+      </p>
 
-        <div class="text-center mb-6">
-            <h1 class="text-gray-800 font-bold dark:text-white text-[3rem]">{{isRegistration ? 'Cadastre-se' : 'Bem-vindo'}}</h1>
-            <p class="text-sm text-grayColor max-w-[33rem]">
-                {{isRegistration ? 
-                    'Você está pronto para a próxima estapa do seu futuro? Registre-se agora.' : 
-                    'Entre com seu email e senha para acessar o aplicativo'}}
-            </p>
-        </div>
+      <p class="mt-1">- Warren Buffett</p>
+    </section>
+  </div>
 
-        <form class="flex flex-col gap-6 w-[34rem]" [formGroup]="!isRegistration ? form : registerForm">
-            @if (isRegistration) {
-                <label class="input">
-                    <span>Nome</span>
-                    <input type="text"
-                    placeholder="Nome completo"
-                    formControlName="nome"
-                    autocomplete="username"
-                    (focus)="formError = false || formEmpty = false">
-                </label>
-            }
-            
-            <label class="input">
-                <span>Email</span>
-                <input type="email"
-                placeholder="nome@exemplo.com"
-                autocomplete="email"
-                formControlName="email"
-                (focus)="formError = false || formEmpty = false">
-                <!-- @if (form.controls.email.errors) {
+  <!-- Rigth -->
+  <div class="flex flex-col items-center justify-center bg-surfaceColor">
+    <p
+      class="absolute top-[3.5rem] right-[3.5rem] flex items-center gap-3 acursor-pointer hover:text-greenColor transition cursor-pointer"
+      (click)="changeLoginForm()"
+    >
+      {{ isRegistration ? 'Login' : 'Registrar-se' }}
+      <ng-icon name="ionArrowForward"></ng-icon>
+    </p>
+
+    <div class="text-center mb-6">
+      <h1 class="text-gray-800 font-bold dark:text-white text-[3rem]">
+        {{ isRegistration ? 'Cadastre-se' : 'Bem-vindo' }}
+      </h1>
+      <p class="text-sm text-grayColor max-w-[33rem]">
+        {{
+          isRegistration
+            ? 'Você está pronto para a próxima estapa do seu futuro? Registre-se agora.'
+            : 'Entre com seu email e senha para acessar o aplicativo'
+        }}
+      </p>
+    </div>
+
+    <form class="flex flex-col gap-6 w-[34rem]" [formGroup]="!isRegistration ? form : registerForm">
+      @if (isRegistration) {
+        <label class="input">
+          <span>Nome</span>
+          <input
+            type="text"
+            placeholder="Nome completo"
+            formControlName="nome"
+            autocomplete="username"
+            (focus)="formError = false || (formEmpty = false)"
+          />
+        </label>
+      }
+
+      <label class="input">
+        <span>Email</span>
+        <input
+          type="email"
+          placeholder="nome@exemplo.com"
+          autocomplete="email"
+          formControlName="email"
+          (focus)="formError = false || (formEmpty = false)"
+        />
+        <!-- @if (form.controls.email.errors) {
                     <p class="text-red-600 text-sm mt-2">Email invalida</p>
                 } -->
-            </label>
-            
-            <label class="input">
-                <span>Senha</span>
-                <input type="password"
-                placeholder="Sua senha"
-                autocomplete="current-password"
-                formControlName="senha">
-                @if (formError || formEmpty && !isRegistration) {
-                    <p class="text-red-600 text-sm mt-2">{{formEmpty ? 'Informe seu email e senha.' : 'Usuário ou senha invalidos.'}}</p>
-                }
-            </label>
+      </label>
 
-            @if (isRegistration) {                
-                <label class="input">
-                    <span>Repita a senha</span>
-                    <input type="password"
-                    placeholder="Confirmar senha"
-                    autocomplete="current-password"
-                    formControlName="confirmacaoSenha">
-                    @if (isDiferentePassword) {
-                        <p class="text-red-600 text-sm mt-2">Senhas diferentes. Tente novamente!</p>
-                    }
-                </label>
-            }
-        
-            <app-button
-                [txt]="isRegistration && showLoader ? 'Entrando' : isRegistration ? 'Cadastrar' : 'Fazer Login'"
-                [loader]="showLoader"
-                (actionEvent)="submitLogin()"
-            ></app-button>
-        </form>
-    </div>
+      <label class="input">
+        <span>Senha</span>
+        <input
+          type="password"
+          placeholder="Sua senha"
+          autocomplete="current-password"
+          formControlName="senha"
+        />
+        @if (formError || (formEmpty && !isRegistration)) {
+          <p class="text-red-600 text-sm mt-2">
+            {{ formEmpty ? 'Informe seu email e senha.' : 'Usuário ou senha invalidos.' }}
+          </p>
+        }
+      </label>
 
+      @if (isRegistration) {
+        <label class="input">
+          <span>Repita a senha</span>
+          <input
+            type="password"
+            placeholder="Confirmar senha"
+            autocomplete="current-password"
+            formControlName="confirmacaoSenha"
+          />
+          @if (isDiferentePassword) {
+            <p class="text-red-600 text-sm mt-2">Senhas diferentes. Tente novamente!</p>
+          }
+        </label>
+      }
+
+      <app-button
+        [txt]="
+          isRegistration && showLoader ? 'Entrando' : isRegistration ? 'Cadastrar' : 'Fazer Login'
+        "
+        [loader]="showLoader"
+        (actionEvent)="submitLogin()"
+      ></app-button>
+    </form>
+  </div>
 </div>
