@@ -1,0 +1,88 @@
+<!-- Header -->
+<app-page-header [title]="pageItem.txt" [icon]="pageItem.icon" />
+
+<!-- Main -->
+<div
+  class="grid gap-[1.6rem]"
+  [ngClass]="!mediaQueryService.isMobile() ? 'grid-cols-2' : 'grid-cols-1'"
+>
+  <div class="box" [ngClass]="{ 'order-2': mediaQueryService.isMobile() }">
+    <h2 class="box__title">Transações</h2>
+
+    <div class="box__content flex flex-col gap-8">
+      <app-transactions-list label="Receitas" typeRef="INCOME" [transactions]="incomings" />
+      <app-transactions-list label="Despesas" typeRef="EXPENSE" [transactions]="expenses" />
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-[1.6rem]">
+    <div
+      class=""
+      [ngClass]="{ box: !mediaQueryService.isMobile(), 'order-2': mediaQueryService.isMobile() }"
+    >
+      <h2 class="box__title">Resumo</h2>
+
+      <div class="grid grid-cols-3 gap-4 sm:gap-6">
+        <app-card
+          title="Balanço"
+          [value]="totalIncomings - totalExpenses"
+          [description]="'Total de ' + dataPickerService.currentDateSignal().format('MMM')"
+          [typeRef]="'BALANCO'"
+        />
+        <app-card
+          title="Receitas"
+          [value]="totalIncomings"
+          [description]="'Total de ' + dataPickerService.currentDateSignal().format('MMM')"
+          [typeRef]="'RECEITA'"
+        />
+        <app-card
+          title="Despesas"
+          [value]="totalExpenses"
+          [description]="'Total de ' + dataPickerService.currentDateSignal().format('MMM')"
+          [typeRef]="'DESPESA'"
+        />
+      </div>
+    </div>
+
+    @if (!mediaQueryService.isMobile()) {
+      <div class="box w-full">
+        @if (utilsService.loaders.showTransaction()) {
+          <apx-chart
+            [series]="chartOptions.series"
+            [chart]="chartOptions.chart"
+            [dataLabels]="chartOptions.dataLabels"
+            [plotOptions]="chartOptions.plotOptions"
+            [yaxis]="chartOptions.yaxis"
+            [xaxis]="chartOptions.xaxis"
+            [fill]="chartOptions.fill"
+            [grid]="chartOptions.grid"
+            [tooltip]="chartOptions.tooltip"
+            [legend]="chartOptions.legend"
+          ></apx-chart>
+        } @else {
+          <div
+            role="status"
+            class="w-full p-4 border border-gray-200 rounded shadow animate-pulse md:p-6 dark:border-gray-700"
+          >
+            <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32 mb-2.5"></div>
+            <div class="w-48 h-2 mb-10 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+            <div class="flex items-baseline mt-4">
+              <div class="w-full bg-gray-200 rounded-t-lg h-72 dark:bg-gray-700"></div>
+              <div class="w-full h-56 ms-6 bg-gray-200 rounded-t-lg dark:bg-gray-700"></div>
+              <div class="w-full bg-gray-200 rounded-t-lg h-72 ms-6 dark:bg-gray-700"></div>
+              <div class="w-full h-64 ms-6 bg-gray-200 rounded-t-lg dark:bg-gray-700"></div>
+              <div class="w-full bg-gray-200 rounded-t-lg h-80 ms-6 dark:bg-gray-700"></div>
+              <div class="w-full bg-gray-200 rounded-t-lg h-72 ms-6 dark:bg-gray-700"></div>
+              <div class="w-full bg-gray-200 rounded-t-lg h-80 ms-6 dark:bg-gray-700"></div>
+              <div class="w-full h-64 ms-6 bg-gray-200 rounded-t-lg dark:bg-gray-700"></div>
+              <div class="w-full bg-gray-200 rounded-t-lg h-80 ms-6 dark:bg-gray-700"></div>
+              <div class="w-full bg-gray-200 rounded-t-lg h-72 ms-6 dark:bg-gray-700"></div>
+              <div class="w-full bg-gray-200 rounded-t-lg h-80 ms-6 dark:bg-gray-700"></div>
+            </div>
+            <span class="sr-only">Loading...</span>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

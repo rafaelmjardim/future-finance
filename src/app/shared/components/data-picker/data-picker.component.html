@@ -1,15 +1,29 @@
-<div class="box dark:bg-surfaceColorDark dark:border-borderColorDark flex justify-between gap-6 h-[4.2rem] px-3 py-0" [ngClass]="{'w-[25rem]': !mediaQueryService.isMobile()}">
-    <button class="flex items-center text-secundaryColor dark:text-white hover:text-textColor dark:hover:text-grayColor transition" (click)="changeMouth('PREV')">
-        <ng-icon name="ionChevronBackOutline" size="2rem"></ng-icon>
-    </button>
-    
-    <div class="flex items-center justify-center gap-4 w-[15rem] dark:text-white">
-        <ng-icon name="ionCalendarOutline" size="1.7rem"></ng-icon>
-    
-        <h2 class="text-secundaryColor dark:text-white">{{ dataPickerService.currentDateSignal().format('MMMM')| titlecase }} <b class="text-textColor dark:text-white">{{ dataPickerService.currentDateSignal().format('YYYY') }}</b></h2>
-    </div>
-    
-    <button class="flex items-center text-secundaryColor dark:text-white hover:text-textColor dark:hover:text-grayColor transition" (click)="changeMouth('NEXT')">
-        <ng-icon name="ionChevronForwardOutline" size="2rem"></ng-icon>
-    </button>
+<div
+  class="box dark:bg-surfaceColorDark dark:border-borderColorDark flex justify-between gap-6 h-[4.2rem] px-3 py-0"
+  [ngClass]="{ 'w-[25rem]': !mediaQueryService.isMobile() }"
+>
+  <button
+    class="flex items-center text-secundaryColor dark:text-white hover:text-textColor dark:hover:text-grayColor transaction"
+    (click)="changeMouth('PREV')"
+  >
+    <ng-icon name="ionChevronBackOutline" size="2rem"></ng-icon>
+  </button>
+
+  <div class="flex items-center justify-center gap-4 w-[15rem] dark:text-white">
+    <ng-icon name="ionCalendarOutline" size="1.7rem"></ng-icon>
+
+    <h2 class="text-secundaryColor dark:text-white">
+      {{ dataPickerService.currentDateSignal().format('MMMM') | titlecase }}
+      <b class="text-textColor dark:text-white">{{
+        dataPickerService.currentDateSignal().format('YYYY')
+      }}</b>
+    </h2>
+  </div>
+
+  <button
+    class="flex items-center text-secundaryColor dark:text-white hover:text-textColor dark:hover:text-grayColor transaction"
+    (click)="changeMouth('NEXT')"
+  >
+    <ng-icon name="ionChevronForwardOutline" size="2rem"></ng-icon>
+  </button>
 </div>

@@ -1,31 +1,30 @@
 import { CurrencyPipe, DatePipe, NgClass } from '@angular/common';
 import { Component, inject, Input } from '@angular/core';
 import { NgIcon } from '@ng-icons/core';
-import { Transition } from '../transitions';
+import { Transaction } from '../transactions';
 import { ItemLoaderComponent } from './item-loader/item-loader.component';
 import { UtilsService } from '../../../../../shared/services/utils/utils.service';
 import { Dialog } from '@angular/cdk/dialog';
 import { SheetComponent } from '../../../components/sheet/sheet.component';
 
 @Component({
-  selector: 'app-transitions-list',
+  selector: 'app-transactions-list',
   standalone: true,
   imports: [NgIcon, NgClass, CurrencyPipe, DatePipe, ItemLoaderComponent],
-  templateUrl: './transitions-list.component.html',
-  styleUrl: './transitions-list.component.scss'
+  templateUrl: './transactions-list.component.html',
+  styleUrl: './transactions-list.component.scss',
 })
-export class TransitionsListComponent {
+export class TransactionsListComponent {
   @Input() label!: string;
   @Input() typeRef!: 'EXPENSE' | 'INCOME';
-  @Input() transitions!: Transition[];
+  @Input() transactions!: Transaction[];
 
   protected utilsService = inject(UtilsService);
   private dialog = inject(Dialog);
 
-  protected handleEditTransition = (transition: Transition) => {
+  protected handleEditTransaction = (transaction: Transaction) => {
     this.dialog.open(SheetComponent, {
-      data: transition
-    })
-  }
-
+      data: transaction,
+    });
+  };
 }

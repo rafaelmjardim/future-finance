@@ -6,7 +6,7 @@ import { ButtonComponent } from '../../../../shared/components/button/button.com
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SheetService } from './sheet.service';
-import { Transition } from '../../pages/transitions/transitions';
+import { Transaction } from '../../pages/transactions/transactions';
 import moment from 'moment';
 import { MediaQueryService } from '../../../../shared/services/media-query/media-query.service';
 import { DataPickerService } from '../../../../shared/components/data-picker/data-picker.service';
@@ -24,163 +24,180 @@ export class SheetComponent implements OnInit {
   protected mediaQueryService = inject(MediaQueryService);
   private apiService = inject(ApiService);
   private sheetService = inject(SheetService);
-  protected transitionData: Transition = inject(DIALOG_DATA);
+  protected transactionData: Transaction = inject(DIALOG_DATA);
 
   private dataPickerService = inject(DataPickerService);
 
-  protected categories: {value: string, txt: string}[] = [];
+  protected categories: { value: string; txt: string }[] = [];
 
   protected isEditConfirm = false;
 
-  protected transitionForm = new FormGroup({
-    value: new FormControl(this.transitionData?.valor ?? '', Validators.required),
-    date: new FormControl((this.transitionData?.data && !this.transitionData?.recorrente) ? this.transitionData?.data : this.dataPickerService.currentDateSignal().format('YYYY-MM-DD'), Validators.required),
-    name: new FormControl(this.transitionData?.nome ?? '', Validators.required),
-    category: new FormControl(this.transitionData?.categoria ?? '', Validators.required),
-    description: new FormControl(this.transitionData?.descricao ?? ''),
-    status: new FormControl(this.transitionData?.status ?? false),
-    typeRef: new FormControl(this.transitionData?.tipo ?? 'despesa', Validators.required),
-    repeatType: new FormControl(this.transitionData?.repeticoes ? 'REPEAT' : 'FIXA'),
-    recorrente: new FormControl(this.transitionData?.recorrente ? true : false),
-    repeat: new FormControl(this.transitionData?.recorrente ?? false),
-    repeatTimes: new FormControl(this.transitionData?.repeticoes ?? 2),
+  protected transactionForm = new FormGroup({
+    value: new FormControl(this.transactionData?.valor ?? '', Validators.required),
+    date: new FormControl(
+      this.transactionData?.data && !this.transactionData?.recorrente
+        ? this.transactionData?.data
+        : this.dataPickerService.currentDateSignal().format('YYYY-MM-DD'),
+      Validators.required
+    ),
+    name: new FormControl(this.transactionData?.nome ?? '', Validators.required),
+    category: new FormControl(this.transactionData?.categoria ?? '', Validators.required),
+    description: new FormControl(this.transactionData?.descricao ?? ''),
+    status: new FormControl(this.transactionData?.status ?? false),
+    typeRef: new FormControl(this.transactionData?.tipo ?? 'despesa', Validators.required),
+    repeatType: new FormControl(this.transactionData?.repeticoes ? 'REPEAT' : 'FIXA'),
+    recorrente: new FormControl(this.transactionData?.recorrente ? true : false),
+    repeat: new FormControl(this.transactionData?.recorrente ?? false),
+    repeatTimes: new FormControl(this.transactionData?.repeticoes ?? 2),
     typeMovimentation: new FormControl(1, Validators.required),
   });
 
-  protected isRecorrente =  false;
+  protected isRecorrente = false;
 
   ngOnInit(): void {
     this.changeCategoryByType();
 
-    if (this.transitionData?.recorrente || this.transitionData?.repete) {
+    if (this.transactionData?.recorrente || this.transactionData?.repete) {
       this.isRecorrente = true;
-      this.changeRepeatType()
+      this.changeRepeatType();
     }
-
   }
 
   protected handleSubmit = () => {
+    if (!this.transactionForm.valid) {
+      console.log('invalidos', this.transactionForm.controls.value.valid);
 
-    if (!this.transitionForm.valid) {
-      console.log('invalidos', this.transitionForm.controls.value.valid);
-      
-      alert('Preencha todos os campos obrigatórios!')
-      return
+      alert('Preencha todos os campos obrigatórios!');
+      return;
     }
 
-    if (this.transitionData) {
-      this.updateTransition();
-      return
+    if (this.transactionData) {
+      this.updateTransiction();
+      return;
     }
 
-    this.postTransition();
-  }
+    this.postTransiction();
+  };
 
-  private postTransition = () => {    
-    const transitionFormData = this.transitionForm.value;
-    
-    this.apiService.postTransition(transitionFormData, this.selectRoteRequest()).subscribe({
-      next: (transition_response) => {
-        this.sheetService.reloadTransitions();
+  private postTransiction = () => {
+    const transactionFormData = this.transactionForm.value;
+
+    this.apiService.postTransiction(transactionFormData, this.selectRoteRequest()).subscribe({
+      next: (transaction_response) => {
+        this.sheetService.reloadTransictions();
         this.dialogRef.close();
       },
-      error: (transition_error: HttpErrorResponse) => {
-        console.log('ERROR', transition_error);
-      }
-    })
-  }
+      error: (transaction_error: HttpErrorResponse) => {
+        console.log('ERROR', transaction_error);
+      },
+    });
+  };
 
-  private updateTransition = () => {
-    if (this.transitionForm.value.recorrente) {
+  private updateTransiction = () => {
+    if (this.transactionForm.value.recorrente) {
       const rota = this.selectRoteRequest();
 
-      const transitionFormData = {
-        id: this.transitionData.id,
-        date: moment(this.transitionForm.value.date).format("YYYY-MM"),
-        value: this.transitionForm.value.value,
-        description: this.transitionForm.value.description
-      } 
+      const transactionFormData = {
+        id: this.transactionData.id,
+        date: moment(this.transactionForm.value.date).format('YYYY-MM'),
+        value: this.transactionForm.value.value,
+        description: this.transactionForm.value.description,
+      };
 
-      
-      if (this.isEditConfirm && this.transitionForm.value.typeMovimentation === 1) {
-        this.apiService.putTransitionSobrecrita(transitionFormData.id, transitionFormData, rota).subscribe({
-          next: (transitionFixe_response) => {
-            this.sheetService.reloadTransitions();
-            this.dialogRef.close()          
-          }
-        })
-      }
-     
-      if (this.isEditConfirm && this.transitionForm.value.typeMovimentation === 2) {
-
-        this.apiService.deleteAllTransitionsSobrescritas(this.transitionData.id, this.selectRoteRequest()).subscribe({
-          next: (delete_sobrescrita_response) => {
-            this.apiService.putTransition(this.transitionData.id, this.transitionForm.value, this.selectRoteRequest()).subscribe({
-              next: (edit_response) => {
-                this.sheetService.reloadTransitions();
-                this.dialogRef.close();
-              }
-            })
-          }
-        })
+      if (this.isEditConfirm && this.transactionForm.value.typeMovimentation === 1) {
+        this.apiService
+          .putTransictionSobrecrita(transactionFormData.id, transactionFormData, rota)
+          .subscribe({
+            next: (transactionFixe_response) => {
+              this.sheetService.reloadTransictions();
+              this.dialogRef.close();
+            },
+          });
       }
 
-      this.isEditConfirm = true;      
-      return
+      if (this.isEditConfirm && this.transactionForm.value.typeMovimentation === 2) {
+        this.apiService
+          .deleteAllTransictionsSobrescritas(this.transactionData.id, this.selectRoteRequest())
+          .subscribe({
+            next: (delete_sobrescrita_response) => {
+              this.apiService
+                .putTransiction(
+                  this.transactionData.id,
+                  this.transactionForm.value,
+                  this.selectRoteRequest()
+                )
+                .subscribe({
+                  next: (edit_response) => {
+                    this.sheetService.reloadTransictions();
+                    this.dialogRef.close();
+                  },
+                });
+            },
+          });
+      }
+
+      this.isEditConfirm = true;
+      return;
     }
 
-    this.apiService.putTransition(this.transitionData.id, this.transitionForm.value, this.selectRoteRequest()).subscribe({
-      next: (edit_response) => {
-        this.sheetService.reloadTransitions();
-        this.dialogRef.close();
-      }
-    })
-  }
+    this.apiService
+      .putTransiction(this.transactionData.id, this.transactionForm.value, this.selectRoteRequest())
+      .subscribe({
+        next: (edit_response) => {
+          this.sheetService.reloadTransictions();
+          this.dialogRef.close();
+        },
+      });
+  };
 
   protected changeRecorrentePayment = (event: Event) => {
     const target = event.target as HTMLInputElement;
     this.isRecorrente = target.checked;
     this.changeRepeatType();
-  }
+  };
   protected changeRepeatType = () => {
-    const repeatType = this.transitionForm.value.repeatType;
+    const repeatType = this.transactionForm.value.repeatType;
 
     if (!this.isRecorrente) {
-      this.transitionForm.controls['repeatType'].setValue(null);
-      this.transitionForm.controls['repeatTimes'].setValue(null);
+      this.transactionForm.controls['repeatType'].setValue(null);
+      this.transactionForm.controls['repeatTimes'].setValue(null);
     }
 
-    this.transitionForm.controls['repeat'].setValue(repeatType === 'REPEAT' && this.isRecorrente ? true : false);
-    this.transitionForm.controls['recorrente'].setValue(repeatType === 'FIXA' && this.isRecorrente ? true : false);    
-  }
+    this.transactionForm.controls['repeat'].setValue(
+      repeatType === 'REPEAT' && this.isRecorrente ? true : false
+    );
+    this.transactionForm.controls['recorrente'].setValue(
+      repeatType === 'FIXA' && this.isRecorrente ? true : false
+    );
+  };
 
   protected backEdit = () => {
     this.isEditConfirm = false;
-  }
+  };
 
-  protected deleteTransition = () => {
-    console.log('DELETE', this.transitionData.id);
+  protected deleteTransaction = () => {
+    console.log('DELETE', this.transactionData.id);
 
-    this.apiService.deleteTransition(this.transitionData.id, this.selectRoteRequest()).subscribe({
+    this.apiService.deleteTransiction(this.transactionData.id, this.selectRoteRequest()).subscribe({
       next: (delete_response) => {
-        this.sheetService.reloadTransitions();
-        this.dialogRef.close();        
-      }
-    })
-  }
+        this.sheetService.reloadTransictions();
+        this.dialogRef.close();
+      },
+    });
+  };
 
   selectRoteRequest = () => {
-    const rote = this.transitionForm.value.typeRef === 'despesa' ? 'despesas' : 'receitas';
+    const rote = this.transactionForm.value.typeRef === 'despesa' ? 'despesas' : 'receitas';
 
-    if (this.transitionForm.value.recorrente) {
+    if (this.transactionForm.value.recorrente) {
       return rote === 'despesas' ? 'despesasFixas' : 'receitasFixas';
     }
     return rote;
-  }
+  };
 
   protected changeCategoryByType = () => {
-    console.log('change', this.transitionForm.value.typeRef);
-    if (this.transitionForm.value.typeRef === 'receita') {
+    console.log('change', this.transactionForm.value.typeRef);
+    if (this.transactionForm.value.typeRef === 'receita') {
       this.categories = [
         { value: '', txt: 'Selecione a categoria' },
         { value: 'salario', txt: 'Salário' },
@@ -189,14 +206,13 @@ export class SheetComponent implements OnInit {
       ];
     } else {
       this.categories = [
-        { value: '', txt: 'Selecione a categoria'},
+        { value: '', txt: 'Selecione a categoria' },
         { value: 'cartao', txt: 'Cartão' },
         { value: 'veiculo', txt: 'Veículo' },
         { value: 'compras', txt: 'Compras' },
-        { value: 'pagamento', txt: 'Pagamento'},
+        { value: 'pagamento', txt: 'Pagamento' },
         { value: 'alimentacao', txt: 'Alimentação' },
-      ]
+      ];
     }
-  }
-
+  };
 }

@@ -12,20 +12,20 @@
   <div class="flex items-center gap-6">
     @if (!mediaQueryService.isMobile()) {
       <!-- Mudança para darkmode temporario -->
-      <!-- <ng-icon class="cursor-pointer text-grayDarkColor dark:text-white hover:text-greenColor transition" 
+      <!-- <ng-icon class="cursor-pointer text-grayDarkColor dark:text-white hover:text-greenColor transaction" 
                 [name]="!utilsService.darkModeSignal() ? 'ionSettings' : 'ionSettingsOutline' " 
                 size="2.2rem"
                 (click)="changeDarkMode()"
             ></ng-icon> -->
     }
 
-    <!-- <ng-icon class="cursor-pointer text-grayDarkColor dark:text-white hover:text-greenColor transition" 
+    <!-- <ng-icon class="cursor-pointer text-grayDarkColor dark:text-white hover:text-greenColor transaction" 
             name="lucideLogOut" size="2.2rem" 
             (click)="handleLogout()"
         ></ng-icon> -->
 
     <div
-      class="flex items-center gap-4 cursor-pointer border border-transparent hover:border-secundaryColor rounded-lg transition-all py-2 px-3"
+      class="flex items-center gap-4 cursor-pointer border border-transparent hover:border-secundaryColor rounded-lg transaction-all py-2 px-3"
       [cdkMenuTriggerFor]="menu"
     >
       <img
@@ -62,7 +62,7 @@
 
         @for (item of menuList; track $index) {
           <li
-            class="flex items-center gap-2 p-5 cursor-pointer hover:bg-[#f4f4f5] transition"
+            class="flex items-center gap-2 p-5 cursor-pointer hover:bg-[#f4f4f5] transaction"
             (click)="item.actionFunc()"
             cdkMenuItem
           >

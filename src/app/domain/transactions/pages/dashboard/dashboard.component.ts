@@ -1,11 +1,11 @@
 import { MediaQueryService } from '../../../../shared/services/media-query/media-query.service';
-import { ChartOptionsCategory, Transition } from './../transitions/transitions';
+import { ChartOptionsCategory, Transaction } from './../transactions/transactions';
 import { DataPickerService } from '../../../../shared/components/data-picker/data-picker.service';
 import { UtilsService } from '../../../../shared/services/utils/utils.service';
 import { Component, effect, inject, OnInit } from '@angular/core';
 import { pagesItems } from '../../../../constants/menu';
 import { CardComponent } from '../../../../shared/components/card/card.component';
-import { ChartOptions } from '../transitions/transitions';
+import { ChartOptions } from '../transactions/transactions';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import moment from 'moment';
 import { ApiService } from '../../apis/api.service';
@@ -16,18 +16,18 @@ import { PageHeaderComponent } from '../../../../shared/components/pageheader/pa
   standalone: true,
   imports: [PageHeaderComponent, CardComponent, NgApexchartsModule],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+  styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit {
-  private apiService = inject(ApiService)
+  private apiService = inject(ApiService);
   protected mediaQueryService = inject(MediaQueryService);
   protected utilsService = inject(UtilsService);
   protected dataPickerService = inject(DataPickerService);
 
   protected pageItem = pagesItems['dashboard'];
-  
-  private incomings!: Transition[];
-  private expenses!: Transition[];
+
+  private incomings!: Transaction[];
+  private expenses!: Transaction[];
 
   protected totalIncomings!: number;
   protected totalExpenses!: number;
@@ -39,104 +39,115 @@ export class DashboardComponent implements OnInit {
   constructor() {
     effect(() => {
       this.dataPickerService.currentDateSignal();
-      this.getTransitions();
+      this.getTransictions();
     });
   }
-  
+
   ngOnInit(): void {
-    this.utilsService.loaders.showTransition.set(false);
-    this.getTransitions();
-  } 
+    this.utilsService.loaders.showTransaction.set(false);
+    this.getTransictions();
+  }
 
-  private getTransitions = () => {
-    this.apiService.getTransitions().subscribe({
-      next: (transitions_res) => {
-        const receitasResponse = this.utilsService.convertGetFirebase(transitions_res?.receitas);
-        const despesasResponse = this.utilsService.convertGetFirebase(transitions_res?.despesas);
-        const incomingsFixed = this.utilsService.convertGetFirebase(transitions_res?.receitasFixas);
-        const expensesFixed = this.utilsService.convertGetFirebase(transitions_res?.despesasFixas);
+  private getTransictions = () => {
+    this.apiService.getTransictions().subscribe({
+      next: (transactions_res) => {
+        const receitasResponse = this.utilsService.convertGetFirebase(transactions_res?.receitas);
+        const despesasResponse = this.utilsService.convertGetFirebase(transactions_res?.despesas);
+        const incomingsFixed = this.utilsService.convertGetFirebase(
+          transactions_res?.receitasFixas
+        );
+        const expensesFixed = this.utilsService.convertGetFirebase(transactions_res?.despesasFixas);
 
-        this.incomings = this.utilsService.filterTransitionByDate(receitasResponse);
-        this.expenses = this.utilsService.filterTransitionByDate(despesasResponse);
+        this.incomings = this.utilsService.filterTransictionByDate(receitasResponse);
+        this.expenses = this.utilsService.filterTransictionByDate(despesasResponse);
 
-        const currentMonthDataPicker = this.dataPickerService.currentDateSignal().format("YYYY-MM");
+        const currentMonthDataPicker = this.dataPickerService.currentDateSignal().format('YYYY-MM');
 
-        this.incomings = this.utilsService.checkAndSetTransitionsFixes(incomingsFixed, this.incomings, currentMonthDataPicker);
-        this.expenses = this.utilsService.checkAndSetTransitionsFixes(expensesFixed, this.expenses, currentMonthDataPicker);
-        
-        this.totalIncomings = this.utilsService.totalTransitionAccumulator(this.incomings);
-        this.totalExpenses = this.utilsService.totalTransitionAccumulator(this.expenses);
-        
+        this.incomings = this.utilsService.checkAndSetTransictionsFixes(
+          incomingsFixed,
+          this.incomings,
+          currentMonthDataPicker
+        );
+        this.expenses = this.utilsService.checkAndSetTransictionsFixes(
+          expensesFixed,
+          this.expenses,
+          currentMonthDataPicker
+        );
+
+        this.totalIncomings = this.utilsService.totalTransictionAccumulator(this.incomings);
+        this.totalExpenses = this.utilsService.totalTransictionAccumulator(this.expenses);
+
         this.showLoader = false;
 
         this.initChart();
-      }
-    })
-  }
+      },
+    });
+  };
 
   private expensesByCategory = (values: 'CATEGORIA' | 'VALOR') => {
-    return this.expenses.map(expense => values === 'CATEGORIA' ? expense.categoria : expense.valor);
-  }
+    return this.expenses.map((expense) =>
+      values === 'CATEGORIA' ? expense.categoria : expense.valor
+    );
+  };
 
   private initChart = () => {
     this.chartOptions = {
       series: [
         {
-          name: "Saldo Previsto",
-          data: this.lastBalances()
-        }
+          name: 'Saldo Previsto',
+          data: this.lastBalances(),
+        },
       ],
       chart: {
-        type: "area",
+        type: 'area',
         height: 350,
 
         zoom: {
-          enabled: false
-        }
+          enabled: false,
+        },
       },
       dataLabels: {
-        enabled: false
+        enabled: false,
       },
       stroke: {
-        curve: "smooth"
+        curve: 'smooth',
       },
       xaxis: {
         categories: this.getNextFourMonths(),
       },
       yaxis: {
         title: {
-          text: "Saldo (R$)"
-        }
+          text: 'Saldo (R$)',
+        },
       },
       tooltip: {
         x: {
-          format: "MM/yyyy"
-        }
+          format: 'MM/yyyy',
+        },
       },
       fill: {
-        opacity: 0.5
+        opacity: 0.5,
       },
       title: {
-        text: "Previsão de Saldos para os Próximos 4 Meses",
-        align: "center"
-      }
+        text: 'Previsão de Saldos para os Próximos 4 Meses',
+        align: 'center',
+      },
     };
 
     this.chartOptionsCategory = {
       series: this.expensesByCategory('VALOR'),
       chart: {
-        type: "donut",        
+        type: 'donut',
       },
       stroke: {
-        show: false
+        show: false,
       },
       dataLabels: {
-        enabled: false
+        enabled: false,
       },
       labels: this.expensesByCategory('CATEGORIA'),
       legend: {
-        position: "bottom",
-
+        position: 'bottom',
       },
       plotOptions: {
         pie: {
@@ -145,18 +156,18 @@ export class DashboardComponent implements OnInit {
               show: true,
               name: {
                 show: true,
-                fontFamily: "Inter, sans-serif",
+                fontFamily: 'Inter, sans-serif',
                 offsetY: 20,
               },
               total: {
                 showAlways: true,
                 show: true,
-                label: "Despesas totais",
+                label: 'Despesas totais',
                 // fontFamily: "Inter, sans-serif",
                 formatter: (w) => {
                   const sum = w.globals.seriesTotals.reduce((a: any, b: any) => {
-                    return a + b
-                  }, 0)
+                    return a + b;
+                  }, 0);
                   return 'R$' + sum + 'k';
                 },
               },
@@ -166,26 +177,25 @@ export class DashboardComponent implements OnInit {
                 // fontFamily: "Inter, sans-serif",
                 offsetY: -20,
                 formatter: (value) => {
-                  return value + "k"
+                  return value + 'k';
                 },
               },
             },
-            size: "80%",
+            size: '80%',
           },
-          
         },
       },
       yaxis: {
         labels: {
           formatter: (value) => {
-            return "R$" + value
+            return 'R$' + value;
           },
         },
       },
       xaxis: {
         labels: {
           formatter: (value) => {
-            return "R$" + value
+            return 'R$' + value;
           },
         },
         axisTicks: {
@@ -200,26 +210,28 @@ export class DashboardComponent implements OnInit {
           breakpoint: 480,
           options: {
             chart: {
-              width: 200
+              width: 200,
             },
             legend: {
-              position: "bottom"
-            }
-          }
-        }
-      ]
+              position: 'bottom',
+            },
+          },
+        },
+      ],
     };
-  }
+  };
 
   getNextFourMonths(): string[] {
     const months = [];
     for (let i = 0; i < 4; i++) {
       //Verificar se esse add('month') vira no ano para evitar bugs
-      const nextDate = this.dataPickerService.currentDateSignal().clone().add(i, 'month').format('MMM / YYYY');
+      const nextDate = this.dataPickerService
+        .currentDateSignal()
+        .clone()
+        .add(i, 'month')
+        .format('MMM / YYYY');
       const nexDateFormat = nextDate.charAt(0).toUpperCase() + nextDate.slice(1).toLowerCase();
-      months.push(
-        nexDateFormat
-      );
+      months.push(nexDateFormat);
     }
     return months;
   }
@@ -228,23 +240,30 @@ export class DashboardComponent implements OnInit {
   lastBalances = () => {
     let lastBalances = [];
 
-    for (let i = 0; i < 4;  i++) {
-      
+    for (let i = 0; i < 4; i++) {
       //Adicionar a variavel global par auser na função getNextFourMounths()
-      const nextDates = this.dataPickerService.currentDateSignal().clone().add(i, 'month').format('MM/YYYY');
-      
+      const nextDates = this.dataPickerService
+        .currentDateSignal()
+        .clone()
+        .add(i, 'month')
+        .format('MM/YYYY');
+
       //Filtra as receitas e pega o total de todas as receitas dos ultimos meses estipulados
-      const incomingsFiltered = this.incomings.filter(incoming => moment(incoming.data).format('MM/YYYY') == nextDates);
-      const totalIncomings = this.utilsService.totalTransitionAccumulator(incomingsFiltered);
-      
+      const incomingsFiltered = this.incomings.filter(
+        (incoming) => moment(incoming.data).format('MM/YYYY') == nextDates
+      );
+      const totalIncomings = this.utilsService.totalTransictionAccumulator(incomingsFiltered);
+
       //Filtra as despesas e pega o total de todas as despesas dos ultimos meses estipulados
-      const expenseFiltered = this.expenses.filter(incoming => moment(incoming.data).format('MM/YYYY') == nextDates);
-      const totalExpenses = this.utilsService.totalTransitionAccumulator(expenseFiltered);
+      const expenseFiltered = this.expenses.filter(
+        (incoming) => moment(incoming.data).format('MM/YYYY') == nextDates
+      );
+      const totalExpenses = this.utilsService.totalTransictionAccumulator(expenseFiltered);
 
       const totalBalancos = totalIncomings - totalExpenses;
       lastBalances.push(totalBalancos);
     }
 
-    return lastBalances;    
-  }
+    return lastBalances;
+  };
 }

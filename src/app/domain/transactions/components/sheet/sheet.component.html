@@ -1,155 +1,237 @@
-<div class="sheet" [ngClass]="{'sheet--active': true, 'sheet--mobile': mediaQueryService.isMobile()}">
-    
-    <form class="flex flex-col justify-between h-full " [formGroup]="transitionForm">        
-        <!-- CONTENT -->
-        <div class="h-full flex flex-col gap-[1.5rem] min-[1550px]:justify-start min-[1550px]:gap-[2rem]">
-                @if (!isEditConfirm) {
-                    <div class="flex items-center gap-4 cursor-pointer hover:text-gray-700 mb-8" (click)="dialogRef.close()">
-                        <ng-icon name="ionArrowBack" size="2rem"></ng-icon>
-                        <span>Adicionar transação</span>
-                    </div>
-                    
-                    <label class="input">
-                        <span>Valor da transação</span>
-                        <input type="number" placeholder="R$ 0.00" formControlName="value">
-                    </label>
-            
-                    <div class="flex items-end justify-between">
-                        <div class="flex flex-col gap-2">
-                            <span>Tipo</span>
-                
-                            <div class="flex items-center gap-6">
-                                <label class="flex items-center gap-2">
-                                    <input class="accent-primaryColor" type="radio" value="despesa" formControlName="typeRef" (change)="changeCategoryByType()">
-                                    <span class="text-md font-medium">Despesa</span>
-                                </label>
-                
-                                <label class="flex items-center gap-2">
-                                    <input class="accent-primaryColor" type="radio" value="receita"  formControlName="typeRef" (change)="changeCategoryByType()">
-                                    <span class="text-md font-medium">Receita</span>
-                                </label>
-                            </div>
-                        </div>
-            
-                        <label class="inline-flex h-[1.8rem] items-center cursor-pointer">
-                            <input type="checkbox" [value]="false" class="sr-only peer" formControlName="status">
-                            <div class="relative w-11 h-[1.8rem] bg-gray-200 peer-focus:outline-none  dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-textColor"></div>
-                            <span class="ms-3 text-md font-medium dark:text-gray-300">Foi pago?</span>
-                        </label>
-                    </div>
-            
-                    <label class="input">
-                        <span>Nome da transação</span>
-                        <input type="text" placeholder="Adicione um nome para a transação" formControlName="name">
-                    </label>
-            
-                    <div class="grid items-end">
-                        <label class="input">
-                            <span>Data</span>
-                            <input type="date" placeholder="Adicione um nome para a transação" formControlName="date">
-                        </label>            
-                    </div>
+<div
+  class="sheet"
+  [ngClass]="{ 'sheet--active': true, 'sheet--mobile': mediaQueryService.isMobile() }"
+>
+  <form class="flex flex-col justify-between h-full" [formGroup]="transactionForm">
+    <!-- CONTENT -->
+    <div
+      class="h-full flex flex-col gap-[1.5rem] min-[1550px]:justify-start min-[1550px]:gap-[2rem]"
+    >
+      @if (!isEditConfirm) {
+        <div
+          class="flex items-center gap-4 cursor-pointer hover:text-gray-700 mb-8"
+          (click)="dialogRef.close()"
+        >
+          <ng-icon name="ionArrowBack" size="2rem"></ng-icon>
+          <span>Adicionar transação</span>
+        </div>
 
-                    <div class="border border-borderColor rounded px-[1.2rem] py-[1rem] w-full flex flex-col gap-[1.5rem]">
-                        <div class="flex items-center justify-between">
-                            <div class="flex flex-col gap-2">
-                                <span class="font-medium">Recorrente</span>
-                                <p class="text-[1.2rem] text-secundaryColor">Esta transaçao se repete periodicamente?</p>
-                            </div>
-    
-                            <label class="flex h-[1.8rem] items-center cursor-pointer justify-end">
-                                <input type="checkbox" [value]="false" class="sr-only peer" [checked]="isRecorrente" (change)="changeRecorrentePayment($event)">
-                                <div class="relative w-11 h-[1.8rem] bg-gray-200 peer-focus:outline-none  dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-textColor"></div>
-                            </label>
-                        </div>
+        <label class="input">
+          <span>Valor da transação</span>
+          <input type="number" placeholder="R$ 0.00" formControlName="value" />
+        </label>
 
-                        @if (isRecorrente) {
-                            <div class="flex flex-col gap-2">
-                                <span>Repetir</span>
-                    
-                                <div class="flex items-center gap-6">
-                                    <label class="flex items-center gap-2">
-                                        <input class="accent-primaryColor" type="radio"  value="FIXA" formControlName="repeatType" (change)="changeRepeatType()">
-                                        <span class="text-md font-medium">Despesa fixa</span>
-                                    </label>
-                    
-                                    <label class="flex items-center gap-2">
-                                        <input class="accent-primaryColor" type="radio" value="REPEAT" formControlName="repeatType" (change)="changeRepeatType()">
-                                        <span class="text-md font-medium">Despesa parcelada</span>
-                                    </label>
-                                </div>
-                            </div>
+        <div class="flex items-end justify-between">
+          <div class="flex flex-col gap-2">
+            <span>Tipo</span>
 
-                            @if (transitionForm.value.repeat) {
-                                <label class="input">
-                                <span>Parcelas</span>
-                                    <input type="number" [value]="2" formControlName="repeatTimes">
-                                </label>
-                            }
-                        }
+            <div class="flex items-center gap-6">
+              <label class="flex items-center gap-2">
+                <input
+                  class="accent-primaryColor"
+                  type="radio"
+                  value="despesa"
+                  formControlName="typeRef"
+                  (change)="changeCategoryByType()"
+                />
+                <span class="text-md font-medium">Despesa</span>
+              </label>
 
-                    </div>
-                    
-                    <!-- TESTE SELECT PERSONALIZADO -->
-                    <label>
-                        <span for="countries" class="block mb-[.5rem] text-md font-medium text-textColor dark:text-white">Categoria</span>
-                        <select id="countries" class="bg-gray-50 border border-gray-300 text-base text-secundaryColor rounded focus:ring-blue-500 focus:border-primaryColor focus:outline-none block w-full h-[4rem] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" formControlName="category">
-                        
-                        @for (option of categories; track $index) {
-                            <option [value]="option.value">{{option.txt}}</option>
-                        }
-                        
-                        </select>
-                    </label>
-                    <!--  -->
-                
-                    <label class="input">
-                        <span>Descrição</span>
-                        <textarea rows="3" placeholder="Adicione uma descrição" formControlName="description"></textarea>
-                    </label>
-                } @else {
-                    <div class="flex items-center gap-4 cursor-pointer hover:text-gray-700 mb-8" (click)="backEdit()">
-                        <ng-icon name="ionArrowBack" size="2rem"></ng-icon>
-                        <span>Voltar</span>
-                    </div>
+              <label class="flex items-center gap-2">
+                <input
+                  class="accent-primaryColor"
+                  type="radio"
+                  value="receita"
+                  formControlName="typeRef"
+                  (change)="changeCategoryByType()"
+                />
+                <span class="text-md font-medium">Receita</span>
+              </label>
+            </div>
+          </div>
 
-                    <div class="flex flex-col gap-2">
-                        <span>Tipo de movimentação</span>
-            
-                        <div class="flex flex-col gap-6">
-                            <label class="flex items-center gap-2">
-                                <input class="accent-primaryColor" type="radio" [value]="1" formControlName="typeMovimentation">
-                                <span class="text-md font-medium">Apenas essa</span>
-                            </label>
-            
-                            <label class="flex items-center gap-2">
-                                <input class="accent-primaryColor" type="radio" [value]="2"  formControlName="typeMovimentation">
-                                <span class="text-md font-medium">Todas elas</span>
-                            </label>
-                        </div>
+          <label class="inline-flex h-[1.8rem] items-center cursor-pointer">
+            <input type="checkbox" [value]="false" class="sr-only peer" formControlName="status" />
+            <div
+              class="relative w-11 h-[1.8rem] bg-gray-200 peer-focus:outline-none dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transaction-all dark:border-gray-600 peer-checked:bg-textColor"
+            ></div>
+            <span class="ms-3 text-md font-medium dark:text-gray-300">Foi pago?</span>
+          </label>
+        </div>
 
-                        <button type="menu"></button>
-                    </div>
-                }
+        <label class="input">
+          <span>Nome da transação</span>
+          <input
+            type="text"
+            placeholder="Adicione um nome para a transação"
+            formControlName="name"
+          />
+        </label>
+
+        <div class="grid items-end">
+          <label class="input">
+            <span>Data</span>
+            <input
+              type="date"
+              placeholder="Adicione um nome para a transação"
+              formControlName="date"
+            />
+          </label>
+        </div>
+
+        <div
+          class="border border-borderColor rounded px-[1.2rem] py-[1rem] w-full flex flex-col gap-[1.5rem]"
+        >
+          <div class="flex items-center justify-between">
+            <div class="flex flex-col gap-2">
+              <span class="font-medium">Recorrente</span>
+              <p class="text-[1.2rem] text-secundaryColor">
+                Esta transaçao se repete periodicamente?
+              </p>
             </div>
 
-        <!-- ACTIONS -->
-        <div class="grid grid-flow-col gap-4 items-center mt-[2rem] min-[1550px]:absolute bottom-[1.6rem] left-[1.6rem] right-[1.6rem]">
-            <app-button 
-                [txt]="transitionData && !isEditConfirm ? 'Editar Transação' : isEditConfirm ? 'Confirmar' : 'Adicionar Transação'" 
-                [icon]="transitionData ? 'ionCreateOutline' : 'ionAddOutlined'"
-                (actionEvent)="handleSubmit()"
-            />
+            <label class="flex h-[1.8rem] items-center cursor-pointer justify-end">
+              <input
+                type="checkbox"
+                [value]="false"
+                class="sr-only peer"
+                [checked]="isRecorrente"
+                (change)="changeRecorrentePayment($event)"
+              />
+              <div
+                class="relative w-11 h-[1.8rem] bg-gray-200 peer-focus:outline-none dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transaction-all dark:border-gray-600 peer-checked:bg-textColor"
+              ></div>
+            </label>
+          </div>
 
-            @if (transitionData) {
-                <app-button 
-                    txt="Excluir" 
-                    icon="ionTrashOutline"
-                    [iconType]="'DELETE'"
-                    (actionEvent)="deleteTransition()"
-                />
+          @if (isRecorrente) {
+            <div class="flex flex-col gap-2">
+              <span>Repetir</span>
+
+              <div class="flex items-center gap-6">
+                <label class="flex items-center gap-2">
+                  <input
+                    class="accent-primaryColor"
+                    type="radio"
+                    value="FIXA"
+                    formControlName="repeatType"
+                    (change)="changeRepeatType()"
+                  />
+                  <span class="text-md font-medium">Despesa fixa</span>
+                </label>
+
+                <label class="flex items-center gap-2">
+                  <input
+                    class="accent-primaryColor"
+                    type="radio"
+                    value="REPEAT"
+                    formControlName="repeatType"
+                    (change)="changeRepeatType()"
+                  />
+                  <span class="text-md font-medium">Despesa parcelada</span>
+                </label>
+              </div>
+            </div>
+
+            @if (transactionForm.value.repeat) {
+              <label class="input">
+                <span>Parcelas</span>
+                <input type="number" [value]="2" formControlName="repeatTimes" />
+              </label>
             }
+          }
         </div>
-    </form>
 
+        <!-- TESTE SELECT PERSONALIZADO -->
+        <label>
+          <span
+            for="countries"
+            class="block mb-[.5rem] text-md font-medium text-textColor dark:text-white"
+            >Categoria</span
+          >
+          <select
+            id="countries"
+            class="bg-gray-50 border border-gray-300 text-base text-secundaryColor rounded focus:ring-blue-500 focus:border-primaryColor focus:outline-none block w-full h-[4rem] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            formControlName="category"
+          >
+            @for (option of categories; track $index) {
+              <option [value]="option.value">{{ option.txt }}</option>
+            }
+          </select>
+        </label>
+        <!--  -->
+
+        <label class="input">
+          <span>Descrição</span>
+          <textarea
+            rows="3"
+            placeholder="Adicione uma descrição"
+            formControlName="description"
+          ></textarea>
+        </label>
+      } @else {
+        <div
+          class="flex items-center gap-4 cursor-pointer hover:text-gray-700 mb-8"
+          (click)="backEdit()"
+        >
+          <ng-icon name="ionArrowBack" size="2rem"></ng-icon>
+          <span>Voltar</span>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <span>Tipo de movimentação</span>
+
+          <div class="flex flex-col gap-6">
+            <label class="flex items-center gap-2">
+              <input
+                class="accent-primaryColor"
+                type="radio"
+                [value]="1"
+                formControlName="typeMovimentation"
+              />
+              <span class="text-md font-medium">Apenas essa</span>
+            </label>
+
+            <label class="flex items-center gap-2">
+              <input
+                class="accent-primaryColor"
+                type="radio"
+                [value]="2"
+                formControlName="typeMovimentation"
+              />
+              <span class="text-md font-medium">Todas elas</span>
+            </label>
+          </div>
+
+          <button type="menu"></button>
+        </div>
+      }
+    </div>
+
+    <!-- ACTIONS -->
+    <div
+      class="grid grid-flow-col gap-4 items-center mt-[2rem] min-[1550px]:absolute bottom-[1.6rem] left-[1.6rem] right-[1.6rem]"
+    >
+      <app-button
+        [txt]="
+          transactionData && !isEditConfirm
+            ? 'Editar Transação'
+            : isEditConfirm
+              ? 'Confirmar'
+              : 'Adicionar Transação'
+        "
+        [icon]="transactionData ? 'ionCreateOutline' : 'ionAddOutlined'"
+        (actionEvent)="handleSubmit()"
+      />
+
+      @if (transactionData) {
+        <app-button
+          txt="Excluir"
+          icon="ionTrashOutline"
+          [iconType]="'DELETE'"
+          (actionEvent)="deleteTransaction()"
+        />
+      }
+    </div>
+  </form>
 </div>

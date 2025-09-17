@@ -1,74 +1,85 @@
 import { inject, Injectable, signal } from '@angular/core';
 import moment from 'moment';
 import { DataPickerService } from '../../components/data-picker/data-picker.service';
-import { Transition } from '../../../domain/transactions/pages/transitions/transitions';
+import { Transaction } from '../../../domain/transactions/pages/transactions/transactions';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UtilsService {
   private dataPickerService = inject(DataPickerService);
-  
+
   darkModeSignal = signal(false);
 
   public loaders = {
-    showTransition: signal(false)
-  }
+    showTransaction: signal(false),
+  };
 
-  constructor() { }
+  constructor() {}
 
   //Função que converte objetos do get em array de objetos.
   public convertGetFirebase = (objects: any) => {
     if (!objects) return [];
-    return Object.keys(objects).map(key => {
+    return Object.keys(objects).map((key) => {
       return {
         ...objects[key],
-        id: key
-      }
-    })
-  }
+        id: key,
+      };
+    });
+  };
 
   //Função que retorna o valor total de uma transição (acumulador: Soma de todos os valores)
-  public totalTransitionAccumulator = (transitions: Transition[]) => {
-    return transitions.reduce((acc, transition) => {
-      return acc + transition.valor;
+  public totalTransictionAccumulator = (transactions: Transaction[]) => {
+    return transactions.reduce((acc, transaction) => {
+      return acc + transaction.valor;
     }, 0);
-  }
-  
-  public filterTransitionByDate = (transitions: Transition[], transitionType?: "FIXE") => {
-    return transitions.filter(transition => {      
-      const transitionDate = moment(transition.data).format('MM/YYYY');
-      const transitioYear = moment(transition.data).format('YYYY');
+  };
+
+  public filterTransictionByDate = (transactions: Transaction[], transactionType?: 'FIXE') => {
+    return transactions.filter((transaction) => {
+      const transactionDate = moment(transaction.data).format('MM/YYYY');
+      const transitioYear = moment(transaction.data).format('YYYY');
       const currentMonthDataPicker = this.dataPickerService.currentDateSignal().format('MM/YYYY');
       const currentYearDataPicker = this.dataPickerService.currentDateSignal().format('YYYY');
 
-      if (transition.repete) {
-        const endDate = moment(transition.data).add((transition.repeticoes - 1), "month").format('MM/YYYY');
-        return transitionDate <= currentMonthDataPicker && currentMonthDataPicker <= endDate && transitioYear === currentYearDataPicker;
+      if (transaction.repete) {
+        const endDate = moment(transaction.data)
+          .add(transaction.repeticoes - 1, 'month')
+          .format('MM/YYYY');
+        return (
+          transactionDate <= currentMonthDataPicker &&
+          currentMonthDataPicker <= endDate &&
+          transitioYear === currentYearDataPicker
+        );
       }
 
-      if (transitionType === "FIXE") {
-        return transitionDate <= currentMonthDataPicker && transitioYear === currentYearDataPicker;
+      if (transactionType === 'FIXE') {
+        return transactionDate <= currentMonthDataPicker && transitioYear === currentYearDataPicker;
       }
-      return transitionDate == currentMonthDataPicker;
-    });    
-  }
+      return transactionDate == currentMonthDataPicker;
+    });
+  };
 
-  // Se tiver transitionFixes verifica ediçao (sobrescritas) conforme o mes
-  public checkAndSetTransitionsFixes = (transitionsFixes: Transition[], transitions: Transition[], currentMonthDataPicker: any) => {
-    const transitionsFixesFormatted = transitionsFixes.map(transition => {
-      return transition.sobrescrita?.[currentMonthDataPicker] ?
-      {...transition, ...transition.sobrescrita[currentMonthDataPicker]} : transition
+  // Se tiver transactionFixes verifica ediçao (sobrescritas) conforme o mes
+  public checkAndSetTransictionsFixes = (
+    transactionsFixes: Transaction[],
+    transactions: Transaction[],
+    currentMonthDataPicker: any
+  ) => {
+    const transactionsFixesFormatted = transactionsFixes.map((transaction) => {
+      return transaction.sobrescrita?.[currentMonthDataPicker]
+        ? { ...transaction, ...transaction.sobrescrita[currentMonthDataPicker] }
+        : transaction;
     });
 
-    const transitionsFormatted = transitions.map((transition) => {
-      const initMonth = moment(transition.data).month();
+    const transactionsFormatted = transactions.map((transaction) => {
+      const initMonth = moment(transaction.data).month();
       const currentMonth = this.dataPickerService.currentDateSignal().month();
-      const currentRepeat = (currentMonth - initMonth) + 1
+      const currentRepeat = currentMonth - initMonth + 1;
 
-      return transition.repete ? {...transition, currentRepeat} : transition;
-    })
+      return transaction.repete ? { ...transaction, currentRepeat } : transaction;
+    });
 
-    return transitions = [...transitionsFormatted, ...transitionsFixesFormatted];
-  }
+    return (transactions = [...transactionsFormatted, ...transactionsFixesFormatted]);
+  };
 }

@@ -3,20 +3,19 @@ import { inject, Injectable, signal } from '@angular/core';
 import { SheetComponent } from './sheet.component';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SheetService {
   private dialog = inject(Dialog);
 
-  public reloadTransitionsSignal = signal(false);
+  public reloadTransictionsSignal = signal(false);
 
-
-  public reloadTransitions = () => {
-    this.reloadTransitionsSignal.set(true);
-    this.reloadTransitionsSignal.update(value => !value);
-  }
+  public reloadTransictions = () => {
+    this.reloadTransictionsSignal.set(true);
+    this.reloadTransictionsSignal.update((value) => !value);
+  };
 
   public openSheetDialog = () => {
     this.dialog.open(SheetComponent);
-  }
+  };
 }
