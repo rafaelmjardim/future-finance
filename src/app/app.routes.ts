@@ -9,16 +9,16 @@ export const routes: Routes = [
     },
     {
         path: 'login',
-        loadComponent: () => import('./pages/login/login.component').then(c => c.LoginComponent)
+        loadComponent: () => import('./domain/auth/pages/login/login.component').then(c => c.LoginComponent)
     },
     {
         path: 'dashboard',
-        loadComponent: () => import('./pages/dashboard/dashboard.component').then(c => c.DashboardComponent),
+        loadComponent: () => import('./domain/transactions/pages/dashboard/dashboard.component').then(c => c.DashboardComponent),
         canActivate: [AuthGuard],
     },
     {
         path: 'transacoes',
-        loadComponent: () => import('./pages/transitions/transitions.component').then(c => c.TransitionsComponent),
+        loadComponent: () => import('./domain/transactions/pages/transitions/transitions.component').then(c => c.TransitionsComponent),
         canActivate: [AuthGuard]
     },
     {   path: '**', redirectTo: 'login' } //Error route
