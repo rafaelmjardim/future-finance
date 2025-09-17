@@ -162,6 +162,11 @@ export class SheetComponent implements OnInit {
       this.transactionForm.controls['repeatType'].setValue(null);
       this.transactionForm.controls['repeatTimes'].setValue(null);
     }
+    
+    if (this.isRecorrente) {
+      this.transactionForm.controls['repeatType'].setValue('FIXA');
+      this.transactionForm.controls['repeatTimes'].setValue(2);
+    }
 
     this.transactionForm.controls['repeat'].setValue(
       repeatType === 'REPEAT' && this.isRecorrente ? true : false
