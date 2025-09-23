@@ -84,7 +84,7 @@ export class SheetComponent implements OnInit {
 
     this.apiService.postTransiction(transactionFormData, this.selectRoteRequest()).subscribe({
       next: (transaction_response) => {
-        this.sheetService.reloadTransictions();
+        this.sheetService.reloadTransactions();
         this.dialogRef.close();
       },
       error: (transaction_error: HttpErrorResponse) => {
@@ -109,7 +109,7 @@ export class SheetComponent implements OnInit {
           .putTransictionSobrecrita(transactionFormData.id, transactionFormData, rota)
           .subscribe({
             next: (transactionFixe_response) => {
-              this.sheetService.reloadTransictions();
+              this.sheetService.reloadTransactions();
               this.dialogRef.close();
             },
           });
@@ -117,7 +117,7 @@ export class SheetComponent implements OnInit {
 
       if (this.isEditConfirm && this.transactionForm.value.typeMovimentation === 2) {
         this.apiService
-          .deleteAllTransictionsSobrescritas(this.transactionData.id, this.selectRoteRequest())
+          .deleteAllTransactionsSobrescritas(this.transactionData.id, this.selectRoteRequest())
           .subscribe({
             next: (delete_sobrescrita_response) => {
               this.apiService
@@ -128,7 +128,7 @@ export class SheetComponent implements OnInit {
                 )
                 .subscribe({
                   next: (edit_response) => {
-                    this.sheetService.reloadTransictions();
+                    this.sheetService.reloadTransactions();
                     this.dialogRef.close();
                   },
                 });
@@ -144,7 +144,7 @@ export class SheetComponent implements OnInit {
       .putTransiction(this.transactionData.id, this.transactionForm.value, this.selectRoteRequest())
       .subscribe({
         next: (edit_response) => {
-          this.sheetService.reloadTransictions();
+          this.sheetService.reloadTransactions();
           this.dialogRef.close();
         },
       });
@@ -180,7 +180,7 @@ export class SheetComponent implements OnInit {
 
     this.apiService.deleteTransiction(this.transactionData.id, this.selectRoteRequest()).subscribe({
       next: (delete_response) => {
-        this.sheetService.reloadTransictions();
+        this.sheetService.reloadTransactions();
         this.dialogRef.close();
       },
     });

@@ -49,23 +49,23 @@ export class TransactionsComponent implements OnInit {
 
   constructor() {
     effect(() => {
-      if (this.sheetService.reloadTransictionsSignal()) {
-        this.getTransictions();
+      if (this.sheetService.reloadTransactionsSignal()) {
+        this.getTransactions();
         //Verificar, talvez tenha que setar para false o reload pois não vá reconhecer segunda transação seguida (signal não atualiza mesmo valor caso n tenha mudança)
       }
 
       this.dataPickerService.currentDateSignal();
-      this.getTransictions(); //Get duplicado, resolver depois
+      this.getTransactions(); //Get duplicado, resolver depois
     });
   }
 
   ngOnInit(): void {
     this.utilsService.loaders.showTransaction.set(false);
-    this.getTransictions();
+    this.getTransactions();
   }
 
-  getTransictions = () => {
-    this.api.getTransictions().subscribe({
+  getTransactions = () => {
+    this.api.getTransactions().subscribe({
       next: (transactions_response) => {
         const receitasResponse = this.utilsService.convertGetFirebase(
           transactions_response?.receitas
@@ -93,12 +93,12 @@ export class TransactionsComponent implements OnInit {
 
         this.currentMonthDataPicker = this.dataPickerService.currentDateSignal().format('YYYY-MM');
 
-        this.incomings = this.utilsService.checkAndSetTransictionsFixes(
+        this.incomings = this.utilsService.checkAndSetTransactionsFixes(
           this.incomingsFixes,
           this.incomings,
           this.currentMonthDataPicker
         );
-        this.expenses = this.utilsService.checkAndSetTransictionsFixes(
+        this.expenses = this.utilsService.checkAndSetTransactionsFixes(
           this.expensesFixes,
           this.expenses,
           this.currentMonthDataPicker

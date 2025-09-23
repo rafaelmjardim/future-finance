@@ -8,11 +8,11 @@ import { SheetComponent } from './sheet.component';
 export class SheetService {
   private dialog = inject(Dialog);
 
-  public reloadTransictionsSignal = signal(false);
+  public reloadTransactionsSignal = signal(false);
 
-  public reloadTransictions = () => {
-    this.reloadTransictionsSignal.set(true);
-    this.reloadTransictionsSignal.update((value) => !value);
+  public reloadTransactions = () => {
+    this.reloadTransactionsSignal.set(true);
+    this.reloadTransactionsSignal.update((value) => !value);
   };
 
   public openSheetDialog = () => {

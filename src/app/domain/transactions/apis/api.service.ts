@@ -20,7 +20,7 @@ const API_KEY = environment.API_KEY;
 export class ApiService {
   private http = inject(HttpClient);
 
-  getTransictions = (): Observable<GET_TRANSITIONS> => {
+  getTransactions = (): Observable<GET_TRANSITIONS> => {
     return this.http.get<GET_TRANSITIONS>(`${API_KEY}.json`);
   };
 
@@ -93,7 +93,7 @@ export class ApiService {
     return this.http.delete(`${API_KEY}/${rota}/${id}.json`);
   };
 
-  deleteAllTransictionsSobrescritas = (id: string, rota: Rota) => {
+  deleteAllTransactionsSobrescritas = (id: string, rota: Rota) => {
     return this.http.delete(`${API_KEY}/${rota}/${id}/sobrescrita.json`);
   };
 }

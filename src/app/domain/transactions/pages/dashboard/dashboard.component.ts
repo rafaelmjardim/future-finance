@@ -39,17 +39,17 @@ export class DashboardComponent implements OnInit {
   constructor() {
     effect(() => {
       this.dataPickerService.currentDateSignal();
-      this.getTransictions();
+      this.getTransactions();
     });
   }
 
   ngOnInit(): void {
     this.utilsService.loaders.showTransaction.set(false);
-    this.getTransictions();
+    this.getTransactions();
   }
 
-  private getTransictions = () => {
-    this.apiService.getTransictions().subscribe({
+  private getTransactions = () => {
+    this.apiService.getTransactions().subscribe({
       next: (transactions_res) => {
         const receitasResponse = this.utilsService.convertGetFirebase(transactions_res?.receitas);
         const despesasResponse = this.utilsService.convertGetFirebase(transactions_res?.despesas);
@@ -63,12 +63,12 @@ export class DashboardComponent implements OnInit {
 
         const currentMonthDataPicker = this.dataPickerService.currentDateSignal().format('YYYY-MM');
 
-        this.incomings = this.utilsService.checkAndSetTransictionsFixes(
+        this.incomings = this.utilsService.checkAndSetTransactionsFixes(
           incomingsFixed,
           this.incomings,
           currentMonthDataPicker
         );
-        this.expenses = this.utilsService.checkAndSetTransictionsFixes(
+        this.expenses = this.utilsService.checkAndSetTransactionsFixes(
           expensesFixed,
           this.expenses,
           currentMonthDataPicker

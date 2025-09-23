@@ -61,7 +61,7 @@ export class UtilsService {
   };
 
   // Se tiver transactionFixes verifica ediçao (sobrescritas) conforme o mes
-  public checkAndSetTransictionsFixes = (
+  public checkAndSetTransactionsFixes = (
     transactionsFixes: Transaction[],
     transactions: Transaction[],
     currentMonthDataPicker: any
