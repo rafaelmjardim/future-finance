@@ -19,8 +19,6 @@ import {
 export type GET_TRANSITIONS = {
   receitas: Transaction[];
   despesas: Transaction[];
-  despesasFixas: Transaction[];
-  receitasFixas: Transaction[];
 };
 
 export type Transaction = {
@@ -29,6 +27,7 @@ export type Transaction = {
   nome: string;
   categoria: string;
   data: string;
+  dataAt?: string;
   valor: number;
   descricao: string;
   icon?: string;

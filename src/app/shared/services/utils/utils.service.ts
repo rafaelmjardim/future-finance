@@ -35,7 +35,7 @@ export class UtilsService {
     }, 0);
   };
 
-  public filterTransictionByDate = (transactions: Transaction[], transactionType?: 'FIXE') => {
+  public filterTransictionByDate = (transactions: Transaction[]) => {
     return transactions.filter((transaction) => {
       const transactionDate = moment(transaction.data).format('MM/YYYY');
       const transitioYear = moment(transaction.data).format('YYYY');
@@ -53,7 +53,7 @@ export class UtilsService {
         );
       }
 
-      if (transactionType === 'FIXE') {
+      if (transaction.recorrente) {
         return transactionDate <= currentMonthDataPicker && transitioYear === currentYearDataPicker;
       }
       return transactionDate == currentMonthDataPicker;

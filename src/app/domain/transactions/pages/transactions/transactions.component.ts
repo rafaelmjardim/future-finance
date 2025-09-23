@@ -11,6 +11,7 @@ import { NgClass } from '@angular/common';
 import { ApiService } from '../../apis/api.service';
 import { PageHeaderComponent } from '../../../../shared/components/pageheader/page-header.component';
 import { TransactionsListComponent } from './transactions-list/transactions-list.component';
+import { map, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-transactions',
@@ -66,30 +67,12 @@ export class TransactionsComponent implements OnInit {
 
   getTransactions = () => {
     this.api.getTransactions().subscribe({
-      next: (transactions_response) => {
-        const receitasResponse = this.utilsService.convertGetFirebase(
-          transactions_response?.receitas
-        );
-        const despesasResponse = this.utilsService.convertGetFirebase(
-          transactions_response?.despesas
-        );
-        const receitasFixasResponse = this.utilsService.convertGetFirebase(
-          transactions_response?.receitasFixas
-        );
-        const despesasFixasResponse = this.utilsService.convertGetFirebase(
-          transactions_response?.despesasFixas
-        );
+      next: ({ receitas, despesas }) => {
+        const receitasResponse = this.utilsService.convertGetFirebase(receitas);
+        const despesasResponse = this.utilsService.convertGetFirebase(despesas);
 
         this.incomings = this.utilsService.filterTransictionByDate(receitasResponse);
         this.expenses = this.utilsService.filterTransictionByDate(despesasResponse);
-        this.expensesFixes = this.utilsService.filterTransictionByDate(
-          despesasFixasResponse,
-          'FIXE'
-        );
-        this.incomingsFixes = this.utilsService.filterTransictionByDate(
-          receitasFixasResponse,
-          'FIXE'
-        );
 
         this.currentMonthDataPicker = this.dataPickerService.currentDateSignal().format('YYYY-MM');
 
