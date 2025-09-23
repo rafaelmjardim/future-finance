@@ -187,12 +187,7 @@ export class SheetComponent implements OnInit {
   };
 
   selectRoteRequest = () => {
-    const rote = this.transactionForm.value.typeRef === 'despesa' ? 'despesas' : 'receitas';
-
-    if (this.transactionForm.value.recorrente) {
-      return rote === 'despesas' ? 'despesasFixas' : 'receitasFixas';
-    }
-    return rote;
+    return this.transactionForm.value.typeRef === 'despesa' ? 'despesas' : 'receitas';
   };
 
   protected changeCategoryByType = () => {
