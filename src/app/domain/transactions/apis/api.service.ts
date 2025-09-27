@@ -81,12 +81,20 @@ export class ApiService {
   };
 
   putTransictionSobrecrita = (id: string, transactionFormData: any, rota: Rota) => {
-    const { date, value, description } = transactionFormData;
+    const payload = {
+      valor: transactionFormData.value,
+      DataAt: transactionFormData.date,
+      nome: transactionFormData.name,
+      categoria: transactionFormData.category,
+      descricao: transactionFormData.description,
+      tipo: transactionFormData.typeRef,
+      status: transactionFormData.status,
+    };
 
-    return this.http.patch(`${API_KEY}/${rota}/${id}/sobrescrita/${date}.json`, {
-      valor: value,
-      descricao: description,
-    });
+    return this.http.patch(
+      `${API_KEY}/${rota}/${id}/sobrescrita/${transactionFormData.date}.json`,
+      payload
+    );
   };
 
   deleteTransiction = (id: string, rota: Rota) => {

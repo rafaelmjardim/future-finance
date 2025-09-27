@@ -98,15 +98,13 @@ export class SheetComponent implements OnInit {
       const rota = this.selectRoteRequest();
 
       const transactionFormData = {
-        id: this.transactionData.id,
+        ...this.transactionForm.value,
         date: moment(this.transactionForm.value.date).format('YYYY-MM'),
-        value: this.transactionForm.value.value,
-        description: this.transactionForm.value.description,
       };
 
       if (this.isEditConfirm && this.transactionForm.value.typeMovimentation === 1) {
         this.apiService
-          .putTransictionSobrecrita(transactionFormData.id, transactionFormData, rota)
+          .putTransictionSobrecrita(this.transactionData.id, transactionFormData, rota)
           .subscribe({
             next: (transactionFixe_response) => {
               this.sheetService.reloadTransactions();

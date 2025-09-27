@@ -97,6 +97,7 @@
                 class="sr-only peer"
                 [checked]="isRecorrente"
                 (change)="changeRecorrentePayment($event)"
+                [disabled]="transactionData.sobrescrita"
               />
               <div
                 class="relative w-11 h-[1.8rem] bg-gray-200 peer-focus:outline-none dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transaction-all dark:border-gray-600 peer-checked:bg-textColor"
@@ -118,16 +119,18 @@
                   <span class="text-md font-medium">Despesa fixa</span>
                 </label>
 
-                <label class="flex items-center gap-2">
-                  <input
-                    class="accent-primaryColor"
-                    type="radio"
-                    value="REPEAT"
-                    formControlName="repeatType"
-                    (change)="changeRepeatType()"
-                  />
-                  <span class="text-md font-medium">Despesa parcelada</span>
-                </label>
+                @if (!transactionData.sobrescrita) {
+                  <label class="flex items-center gap-2">
+                    <input
+                      class="accent-primaryColor"
+                      type="radio"
+                      value="REPEAT"
+                      formControlName="repeatType"
+                      (change)="changeRepeatType()"
+                    />
+                    <span class="text-md font-medium">Despesa parcelada</span>
+                  </label>
+                }
               </div>
             </div>
 
