@@ -10,6 +10,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import moment from 'moment';
 import { ApiService } from '../../apis/api.service';
 import { PageHeaderComponent } from '../../../../shared/components/pageheader/page-header.component';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -49,33 +50,38 @@ export class DashboardComponent implements OnInit {
   }
 
   private getTransactions = () => {
-    this.apiService.getTransactions().subscribe({
-      next: ({ receitas, despesas }) => {
-        const receitasResponse = this.utilsService.convertGetFirebase(receitas);
-        const despesasResponse = this.utilsService.convertGetFirebase(despesas);
+    this.apiService
+      .getTransactions()
+      .pipe(filter((transactions) => !!transactions))
+      .subscribe({
+        next: ({ receitas, despesas }) => {
+          const receitasResponse = this.utilsService.convertGetFirebase(receitas);
+          const despesasResponse = this.utilsService.convertGetFirebase(despesas);
 
-        this.incomings = this.utilsService.filterTransictionByDate(receitasResponse);
-        this.expenses = this.utilsService.filterTransictionByDate(despesasResponse);
+          this.incomings = this.utilsService.filterTransictionByDate(receitasResponse);
+          this.expenses = this.utilsService.filterTransictionByDate(despesasResponse);
 
-        const currentMonthDataPicker = this.dataPickerService.currentDateSignal().format('YYYY-MM');
+          const currentMonthDataPicker = this.dataPickerService
+            .currentDateSignal()
+            .format('YYYY-MM');
 
-        this.incomings = this.utilsService.checkAndSetRepeatTransactions(
-          this.incomings,
-          currentMonthDataPicker
-        );
-        this.expenses = this.utilsService.checkAndSetRepeatTransactions(
-          this.expenses,
-          currentMonthDataPicker
-        );
+          this.incomings = this.utilsService.checkAndSetRepeatTransactions(
+            this.incomings,
+            currentMonthDataPicker
+          );
+          this.expenses = this.utilsService.checkAndSetRepeatTransactions(
+            this.expenses,
+            currentMonthDataPicker
+          );
 
-        this.totalIncomings = this.utilsService.totalTransictionAccumulator(this.incomings);
-        this.totalExpenses = this.utilsService.totalTransictionAccumulator(this.expenses);
+          this.totalIncomings = this.utilsService.totalTransictionAccumulator(this.incomings);
+          this.totalExpenses = this.utilsService.totalTransictionAccumulator(this.expenses);
 
-        this.showLoader = false;
+          this.showLoader = false;
 
-        this.initChart();
-      },
-    });
+          this.initChart();
+        },
+      });
   };
 
   private expensesByCategory = (values: 'CATEGORIA' | 'VALOR') => {

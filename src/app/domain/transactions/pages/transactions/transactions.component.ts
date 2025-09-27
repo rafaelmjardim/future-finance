@@ -11,7 +11,7 @@ import { NgClass } from '@angular/common';
 import { ApiService } from '../../apis/api.service';
 import { PageHeaderComponent } from '../../../../shared/components/pageheader/page-header.component';
 import { TransactionsListComponent } from './transactions-list/transactions-list.component';
-import { map, switchMap } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-transactions',
@@ -66,36 +66,41 @@ export class TransactionsComponent implements OnInit {
   }
 
   getTransactions = () => {
-    this.api.getTransactions().subscribe({
-      next: ({ receitas, despesas }) => {
-        const receitasResponse = this.utilsService.convertGetFirebase(receitas);
-        const despesasResponse = this.utilsService.convertGetFirebase(despesas);
+    this.api
+      .getTransactions()
+      .pipe(filter((transactions) => !!transactions))
+      .subscribe({
+        next: ({ receitas, despesas }) => {
+          const receitasResponse = this.utilsService.convertGetFirebase(receitas);
+          const despesasResponse = this.utilsService.convertGetFirebase(despesas);
 
-        this.incomings = this.utilsService.filterTransictionByDate(receitasResponse);
-        this.expenses = this.utilsService.filterTransictionByDate(despesasResponse);
+          this.incomings = this.utilsService.filterTransictionByDate(receitasResponse);
+          this.expenses = this.utilsService.filterTransictionByDate(despesasResponse);
 
-        this.currentMonthDataPicker = this.dataPickerService.currentDateSignal().format('YYYY-MM');
+          this.currentMonthDataPicker = this.dataPickerService
+            .currentDateSignal()
+            .format('YYYY-MM');
 
-        this.incomings = this.utilsService.checkAndSetRepeatTransactions(
-          this.incomings,
-          this.currentMonthDataPicker
-        );
-        this.expenses = this.utilsService.checkAndSetRepeatTransactions(
-          this.expenses,
-          this.currentMonthDataPicker
-        );
+          this.incomings = this.utilsService.checkAndSetRepeatTransactions(
+            this.incomings,
+            this.currentMonthDataPicker
+          );
+          this.expenses = this.utilsService.checkAndSetRepeatTransactions(
+            this.expenses,
+            this.currentMonthDataPicker
+          );
 
-        // Seta icones conforme categoria
-        this.incomings = this.setIconCategoryInTransiction(this.incomings);
-        this.expenses = this.setIconCategoryInTransiction(this.expenses);
+          // Seta icones conforme categoria
+          this.incomings = this.setIconCategoryInTransiction(this.incomings);
+          this.expenses = this.setIconCategoryInTransiction(this.expenses);
 
-        this.totalIncomings = this.utilsService.totalTransictionAccumulator(this.incomings);
-        this.totalExpenses = this.utilsService.totalTransictionAccumulator(this.expenses);
+          this.totalIncomings = this.utilsService.totalTransictionAccumulator(this.incomings);
+          this.totalExpenses = this.utilsService.totalTransictionAccumulator(this.expenses);
 
-        this.utilsService.loaders.showTransaction.set(true);
-        this.initChart();
-      },
-    });
+          this.utilsService.loaders.showTransaction.set(true);
+          this.initChart();
+        },
+      });
   };
 
   setIconCategoryInTransiction = (transactions: Transaction[]) => {
