@@ -50,26 +50,20 @@ export class DashboardComponent implements OnInit {
 
   private getTransactions = () => {
     this.apiService.getTransactions().subscribe({
-      next: (transactions_res) => {
-        const receitasResponse = this.utilsService.convertGetFirebase(transactions_res?.receitas);
-        const despesasResponse = this.utilsService.convertGetFirebase(transactions_res?.despesas);
-        const incomingsFixed = this.utilsService.convertGetFirebase(
-          transactions_res?.receitasFixas
-        );
-        const expensesFixed = this.utilsService.convertGetFirebase(transactions_res?.despesasFixas);
+      next: ({ receitas, despesas }) => {
+        const receitasResponse = this.utilsService.convertGetFirebase(receitas);
+        const despesasResponse = this.utilsService.convertGetFirebase(despesas);
 
         this.incomings = this.utilsService.filterTransictionByDate(receitasResponse);
         this.expenses = this.utilsService.filterTransictionByDate(despesasResponse);
 
         const currentMonthDataPicker = this.dataPickerService.currentDateSignal().format('YYYY-MM');
 
-        this.incomings = this.utilsService.checkAndSetTransactionsFixes(
-          incomingsFixed,
+        this.incomings = this.utilsService.checkAndSetRepeatTransactions(
           this.incomings,
           currentMonthDataPicker
         );
-        this.expenses = this.utilsService.checkAndSetTransactionsFixes(
-          expensesFixed,
+        this.expenses = this.utilsService.checkAndSetRepeatTransactions(
           this.expenses,
           currentMonthDataPicker
         );

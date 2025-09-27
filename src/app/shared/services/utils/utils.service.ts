@@ -60,26 +60,22 @@ export class UtilsService {
     });
   };
 
-  // Se tiver transactionFixes verifica ediçao (sobrescritas) conforme o mes
-  public checkAndSetTransactionsFixes = (
-    transactionsFixes: Transaction[],
+  public checkAndSetRepeatTransactions = (
     transactions: Transaction[],
     currentMonthDataPicker: any
   ) => {
-    const transactionsFixesFormatted = transactionsFixes.map((transaction) => {
-      return transaction.sobrescrita?.[currentMonthDataPicker]
-        ? { ...transaction, ...transaction.sobrescrita[currentMonthDataPicker] }
-        : transaction;
-    });
-
     const transactionsFormatted = transactions.map((transaction) => {
       const initMonth = moment(transaction.data).month();
       const currentMonth = this.dataPickerService.currentDateSignal().month();
       const currentRepeat = currentMonth - initMonth + 1;
 
+      if (transaction.sobrescrita) {
+        transaction = { ...transaction, ...transaction.sobrescrita[currentMonthDataPicker] };
+      }
+
       return transaction.repete ? { ...transaction, currentRepeat } : transaction;
     });
 
-    return (transactions = [...transactionsFormatted, ...transactionsFixesFormatted]);
+    return (transactions = [...transactionsFormatted]);
   };
 }

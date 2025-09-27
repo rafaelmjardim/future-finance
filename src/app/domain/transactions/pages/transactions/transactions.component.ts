@@ -76,13 +76,11 @@ export class TransactionsComponent implements OnInit {
 
         this.currentMonthDataPicker = this.dataPickerService.currentDateSignal().format('YYYY-MM');
 
-        this.incomings = this.utilsService.checkAndSetTransactionsFixes(
-          this.incomingsFixes,
+        this.incomings = this.utilsService.checkAndSetRepeatTransactions(
           this.incomings,
           this.currentMonthDataPicker
         );
-        this.expenses = this.utilsService.checkAndSetTransactionsFixes(
-          this.expensesFixes,
+        this.expenses = this.utilsService.checkAndSetRepeatTransactions(
           this.expenses,
           this.currentMonthDataPicker
         );
