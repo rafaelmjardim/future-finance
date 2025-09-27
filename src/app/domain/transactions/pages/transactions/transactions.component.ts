@@ -65,7 +65,7 @@ export class TransactionsComponent implements OnInit {
     this.getTransactions();
   }
 
-  getTransactions = () => {
+  private getTransactions = (): void => {
     this.api
       .getTransactions()
       .pipe(filter((transactions) => !!transactions))
@@ -103,8 +103,8 @@ export class TransactionsComponent implements OnInit {
       });
   };
 
-  setIconCategoryInTransiction = (transactions: Transaction[]) => {
-    const transactionsFormatted = transactions.map((transaction) => {
+  private setIconCategoryInTransiction = (transactions: Transaction[]): Transaction[] => {
+    return (transactions = transactions.map((transaction) => {
       return {
         ...transaction,
         icon:
@@ -112,12 +112,10 @@ export class TransactionsComponent implements OnInit {
             ? this.setIconByCetegory(transaction.categoria)
             : 'lucideDollarSign',
       };
-    });
-
-    return transactionsFormatted;
+    }));
   };
 
-  setIconByCetegory = (categoryKey: string) => {
+  private setIconByCetegory = (categoryKey: string): string => {
     const icons: { [ket: string]: string } = {
       cartao: 'ionCardOutline',
       veiculo: 'ionCarOutline',
@@ -129,7 +127,7 @@ export class TransactionsComponent implements OnInit {
     return icons[categoryKey] ?? 'ionPricetagOutline';
   };
 
-  initChart = () => {
+  private initChart = () => {
     this.chartOptions = {
       series: [
         {
