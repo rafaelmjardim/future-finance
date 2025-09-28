@@ -13,10 +13,10 @@ import { DataPickerService } from '../../../../shared/components/data-picker/dat
 import { ApiService } from '../../apis/api.service';
 
 @Component({
-    selector: 'app-sheet',
-    imports: [DialogModule, ReactiveFormsModule, NgIcon, NgClass, ButtonComponent],
-    templateUrl: './sheet.component.html',
-    styleUrl: './sheet.component.scss'
+  selector: 'app-sheet',
+  imports: [DialogModule, ReactiveFormsModule, NgIcon, NgClass, ButtonComponent],
+  templateUrl: './sheet.component.html',
+  styleUrl: './sheet.component.scss',
 })
 export class SheetComponent implements OnInit {
   protected dialogRef = inject(DialogRef<SheetComponent>);
@@ -30,6 +30,7 @@ export class SheetComponent implements OnInit {
   protected categories: { value: string; txt: string }[] = [];
 
   protected isEditConfirm = false;
+  protected isDeleteConfirm = false;
 
   protected transactionForm = new FormGroup({
     value: new FormControl(this.transactionData?.valor ?? '', Validators.required),
@@ -168,19 +169,45 @@ export class SheetComponent implements OnInit {
     );
   };
 
-  protected backEdit = () => {
+  protected backConfirmation = () => {
     this.isEditConfirm = false;
+    this.isDeleteConfirm = false;
   };
 
-  protected deleteTransaction = () => {
-    console.log('DELETE', this.transactionData.id);
+  public deleteTransaction = () => {
+    if (this.setTypeMovimentation() === 1) {
+      const dateRecorrent = this.dataPickerService.currentDateSignal().format('YYYY-MM');
 
-    this.apiService.deleteTransiction(this.transactionData.id, this.selectRoteRequest()).subscribe({
-      next: () => {
-        this.sheetService.reloadTransactions();
-        this.dialogRef.close();
-      },
-    });
+      this.apiService
+        .deleteTransictionSobrescrita(
+          this.transactionData.id,
+          dateRecorrent,
+          this.selectRoteRequest()
+        )
+        .subscribe({
+          next: () => {
+            this.sheetService.reloadTransactions();
+            this.dialogRef.close();
+          },
+          error: (err: HttpErrorResponse) => {
+            console.log(err);
+          },
+        });
+      return;
+    }
+
+    if (this.setTypeMovimentation() === 2) {
+      this.apiService
+        .deleteTransiction(this.transactionData.id, this.selectRoteRequest())
+        .subscribe({
+          next: () => {
+            this.sheetService.reloadTransactions();
+            this.dialogRef.close();
+          },
+        });
+
+      return;
+    }
   };
 
   selectRoteRequest = () => {
@@ -188,7 +215,6 @@ export class SheetComponent implements OnInit {
   };
 
   protected changeCategoryByType = () => {
-    console.log('change', this.transactionForm.value.typeRef);
     if (this.transactionForm.value.typeRef === 'receita') {
       this.categories = [
         { value: '', txt: 'Selecione a categoria' },
@@ -206,5 +232,10 @@ export class SheetComponent implements OnInit {
         { value: 'alimentacao', txt: 'Alimentação' },
       ];
     }
+  };
+
+  setTypeMovimentation = (): number => {
+    const startTypeMovimentation = 1;
+    return this.transactionForm.value.typeMovimentation ?? startTypeMovimentation;
   };
 }

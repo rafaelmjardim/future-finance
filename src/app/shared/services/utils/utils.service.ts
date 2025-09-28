@@ -64,7 +64,7 @@ export class UtilsService {
     transactions: Transaction[],
     currentMonthDataPicker: any
   ) => {
-    const transactionsFormatted = transactions.map((transaction) => {
+    let transactionsFormatted = transactions.map((transaction) => {
       const initMonth = moment(transaction.data).month();
       const currentMonth = this.dataPickerService.currentDateSignal().month();
       const currentRepeat = currentMonth - initMonth + 1;
@@ -75,6 +75,11 @@ export class UtilsService {
 
       return transaction.repete ? { ...transaction, currentRepeat } : transaction;
     });
+
+    // Remove transação deletada caso seja fixa
+    transactionsFormatted = transactionsFormatted.filter(
+      (transaction) => !transaction?.sobrescrita?.[currentMonthDataPicker]?.deletado
+    );
 
     return (transactions = [...transactionsFormatted]);
   };

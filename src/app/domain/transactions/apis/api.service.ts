@@ -97,6 +97,12 @@ export class ApiService {
     );
   };
 
+  deleteTransictionSobrescrita = (id: string, dateRecorrent: any, rota: Rota) => {
+    return this.http.patch(`${API_KEY}/${rota}/${id}/sobrescrita/${dateRecorrent}.json`, {
+      deletado: true,
+    });
+  };
+
   deleteTransiction = (id: string, rota: Rota) => {
     return this.http.delete(`${API_KEY}/${rota}/${id}.json`);
   };
