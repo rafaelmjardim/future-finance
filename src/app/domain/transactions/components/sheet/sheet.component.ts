@@ -83,7 +83,7 @@ export class SheetComponent implements OnInit {
     const transactionFormData = this.transactionForm.value;
 
     this.apiService.postTransiction(transactionFormData, this.selectRoteRequest()).subscribe({
-      next: (transaction_response) => {
+      next: () => {
         this.sheetService.reloadTransactions();
         this.dialogRef.close();
       },
@@ -141,7 +141,7 @@ export class SheetComponent implements OnInit {
     this.apiService
       .putTransiction(this.transactionData.id, this.transactionForm.value, this.selectRoteRequest())
       .subscribe({
-        next: (edit_response) => {
+        next: () => {
           this.sheetService.reloadTransactions();
           this.dialogRef.close();
         },
@@ -177,7 +177,7 @@ export class SheetComponent implements OnInit {
     console.log('DELETE', this.transactionData.id);
 
     this.apiService.deleteTransiction(this.transactionData.id, this.selectRoteRequest()).subscribe({
-      next: (delete_response) => {
+      next: () => {
         this.sheetService.reloadTransactions();
         this.dialogRef.close();
       },
