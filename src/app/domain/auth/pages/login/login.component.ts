@@ -15,11 +15,10 @@ import { NgIcon } from '@ng-icons/core';
 import { MediaQueryService } from '../../../../shared/services/media-query/media-query.service';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, NgIcon, ButtonComponent],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
+    selector: 'app-login',
+    imports: [FormsModule, ReactiveFormsModule, NgIcon, ButtonComponent],
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit {
   isRegistration = false;

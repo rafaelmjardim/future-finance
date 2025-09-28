@@ -13,11 +13,10 @@ import { PageHeaderComponent } from '../../../../shared/components/pageheader/pa
 import { filter } from 'rxjs';
 
 @Component({
-  selector: 'app-dashboard',
-  standalone: true,
-  imports: [PageHeaderComponent, CardComponent, NgApexchartsModule],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss',
+    selector: 'app-dashboard',
+    imports: [PageHeaderComponent, CardComponent, NgApexchartsModule],
+    templateUrl: './dashboard.component.html',
+    styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit {
   private apiService = inject(ApiService);

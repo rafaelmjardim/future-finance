@@ -9,11 +9,10 @@ import { NgClass } from '@angular/common';
 import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 
 @Component({
-  selector: 'app-header',
-  standalone: true,
-  imports: [NgIcon, NgClass, CdkMenu, CdkMenuItem, CdkMenuTrigger],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
+    selector: 'app-header',
+    imports: [NgIcon, NgClass, CdkMenu, CdkMenuItem, CdkMenuTrigger],
+    templateUrl: './header.component.html',
+    styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
   protected mediaQueryService = inject(MediaQueryService);

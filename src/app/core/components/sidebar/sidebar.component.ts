@@ -9,11 +9,10 @@ import { SidebarService } from './sidebar.service';
 import { UtilsService } from '../../../shared/services/utils/utils.service';
 
 @Component({
-  selector: 'app-sidebar',
-  standalone: true,
-  imports: [NgIcon, NgClass, RouterLink, ButtonComponent],
-  templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.scss'
+    selector: 'app-sidebar',
+    imports: [NgIcon, NgClass, RouterLink, ButtonComponent],
+    templateUrl: './sidebar.component.html',
+    styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
   protected router = inject(Router);

@@ -4,11 +4,10 @@ import { NgIcon } from '@ng-icons/core';
 import { LoaderComponent } from '../loader/loader.component';
 
 @Component({
-  selector: 'app-button',
-  standalone: true,
-  imports: [NgIcon, NgClass, LoaderComponent],
-  templateUrl: './button.component.html',
-  styleUrl: './button.component.scss'
+    selector: 'app-button',
+    imports: [NgIcon, NgClass, LoaderComponent],
+    templateUrl: './button.component.html',
+    styleUrl: './button.component.scss'
 })
 export class ButtonComponent {
   @Output() actionEvent = new EventEmitter<void>();

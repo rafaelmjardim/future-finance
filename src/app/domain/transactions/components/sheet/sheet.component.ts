@@ -13,11 +13,10 @@ import { DataPickerService } from '../../../../shared/components/data-picker/dat
 import { ApiService } from '../../apis/api.service';
 
 @Component({
-  selector: 'app-sheet',
-  standalone: true,
-  imports: [DialogModule, ReactiveFormsModule, NgIcon, NgClass, ButtonComponent],
-  templateUrl: './sheet.component.html',
-  styleUrl: './sheet.component.scss',
+    selector: 'app-sheet',
+    imports: [DialogModule, ReactiveFormsModule, NgIcon, NgClass, ButtonComponent],
+    templateUrl: './sheet.component.html',
+    styleUrl: './sheet.component.scss'
 })
 export class SheetComponent implements OnInit {
   protected dialogRef = inject(DialogRef<SheetComponent>);

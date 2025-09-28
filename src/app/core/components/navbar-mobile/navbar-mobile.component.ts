@@ -7,11 +7,10 @@ import { SheetComponent } from '../../../domain/transactions/components/sheet/sh
 import { NgClass } from '@angular/common';
 
 @Component({
-  selector: 'app-navbar-mobile',
-  standalone: true,
-  imports: [NgIcon, ButtonComponent, RouterLink, NgClass],
-  templateUrl: './navbar-mobile.component.html',
-  styleUrl: './navbar-mobile.component.scss'
+    selector: 'app-navbar-mobile',
+    imports: [NgIcon, ButtonComponent, RouterLink, NgClass],
+    templateUrl: './navbar-mobile.component.html',
+    styleUrl: './navbar-mobile.component.scss'
 })
 export class NavbarMobileComponent {
   private dialog = inject(Dialog);

@@ -5,11 +5,10 @@ import { NgIcon } from '@ng-icons/core';
 import { DataPickerService } from './data-picker.service';
 
 @Component({
-  selector: 'app-data-picker',
-  standalone: true,
-  imports: [NgIcon, NgClass, TitleCasePipe],
-  templateUrl: './data-picker.component.html',
-  styleUrl: './data-picker.component.scss'
+    selector: 'app-data-picker',
+    imports: [NgIcon, NgClass, TitleCasePipe],
+    templateUrl: './data-picker.component.html',
+    styleUrl: './data-picker.component.scss'
 })
 export class DataPickerComponent {
   public dataPickerService = inject(DataPickerService);

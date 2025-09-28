@@ -3,11 +3,10 @@ import { CurrencyPipe, NgClass, NgStyle } from '@angular/common';
 import { Component, inject, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-card',
-  standalone: true,
-  imports: [CurrencyPipe, NgClass, NgStyle],
-  templateUrl: './card.component.html',
-  styleUrl: './card.component.scss'
+    selector: 'app-card',
+    imports: [CurrencyPipe, NgClass, NgStyle],
+    templateUrl: './card.component.html',
+    styleUrl: './card.component.scss'
 })
 export class CardComponent {
   @Input() title!: string;

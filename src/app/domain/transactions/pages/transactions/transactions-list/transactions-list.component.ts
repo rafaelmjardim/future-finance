@@ -8,11 +8,10 @@ import { Dialog } from '@angular/cdk/dialog';
 import { SheetComponent } from '../../../components/sheet/sheet.component';
 
 @Component({
-  selector: 'app-transactions-list',
-  standalone: true,
-  imports: [NgIcon, NgClass, CurrencyPipe, DatePipe, ItemLoaderComponent],
-  templateUrl: './transactions-list.component.html',
-  styleUrl: './transactions-list.component.scss',
+    selector: 'app-transactions-list',
+    imports: [NgIcon, NgClass, CurrencyPipe, DatePipe, ItemLoaderComponent],
+    templateUrl: './transactions-list.component.html',
+    styleUrl: './transactions-list.component.scss'
 })
 export class TransactionsListComponent {
   @Input() label!: string;

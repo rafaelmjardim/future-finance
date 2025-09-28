@@ -5,11 +5,10 @@ import { NgClass, NgStyle } from '@angular/common';
 import { MediaQueryService } from '../../services/media-query/media-query.service';
 
 @Component({
-  selector: 'app-page-header',
-  standalone: true,
-  imports: [NgIcon, DataPickerComponent, NgClass, NgStyle],
-  templateUrl: './page-header.component.html',
-  styleUrl: './page-header.component.scss'
+    selector: 'app-page-header',
+    imports: [NgIcon, DataPickerComponent, NgClass, NgStyle],
+    templateUrl: './page-header.component.html',
+    styleUrl: './page-header.component.scss'
 })
 export class PageHeaderComponent {
   protected mediaQueryService = inject(MediaQueryService);

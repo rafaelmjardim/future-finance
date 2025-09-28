@@ -14,17 +14,16 @@ import { TransactionsListComponent } from './transactions-list/transactions-list
 import { filter, map, switchMap } from 'rxjs';
 
 @Component({
-  selector: 'app-transactions',
-  standalone: true,
-  imports: [
-    PageHeaderComponent,
-    TransactionsListComponent,
-    CardComponent,
-    NgApexchartsModule,
-    NgClass,
-  ],
-  templateUrl: './transactions.component.html',
-  styleUrl: './transactions.component.scss',
+    selector: 'app-transactions',
+    imports: [
+        PageHeaderComponent,
+        TransactionsListComponent,
+        CardComponent,
+        NgApexchartsModule,
+        NgClass,
+    ],
+    templateUrl: './transactions.component.html',
+    styleUrl: './transactions.component.scss'
 })
 export class TransactionsComponent implements OnInit {
   private api = inject(ApiService);
