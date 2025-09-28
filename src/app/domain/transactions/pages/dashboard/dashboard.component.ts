@@ -13,10 +13,10 @@ import { PageHeaderComponent } from '../../../../shared/components/pageheader/pa
 import { filter } from 'rxjs';
 
 @Component({
-    selector: 'app-dashboard',
-    imports: [PageHeaderComponent, CardComponent, NgApexchartsModule],
-    templateUrl: './dashboard.component.html',
-    styleUrl: './dashboard.component.scss'
+  selector: 'app-dashboard',
+  imports: [PageHeaderComponent, CardComponent, NgApexchartsModule],
+  templateUrl: './dashboard.component.html',
+  styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit {
   private apiService = inject(ApiService);
@@ -31,8 +31,8 @@ export class DashboardComponent implements OnInit {
 
   protected totalIncomings!: number;
   protected totalExpenses!: number;
-  protected chartOptions!: Partial<ChartOptions>;
-  protected chartOptionsCategory!: Partial<ChartOptionsCategory>;
+  protected chartOptions!: Partial<ChartOptions> | any;
+  protected chartOptionsCategory!: Partial<ChartOptionsCategory> | Partial<any>;
 
   public showLoader = true;
 

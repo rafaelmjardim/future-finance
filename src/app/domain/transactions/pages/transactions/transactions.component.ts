@@ -1,10 +1,10 @@
 import { MediaQueryService } from '../../../../shared/services/media-query/media-query.service';
-import { Component, effect, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { UtilsService } from '../../../../shared/services/utils/utils.service';
 import { pagesItems } from '../../../../constants/menu';
 import { ChartOptions, Transaction } from './transactions';
 import { CardComponent } from '../../../../shared/components/card/card.component';
-import { NgApexchartsModule } from 'ng-apexcharts';
+import { ChartComponent, NgApexchartsModule } from 'ng-apexcharts';
 import { SheetService } from '../../components/sheet/sheet.service';
 import { DataPickerService } from '../../../../shared/components/data-picker/data-picker.service';
 import { NgClass } from '@angular/common';
@@ -14,16 +14,16 @@ import { TransactionsListComponent } from './transactions-list/transactions-list
 import { filter, map, switchMap } from 'rxjs';
 
 @Component({
-    selector: 'app-transactions',
-    imports: [
-        PageHeaderComponent,
-        TransactionsListComponent,
-        CardComponent,
-        NgApexchartsModule,
-        NgClass,
-    ],
-    templateUrl: './transactions.component.html',
-    styleUrl: './transactions.component.scss'
+  selector: 'app-transactions',
+  imports: [
+    PageHeaderComponent,
+    TransactionsListComponent,
+    CardComponent,
+    NgApexchartsModule,
+    NgClass,
+  ],
+  templateUrl: './transactions.component.html',
+  styleUrl: './transactions.component.scss',
 })
 export class TransactionsComponent implements OnInit {
   private api = inject(ApiService);
@@ -45,7 +45,7 @@ export class TransactionsComponent implements OnInit {
   protected totalIncomings!: number;
   protected totalExpenses!: number;
 
-  protected chartOptions!: Partial<ChartOptions>;
+  protected chartOptions!: Partial<ChartOptions> | any;
 
   constructor() {
     effect(() => {
