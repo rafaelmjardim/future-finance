@@ -106,7 +106,7 @@ export class SheetComponent implements OnInit {
         this.apiService
           .putTransictionSobrecrita(this.transactionData.id, transactionFormData, rota)
           .subscribe({
-            next: (transactionFixe_response) => {
+            next: () => {
               this.sheetService.reloadTransactions();
               this.dialogRef.close();
             },
@@ -117,7 +117,7 @@ export class SheetComponent implements OnInit {
         this.apiService
           .deleteAllTransactionsSobrescritas(this.transactionData.id, this.selectRoteRequest())
           .subscribe({
-            next: (delete_sobrescrita_response) => {
+            next: () => {
               this.apiService
                 .putTransiction(
                   this.transactionData.id,
@@ -125,7 +125,7 @@ export class SheetComponent implements OnInit {
                   this.selectRoteRequest()
                 )
                 .subscribe({
-                  next: (edit_response) => {
+                  next: () => {
                     this.sheetService.reloadTransactions();
                     this.dialogRef.close();
                   },
