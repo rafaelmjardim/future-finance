@@ -68,7 +68,7 @@ export class ApiService {
 
     return this.http.patch(`${API_KEY}/${rota}/${id}.json`, {
       valor: value,
-      dataAt: date,
+      data: date,
       nome: name,
       categoria: category,
       descricao: description,
@@ -83,7 +83,7 @@ export class ApiService {
   putTransictionSobrecrita = (id: string, transactionFormData: any, rota: Rota) => {
     const payload = {
       valor: transactionFormData.value,
-      DataAt: transactionFormData.date,
+      dataAt: transactionFormData.date,
       nome: transactionFormData.name,
       categoria: transactionFormData.category,
       descricao: transactionFormData.description,
