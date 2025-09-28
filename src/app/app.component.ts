@@ -10,20 +10,14 @@ import { NavbarMobileComponent } from './core/components/navbar-mobile/navbar-mo
 import { MediaQueryService } from './shared/services/media-query/media-query.service';
 
 @Component({
-    selector: 'app-root',
-    imports: [
-        RouterOutlet,
-        AsyncPipe,
-        HeaderComponent,
-        SidebarComponent,
-        NavbarMobileComponent,
-    ],
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.scss'
+  selector: 'app-root',
+  imports: [RouterOutlet, AsyncPipe, HeaderComponent, SidebarComponent, NavbarMobileComponent],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  protected authService = inject(AuthService);  
+  protected authService = inject(AuthService);
   protected mediaQueryService = inject(MediaQueryService);
   protected sidebarService = inject(SidebarService);
-  protected utilsService = inject(UtilsService);  
+  protected utilsService = inject(UtilsService);
 }
