@@ -175,7 +175,7 @@ export class SheetComponent implements OnInit {
   };
 
   public deleteTransaction = () => {
-    if (this.setTypeMovimentation() === 1) {
+    if (this.isDeleteConfirm && this.setTypeMovimentation() === 1) {
       const dateRecorrent = this.dataPickerService.currentDateSignal().format('YYYY-MM');
 
       this.apiService
@@ -196,7 +196,7 @@ export class SheetComponent implements OnInit {
       return;
     }
 
-    if (this.setTypeMovimentation() === 2) {
+    if (!this.isDeleteConfirm || this.setTypeMovimentation() === 2) {
       this.apiService
         .deleteTransiction(this.transactionData.id, this.selectRoteRequest())
         .subscribe({

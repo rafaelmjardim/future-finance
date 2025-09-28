@@ -78,7 +78,7 @@ export class UtilsService {
 
     // Remove transação deletada caso seja fixa
     transactionsFormatted = transactionsFormatted.filter(
-      (transaction) => !transaction?.sobrescrita?.[currentMonthDataPicker]?.deletado
+      (transaction) => transaction?.sobrescrita?.[currentMonthDataPicker]?.deletado !== true
     );
 
     return (transactions = [...transactionsFormatted]);

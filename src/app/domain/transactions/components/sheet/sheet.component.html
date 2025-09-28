@@ -229,11 +229,11 @@
 
       @if (transactionData && !isEditConfirm) {
         <app-button
-          [txt]="transactionData.sobrescrita && !isDeleteConfirm ? 'Excluir' : 'Confirmar'"
+          [txt]="transactionData && !isDeleteConfirm ? 'Excluir' : 'Confirmar'"
           icon="ionTrashOutline"
           [iconType]="'DELETE'"
           (actionEvent)="
-            transactionData.sobrescrita && !isDeleteConfirm
+            transactionData.recorrente && !isDeleteConfirm
               ? (isDeleteConfirm = true)
               : deleteTransaction()
           "
