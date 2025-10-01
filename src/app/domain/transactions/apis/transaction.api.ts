@@ -10,14 +10,14 @@ const API_KEY = environment.API_KEY;
 @Injectable({
   providedIn: 'root',
 })
-export class ApiService {
+export class TransactionApi {
   private http = inject(HttpClient);
 
   getTransactions = (): Observable<GET_TRANSITIONS> => {
     return this.http.get<GET_TRANSITIONS>(`${API_KEY}.json`);
   };
 
-  postTransiction = (transactionFormData: any, rota: Rota) => {
+  postTransaction = (transactionFormData: any, rota: Rota) => {
     const {
       date,
       value,
@@ -45,7 +45,7 @@ export class ApiService {
     });
   };
 
-  putTransiction = (id: string, transactionFormData: any, rota: Rota) => {
+  putTransaction = (id: string, transactionFormData: any, rota: Rota) => {
     const {
       date,
       value,
@@ -73,7 +73,7 @@ export class ApiService {
     });
   };
 
-  putTransictionSobrecrita = (id: string, transactionFormData: any, rota: Rota) => {
+  putTransactionSobrecrita = (id: string, transactionFormData: any, rota: Rota) => {
     const payload = {
       valor: transactionFormData.value,
       dataAt: transactionFormData.date,
@@ -90,13 +90,13 @@ export class ApiService {
     );
   };
 
-  deleteTransictionSobrescrita = (id: string, dateRecorrent: any, rota: Rota) => {
+  deleteTransactionSobrescrita = (id: string, dateRecorrent: any, rota: Rota) => {
     return this.http.patch(`${API_KEY}/${rota}/${id}/sobrescrita/${dateRecorrent}.json`, {
       deletado: true,
     });
   };
 
-  deleteTransiction = (id: string, rota: Rota) => {
+  deleteTransaction = (id: string, rota: Rota) => {
     return this.http.delete(`${API_KEY}/${rota}/${id}.json`);
   };
 

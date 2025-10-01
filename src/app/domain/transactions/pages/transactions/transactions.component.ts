@@ -8,7 +8,7 @@ import { ChartComponent, NgApexchartsModule } from 'ng-apexcharts';
 import { SheetService } from '../../components/sheet/sheet.service';
 import { DataPickerService } from '../../../../shared/components/data-picker/data-picker.service';
 import { NgClass } from '@angular/common';
-import { ApiService } from '../../apis/api.service';
+import { TransactionApi } from '../../apis/transaction.api';
 import { PageHeaderComponent } from '../../../../shared/components/pageheader/page-header.component';
 import { TransactionsListComponent } from './transactions-list/transactions-list.component';
 import { filter, map, switchMap } from 'rxjs';
@@ -26,7 +26,7 @@ import { filter, map, switchMap } from 'rxjs';
   styleUrl: './transactions.component.scss',
 })
 export class TransactionsComponent implements OnInit {
-  private api = inject(ApiService);
+  private api = inject(TransactionApi);
   protected mediaQueryService = inject(MediaQueryService);
   protected utilsService = inject(UtilsService);
   private sheetService = inject(SheetService);
@@ -73,8 +73,8 @@ export class TransactionsComponent implements OnInit {
           const receitasResponse = this.utilsService.convertGetFirebase(receitas);
           const despesasResponse = this.utilsService.convertGetFirebase(despesas);
 
-          this.incomings = this.utilsService.filterTransictionByDate(receitasResponse);
-          this.expenses = this.utilsService.filterTransictionByDate(despesasResponse);
+          this.incomings = this.utilsService.filterTransactionByDate(receitasResponse);
+          this.expenses = this.utilsService.filterTransactionByDate(despesasResponse);
 
           this.currentMonthDataPicker = this.dataPickerService
             .currentDateSignal()
@@ -90,11 +90,11 @@ export class TransactionsComponent implements OnInit {
           );
 
           // Seta icones conforme categoria
-          this.incomings = this.setIconCategoryInTransiction(this.incomings);
-          this.expenses = this.setIconCategoryInTransiction(this.expenses);
+          this.incomings = this.setIconCategoryInTransaction(this.incomings);
+          this.expenses = this.setIconCategoryInTransaction(this.expenses);
 
-          this.totalIncomings = this.utilsService.totalTransictionAccumulator(this.incomings);
-          this.totalExpenses = this.utilsService.totalTransictionAccumulator(this.expenses);
+          this.totalIncomings = this.utilsService.totalTransactionAccumulator(this.incomings);
+          this.totalExpenses = this.utilsService.totalTransactionAccumulator(this.expenses);
 
           this.utilsService.loaders.showTransaction.set(true);
           this.initChart();
@@ -102,7 +102,7 @@ export class TransactionsComponent implements OnInit {
       });
   };
 
-  private setIconCategoryInTransiction = (transactions: Transaction[]): Transaction[] => {
+  private setIconCategoryInTransaction = (transactions: Transaction[]): Transaction[] => {
     return (transactions = transactions.map((transaction) => {
       return {
         ...transaction,

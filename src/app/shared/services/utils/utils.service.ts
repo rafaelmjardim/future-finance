@@ -29,13 +29,13 @@ export class UtilsService {
   };
 
   //Função que retorna o valor total de uma transição (acumulador: Soma de todos os valores)
-  public totalTransictionAccumulator = (transactions: Transaction[]) => {
+  public totalTransactionAccumulator = (transactions: Transaction[]) => {
     return transactions.reduce((acc, transaction) => {
       return acc + transaction.valor;
     }, 0);
   };
 
-  public filterTransictionByDate = (transactions: Transaction[]) => {
+  public filterTransactionByDate = (transactions: Transaction[]) => {
     return transactions.filter((transaction) => {
       const transactionDate = moment(transaction.data).format('MM/YYYY');
       const transitioYear = moment(transaction.data).format('YYYY');

@@ -10,7 +10,7 @@ import { Transaction } from '../../pages/transactions/transactions';
 import moment from 'moment';
 import { MediaQueryService } from '../../../../shared/services/media-query/media-query.service';
 import { DataPickerService } from '../../../../shared/components/data-picker/data-picker.service';
-import { ApiService } from '../../apis/api.service';
+import { TransactionApi } from '../../apis/transaction.api';
 
 @Component({
   selector: 'app-sheet',
@@ -21,7 +21,7 @@ import { ApiService } from '../../apis/api.service';
 export class SheetComponent implements OnInit {
   protected dialogRef = inject(DialogRef<SheetComponent>);
   protected mediaQueryService = inject(MediaQueryService);
-  private apiService = inject(ApiService);
+  private apiService = inject(TransactionApi);
   private sheetService = inject(SheetService);
   protected transactionData: Transaction = inject(DIALOG_DATA);
 
@@ -72,17 +72,17 @@ export class SheetComponent implements OnInit {
     }
 
     if (this.transactionData) {
-      this.updateTransiction();
+      this.updateTransaction();
       return;
     }
 
-    this.postTransiction();
+    this.postTransaction();
   };
 
-  private postTransiction = () => {
+  private postTransaction = () => {
     const transactionFormData = this.transactionForm.value;
 
-    this.apiService.postTransiction(transactionFormData, this.selectRoteRequest()).subscribe({
+    this.apiService.postTransaction(transactionFormData, this.selectRoteRequest()).subscribe({
       next: () => {
         this.sheetService.reloadTransactions();
         this.dialogRef.close();
@@ -93,7 +93,7 @@ export class SheetComponent implements OnInit {
     });
   };
 
-  private updateTransiction = () => {
+  private updateTransaction = () => {
     if (this.transactionForm.value.recorrente) {
       const rota = this.selectRoteRequest();
 
@@ -104,7 +104,7 @@ export class SheetComponent implements OnInit {
 
       if (this.isEditConfirm && this.transactionForm.value.typeMovimentation === 1) {
         this.apiService
-          .putTransictionSobrecrita(this.transactionData.id, transactionFormData, rota)
+          .putTransactionSobrecrita(this.transactionData.id, transactionFormData, rota)
           .subscribe({
             next: () => {
               this.sheetService.reloadTransactions();
@@ -119,7 +119,7 @@ export class SheetComponent implements OnInit {
           .subscribe({
             next: () => {
               this.apiService
-                .putTransiction(
+                .putTransaction(
                   this.transactionData.id,
                   this.transactionForm.value,
                   this.selectRoteRequest()
@@ -139,7 +139,7 @@ export class SheetComponent implements OnInit {
     }
 
     this.apiService
-      .putTransiction(this.transactionData.id, this.transactionForm.value, this.selectRoteRequest())
+      .putTransaction(this.transactionData.id, this.transactionForm.value, this.selectRoteRequest())
       .subscribe({
         next: () => {
           this.sheetService.reloadTransactions();
@@ -179,7 +179,7 @@ export class SheetComponent implements OnInit {
       const dateRecorrent = this.dataPickerService.currentDateSignal().format('YYYY-MM');
 
       this.apiService
-        .deleteTransictionSobrescrita(
+        .deleteTransactionSobrescrita(
           this.transactionData.id,
           dateRecorrent,
           this.selectRoteRequest()
@@ -198,7 +198,7 @@ export class SheetComponent implements OnInit {
 
     if (!this.isDeleteConfirm || this.setTypeMovimentation() === 2) {
       this.apiService
-        .deleteTransiction(this.transactionData.id, this.selectRoteRequest())
+        .deleteTransaction(this.transactionData.id, this.selectRoteRequest())
         .subscribe({
           next: () => {
             this.sheetService.reloadTransactions();
