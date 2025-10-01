@@ -3,14 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GET_TRANSITIONS } from '../pages/transactions/transactions';
 import { environment } from '../../../../environments/environment.development';
-
-export type Rota =
-  | 'despesas'
-  | 'receitas'
-  | 'despesasFixas'
-  | 'receitasFixas'
-  | 'despesasSobrescritas'
-  | 'receitasSobrescritas';
+import { Rota } from '../interfaces/interfaces';
 
 const API_KEY = environment.API_KEY;
 
