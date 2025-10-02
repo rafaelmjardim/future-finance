@@ -11,65 +11,39 @@ const API_KEY = environment.API_KEY;
   providedIn: 'root',
 })
 export class TransactionApi {
-  private http = inject(HttpClient);
+  private readonly _http = inject(HttpClient);
 
   getTransactions = (): Observable<GET_TRANSITIONS> => {
-    return this.http.get<GET_TRANSITIONS>(`${API_KEY}.json`);
+    return this._http.get<GET_TRANSITIONS>(`${API_KEY}.json`);
   };
 
   postTransaction = (transactionFormData: any, rota: Rota) => {
-    const {
-      date,
-      value,
-      description,
-      name,
-      category,
-      typeRef,
-      status,
-      recorrente,
-      repeat,
-      repeatTimes,
-    } = transactionFormData;
-
-    return this.http.post(`${API_KEY}/${rota}.json`, {
-      valor: value,
-      data: date,
-      nome: name,
-      categoria: category,
-      descricao: description,
-      tipo: typeRef,
-      recorrente,
-      status,
-      repete: repeat,
-      repeticoes: repeat ? repeatTimes : null,
+    return this._http.post(`${API_KEY}/${rota}.json`, {
+      valor: transactionFormData.value,
+      data: transactionFormData.date,
+      nome: transactionFormData.name,
+      categoria: transactionFormData.category,
+      descricao: transactionFormData.description,
+      tipo: transactionFormData.typeRef,
+      recorrente: transactionFormData.recorrente,
+      status: transactionFormData.status,
+      repete: transactionFormData.repeat,
+      repeticoes: transactionFormData.repeat ? transactionFormData.repeatTimes : null,
     });
   };
 
   putTransaction = (id: string, transactionFormData: any, rota: Rota) => {
-    const {
-      date,
-      value,
-      description,
-      name,
-      category,
-      typeRef,
-      status,
-      recorrente,
-      repeat,
-      repeatTimes,
-    } = transactionFormData;
-
-    return this.http.patch(`${API_KEY}/${rota}/${id}.json`, {
-      valor: value,
-      data: date,
-      nome: name,
-      categoria: category,
-      descricao: description,
-      tipo: typeRef,
-      recorrente,
-      status,
-      repete: repeat,
-      repeticoes: repeat ? repeatTimes : null,
+    return this._http.patch(`${API_KEY}/${rota}/${id}.json`, {
+      valor: transactionFormData.value,
+      data: transactionFormData.date,
+      nome: transactionFormData.name,
+      categoria: transactionFormData.category,
+      descricao: transactionFormData.description,
+      tipo: transactionFormData.typeRef,
+      recorrent: transactionFormData.recorrente,
+      status: transactionFormData.status,
+      repete: transactionFormData.repeat,
+      repeticoes: transactionFormData.repeat ? transactionFormData.repeatTimes : null,
     });
   };
 
@@ -84,23 +58,23 @@ export class TransactionApi {
       status: transactionFormData.status,
     };
 
-    return this.http.patch(
+    return this._http.patch(
       `${API_KEY}/${rota}/${id}/sobrescrita/${transactionFormData.date}.json`,
       payload
     );
   };
 
   deleteTransactionSobrescrita = (id: string, dateRecorrent: any, rota: Rota) => {
-    return this.http.patch(`${API_KEY}/${rota}/${id}/sobrescrita/${dateRecorrent}.json`, {
+    return this._http.patch(`${API_KEY}/${rota}/${id}/sobrescrita/${dateRecorrent}.json`, {
       deletado: true,
     });
   };
 
   deleteTransaction = (id: string, rota: Rota) => {
-    return this.http.delete(`${API_KEY}/${rota}/${id}.json`);
+    return this._http.delete(`${API_KEY}/${rota}/${id}.json`);
   };
 
   deleteAllTransactionsSobrescritas = (id: string, rota: Rota) => {
-    return this.http.delete(`${API_KEY}/${rota}/${id}/sobrescrita.json`);
+    return this._http.delete(`${API_KEY}/${rota}/${id}/sobrescrita.json`);
   };
 }
