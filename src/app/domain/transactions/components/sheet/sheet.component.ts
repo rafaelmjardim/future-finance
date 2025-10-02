@@ -6,11 +6,11 @@ import { ButtonComponent } from '../../../../shared/components/button/button.com
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SheetService } from './sheet.service';
-import { Transaction } from '../../pages/transactions/transactions';
 import moment from 'moment';
 import { MediaQueryService } from '../../../../shared/services/media-query/media-query.service';
 import { DataPickerService } from '../../../../shared/components/data-picker/data-picker.service';
 import { TransactionApi } from '../../apis/transaction.api';
+import { Transaction } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-sheet',

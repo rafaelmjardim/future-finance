@@ -1,16 +1,15 @@
 import { MediaQueryService } from '../../../../shared/services/media-query/media-query.service';
-import { ChartOptionsCategory, Transaction } from './../transactions/transactions';
 import { DataPickerService } from '../../../../shared/components/data-picker/data-picker.service';
 import { UtilsService } from '../../../../shared/services/utils/utils.service';
 import { Component, effect, inject, OnInit } from '@angular/core';
 import { pagesItems } from '../../../../constants/menu';
 import { CardComponent } from '../../../../shared/components/card/card.component';
-import { ChartOptions } from '../transactions/transactions';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import moment from 'moment';
 import { TransactionApi } from '../../apis/transaction.api';
 import { PageHeaderComponent } from '../../../../shared/components/pageheader/page-header.component';
 import { filter } from 'rxjs';
+import { ChartOptions, ChartOptionsCategory, Transaction } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-dashboard',

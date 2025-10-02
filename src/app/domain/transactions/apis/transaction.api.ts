@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { GET_TRANSITIONS } from '../pages/transactions/transactions';
 import { environment } from '../../../../environments/environment.development';
-import { Rota } from '../interfaces/interfaces';
+import { GET_TRANSITIONS, Rota } from '../interfaces/interfaces';
 
 const API_KEY = environment.API_KEY;
 

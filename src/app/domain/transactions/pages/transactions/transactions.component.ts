@@ -2,7 +2,6 @@ import { MediaQueryService } from '../../../../shared/services/media-query/media
 import { Component, effect, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { UtilsService } from '../../../../shared/services/utils/utils.service';
 import { pagesItems } from '../../../../constants/menu';
-import { ChartOptions, Transaction } from './transactions';
 import { CardComponent } from '../../../../shared/components/card/card.component';
 import { ChartComponent, NgApexchartsModule } from 'ng-apexcharts';
 import { SheetService } from '../../components/sheet/sheet.service';
@@ -12,6 +11,7 @@ import { TransactionApi } from '../../apis/transaction.api';
 import { PageHeaderComponent } from '../../../../shared/components/pageheader/page-header.component';
 import { TransactionsListComponent } from './transactions-list/transactions-list.component';
 import { filter, map, switchMap } from 'rxjs';
+import { ChartOptions, Transaction } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-transactions',

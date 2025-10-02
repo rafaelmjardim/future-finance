@@ -1,7 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import moment from 'moment';
 import { DataPickerService } from '../../components/data-picker/data-picker.service';
-import { Transaction } from '../../../domain/transactions/pages/transactions/transactions';
+import { Transaction } from '../../../domain/transactions/interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root',
