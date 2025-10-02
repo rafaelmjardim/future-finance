@@ -2,10 +2,10 @@ import { CurrencyPipe, DatePipe, NgClass } from '@angular/common';
 import { Component, inject, Input } from '@angular/core';
 import { NgIcon } from '@ng-icons/core';
 import { ItemLoaderComponent } from './item-loader/item-loader.component';
-import { UtilsService } from '../../../../../shared/services/utils/utils.service';
 import { Dialog } from '@angular/cdk/dialog';
 import { SheetComponent } from '../../../components/sheet/sheet.component';
 import { Transaction } from '../../../interfaces/interfaces';
+import { TransactionsService } from '../../../services/transactions.service';
 
 @Component({
   selector: 'app-transactions-list',
@@ -18,7 +18,7 @@ export class TransactionsListComponent {
   @Input() typeRef!: 'EXPENSE' | 'INCOME';
   @Input() transactions!: Transaction[];
 
-  protected utilsService = inject(UtilsService);
+  protected _transactionsService = inject(TransactionsService);
   private dialog = inject(Dialog);
 
   protected handleEditTransaction = (transaction: Transaction) => {

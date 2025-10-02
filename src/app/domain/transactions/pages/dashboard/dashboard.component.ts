@@ -10,6 +10,7 @@ import { TransactionApi } from '../../apis/transaction.api';
 import { PageHeaderComponent } from '../../../../shared/components/pageheader/page-header.component';
 import { filter } from 'rxjs';
 import { ChartOptions, ChartOptionsCategory, Transaction } from '../../interfaces/interfaces';
+import { TransactionsService } from '../../services/transactions.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,6 +19,7 @@ import { ChartOptions, ChartOptionsCategory, Transaction } from '../../interface
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit {
+  private readonly _transactionsService = inject(TransactionsService);
   private apiService = inject(TransactionApi);
   protected mediaQueryService = inject(MediaQueryService);
   protected utilsService = inject(UtilsService);
@@ -43,7 +45,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.utilsService.loaders.showTransaction.set(false);
+    this._transactionsService.loaders.showTransaction.set(false);
     this.getTransactions();
   }
 
@@ -56,24 +58,26 @@ export class DashboardComponent implements OnInit {
           const receitasResponse = this.utilsService.convertGetFirebase(receitas);
           const despesasResponse = this.utilsService.convertGetFirebase(despesas);
 
-          this.incomings = this.utilsService.filterTransactionByDate(receitasResponse);
-          this.expenses = this.utilsService.filterTransactionByDate(despesasResponse);
+          this.incomings = this._transactionsService.filterTransactionByDate(receitasResponse);
+          this.expenses = this._transactionsService.filterTransactionByDate(despesasResponse);
 
           const currentMonthDataPicker = this.dataPickerService
             .currentDateSignal()
             .format('YYYY-MM');
 
-          this.incomings = this.utilsService.checkAndSetRepeatTransactions(
+          this.incomings = this._transactionsService.checkAndSetRepeatTransactions(
             this.incomings,
             currentMonthDataPicker
           );
-          this.expenses = this.utilsService.checkAndSetRepeatTransactions(
+          this.expenses = this._transactionsService.checkAndSetRepeatTransactions(
             this.expenses,
             currentMonthDataPicker
           );
 
-          this.totalIncomings = this.utilsService.totalTransactionAccumulator(this.incomings);
-          this.totalExpenses = this.utilsService.totalTransactionAccumulator(this.expenses);
+          this.totalIncomings = this._transactionsService.totalTransactionAccumulator(
+            this.incomings
+          );
+          this.totalExpenses = this._transactionsService.totalTransactionAccumulator(this.expenses);
 
           this.showLoader = false;
 
@@ -250,13 +254,14 @@ export class DashboardComponent implements OnInit {
       const incomingsFiltered = this.incomings.filter(
         (incoming) => moment(incoming.data).format('MM/YYYY') == nextDates
       );
-      const totalIncomings = this.utilsService.totalTransactionAccumulator(incomingsFiltered);
+      const totalIncomings =
+        this._transactionsService.totalTransactionAccumulator(incomingsFiltered);
 
       //Filtra as despesas e pega o total de todas as despesas dos ultimos meses estipulados
       const expenseFiltered = this.expenses.filter(
         (incoming) => moment(incoming.data).format('MM/YYYY') == nextDates
       );
-      const totalExpenses = this.utilsService.totalTransactionAccumulator(expenseFiltered);
+      const totalExpenses = this._transactionsService.totalTransactionAccumulator(expenseFiltered);
 
       const totalBalancos = totalIncomings - totalExpenses;
       lastBalances.push(totalBalancos);
