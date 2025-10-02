@@ -58,8 +58,8 @@ export class DashboardComponent implements OnInit {
           const receitasResponse = this.utilsService.convertGetFirebase(receitas);
           const despesasResponse = this.utilsService.convertGetFirebase(despesas);
 
-          this.incomings = this._transactionsService.filterTransactionByDate(receitasResponse);
-          this.expenses = this._transactionsService.filterTransactionByDate(despesasResponse);
+          this.incomings = this.dataPickerService.filterTransactionByDate(receitasResponse);
+          this.expenses = this.dataPickerService.filterTransactionByDate(despesasResponse);
 
           const currentMonthDataPicker = this.dataPickerService
             .currentDateSignal()

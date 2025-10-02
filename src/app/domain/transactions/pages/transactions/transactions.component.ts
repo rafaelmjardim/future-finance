@@ -28,11 +28,11 @@ import { TransactionsService } from '../../services/transactions.service';
 })
 export class TransactionsComponent implements OnInit {
   public readonly _transactionService = inject(TransactionsService);
+  protected readonly _dataPickerService = inject(DataPickerService);
   private api = inject(TransactionApi);
   protected mediaQueryService = inject(MediaQueryService);
   protected utilsService = inject(UtilsService);
   private sheetService = inject(SheetService);
-  protected dataPickerService = inject(DataPickerService);
 
   private currentMonthDataPicker!: any;
 
@@ -56,7 +56,7 @@ export class TransactionsComponent implements OnInit {
         //Verificar, talvez tenha que setar para false o reload pois não vá reconhecer segunda transação seguida (signal não atualiza mesmo valor caso n tenha mudança)
       }
 
-      this.dataPickerService.currentDateSignal();
+      this._dataPickerService.currentDateSignal();
       this.getTransactions(); //Get duplicado, resolver depois
     });
   }
@@ -75,10 +75,10 @@ export class TransactionsComponent implements OnInit {
           const receitasResponse = this.utilsService.convertGetFirebase(receitas);
           const despesasResponse = this.utilsService.convertGetFirebase(despesas);
 
-          this.incomings = this._transactionService.filterTransactionByDate(receitasResponse);
-          this.expenses = this._transactionService.filterTransactionByDate(despesasResponse);
+          this.incomings = this._dataPickerService.filterTransactionByDate(receitasResponse);
+          this.expenses = this._dataPickerService.filterTransactionByDate(despesasResponse);
 
-          this.currentMonthDataPicker = this.dataPickerService
+          this.currentMonthDataPicker = this._dataPickerService
             .currentDateSignal()
             .format('YYYY-MM');
 

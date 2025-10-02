@@ -26,19 +26,19 @@
         <app-card
           title="Balanço"
           [value]="totalIncomings - totalExpenses"
-          [description]="'Total de ' + dataPickerService.currentDateSignal().format('MMM')"
+          [description]="'Total de ' + _dataPickerService.currentDateSignal().format('MMM')"
           [typeRef]="'BALANCO'"
         />
         <app-card
           title="Receitas"
           [value]="totalIncomings"
-          [description]="'Total de ' + dataPickerService.currentDateSignal().format('MMM')"
+          [description]="'Total de ' + _dataPickerService.currentDateSignal().format('MMM')"
           [typeRef]="'RECEITA'"
         />
         <app-card
           title="Despesas"
           [value]="totalExpenses"
-          [description]="'Total de ' + dataPickerService.currentDateSignal().format('MMM')"
+          [description]="'Total de ' + _dataPickerService.currentDateSignal().format('MMM')"
           [typeRef]="'DESPESA'"
         />
       </div>

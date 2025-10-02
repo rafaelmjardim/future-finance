@@ -20,31 +20,6 @@ export class TransactionsService {
     }, 0);
   };
 
-  public filterTransactionByDate = (transactions: Transaction[]) => {
-    return transactions.filter((transaction) => {
-      const transactionDate = moment(transaction.data).format('MM/YYYY');
-      const transitioYear = moment(transaction.data).format('YYYY');
-      const currentMonthDataPicker = this._dataPickerService.currentDateSignal().format('MM/YYYY');
-      const currentYearDataPicker = this._dataPickerService.currentDateSignal().format('YYYY');
-
-      if (transaction.repete) {
-        const endDate = moment(transaction.data)
-          .add(transaction.repeticoes - 1, 'month')
-          .format('MM/YYYY');
-        return (
-          transactionDate <= currentMonthDataPicker &&
-          currentMonthDataPicker <= endDate &&
-          transitioYear === currentYearDataPicker
-        );
-      }
-
-      if (transaction.recorrente) {
-        return transactionDate <= currentMonthDataPicker && transitioYear === currentYearDataPicker;
-      }
-      return transactionDate == currentMonthDataPicker;
-    });
-  };
-
   public checkAndSetRepeatTransactions = (
     transactions: Transaction[],
     currentMonthDataPicker: any
