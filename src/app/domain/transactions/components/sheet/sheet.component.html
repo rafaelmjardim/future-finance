@@ -119,7 +119,7 @@
                   <span class="text-md font-medium">Despesa fixa</span>
                 </label>
 
-                @if (!transactionData?.sobrescrita) {
+                @if (!transactionData || !transactionData.recorrente) {
                   <label class="flex items-center gap-2">
                     <input
                       class="accent-primaryColor"
