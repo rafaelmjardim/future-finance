@@ -1,16 +1,16 @@
 import { MediaQueryService } from '../../../../shared/services/media-query/media-query.service';
-import { Component, effect, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, effect, inject, OnInit } from '@angular/core';
 import { UtilsService } from '../../../../shared/services/utils/utils.service';
 import { pagesItems } from '../../../../constants/menu';
 import { CardComponent } from '../../../../shared/components/card/card.component';
-import { ChartComponent, NgApexchartsModule } from 'ng-apexcharts';
+import { NgApexchartsModule } from 'ng-apexcharts';
 import { SheetService } from '../../components/sheet/sheet.service';
 import { DataPickerService } from '../../../../shared/components/data-picker/data-picker.service';
 import { NgClass } from '@angular/common';
 import { TransactionApi } from '../../apis/transaction.api';
 import { PageHeaderComponent } from '../../../../shared/components/pageheader/page-header.component';
 import { TransactionsListComponent } from './transactions-list/transactions-list.component';
-import { filter, map, switchMap } from 'rxjs';
+import { filter, map } from 'rxjs';
 import { ChartOptions, Transaction } from '../../interfaces/interfaces';
 import { TransactionsService } from '../../services/transactions.service';
 
@@ -69,14 +69,17 @@ export class TransactionsComponent implements OnInit {
   private getTransactions = (): void => {
     this.api
       .getTransactions()
-      .pipe(filter((transactions) => !!transactions))
+      .pipe(
+        filter((transactions) => !!transactions),
+        map(({ receitas, despesas }) => ({
+          receitas: this.utilsService.convertGetFirebase(receitas),
+          despesas: this.utilsService.convertGetFirebase(despesas),
+        }))
+      )
       .subscribe({
         next: ({ receitas, despesas }) => {
-          const receitasResponse = this.utilsService.convertGetFirebase(receitas);
-          const despesasResponse = this.utilsService.convertGetFirebase(despesas);
-
-          this.incomings = this._dataPickerService.filterTransactionByDate(receitasResponse);
-          this.expenses = this._dataPickerService.filterTransactionByDate(despesasResponse);
+          this.incomings = this._dataPickerService.filterTransactionByDate(receitas);
+          this.expenses = this._dataPickerService.filterTransactionByDate(despesas);
 
           this.currentMonthDataPicker = this._dataPickerService
             .currentDateSignal()
