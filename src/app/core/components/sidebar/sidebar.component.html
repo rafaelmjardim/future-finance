@@ -31,18 +31,18 @@
     <ul class="flex flex-col gap-2 mt-2">
       @for (item of menu; track $index) {
         <li
-          class="flex items-center gap-4 px-[1.2rem] py-[.8rem] rounded font-semibold hover:text-greenColor dark:hover:bg-[#1f2626] transaction cursor-pointer"
+          class="group flex items-center gap-4 px-[1.2rem] py-[.8rem] rounded font-semibold dark:hover:bg-[#1f2626] transaction cursor-pointer"
           [routerLink]="item.rota"
           [ngClass]="{
-            'text-[#50a87c] bg-[#edf5fb] dark:bg-[#1B2121] dark:text-[#4A8374] hover:border-transparent':
+            'bg-[#edf5fb] dark:bg-[#1B2121] dark:text-[#4A8374] hover:border-transparent':
               router.url === item.rota,
             'justify-center': sidebarService.closeSidebarSignal(),
           }"
         >
-          <ng-icon [name]="item.icon" size="1.9rem"></ng-icon>
+          <ng-icon class="group-hover:text-greenColor" [name]="item.icon" size="1.9rem"></ng-icon>
 
           @if (!sidebarService.closeSidebarSignal()) {
-            <span class="text-[1.5rem] text-textColor hover:text-greenColor transaction">{{
+            <span class="text-[1.5rem] text-textColor group-hover:text-greenColor transaction">{{
               item.txt
             }}</span>
           }

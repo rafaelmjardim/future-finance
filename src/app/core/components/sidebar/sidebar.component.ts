@@ -7,12 +7,13 @@ import { menu, pagesItems } from '../../../constants/menu';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { SidebarService } from './sidebar.service';
 import { UtilsService } from '../../../shared/services/utils/utils.service';
+import { Menu } from './sidebar';
 
 @Component({
-    selector: 'app-sidebar',
-    imports: [NgIcon, NgClass, RouterLink, ButtonComponent],
-    templateUrl: './sidebar.component.html',
-    styleUrl: './sidebar.component.scss'
+  selector: 'app-sidebar',
+  imports: [NgIcon, NgClass, RouterLink, ButtonComponent],
+  templateUrl: './sidebar.component.html',
+  styleUrl: './sidebar.component.scss',
 })
 export class SidebarComponent {
   protected router = inject(Router);
@@ -20,5 +21,27 @@ export class SidebarComponent {
   protected sidebarService = inject(SidebarService);
   protected utilsService = inject(UtilsService);
 
-  protected menu = menu;
+  protected menu: Menu[] = [
+    {
+      txt: 'Dashboard',
+      icon: 'lucideLayoutPanelLeft',
+      rota: '/dashboard',
+      strokeWidth: '1.5',
+    },
+    {
+      txt: 'Transações',
+      icon: 'ionSwapHorizontalOutline',
+      rota: '/transacoes',
+    },
+    {
+      txt: 'Conta',
+      icon: 'ionPersonOutline',
+      rota: '/account',
+    },
+    {
+      txt: 'Config',
+      icon: 'ionSettingsOutline',
+      rota: '/account',
+    },
+  ];
 }
