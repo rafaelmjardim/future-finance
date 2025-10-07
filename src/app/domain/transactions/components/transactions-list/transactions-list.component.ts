@@ -18,7 +18,7 @@ export class TransactionsListComponent {
   @Input() typeRef!: 'EXPENSE' | 'INCOME';
   @Input() transactions!: Transaction[];
 
-  public showLoader = input(false);
+  public showLoader = input<boolean | null>(null);
 
   protected _transactionsService = inject(TransactionsService);
   private dialog = inject(Dialog);

@@ -46,8 +46,9 @@
         <app-item-loader />
       }
     } @empty {
-      <app-item-loader />
-      <!-- <h2>Nenhuma transação para exibir</h2> -->
+      @if (!showLoader() && !transactions.length) {
+        <h2>Nenhuma transação para exibir</h2>
+      }
     }
   </ul>
 </div>

@@ -49,7 +49,7 @@ export class TransactionsComponent implements OnInit {
 
   protected chartOptions!: Partial<ChartOptions> | any;
 
-  public showLoader = signal(false);
+  public showLoader = signal<boolean | null>(null);
 
   constructor() {
     effect(() => {
