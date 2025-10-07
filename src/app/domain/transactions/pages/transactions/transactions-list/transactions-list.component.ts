@@ -1,5 +1,5 @@
 import { CurrencyPipe, DatePipe, NgClass } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, input, Input, signal } from '@angular/core';
 import { NgIcon } from '@ng-icons/core';
 import { ItemLoaderComponent } from './item-loader/item-loader.component';
 import { Dialog } from '@angular/cdk/dialog';
@@ -17,6 +17,8 @@ export class TransactionsListComponent {
   @Input() label!: string;
   @Input() typeRef!: 'EXPENSE' | 'INCOME';
   @Input() transactions!: Transaction[];
+
+  public showLoader = input(false);
 
   protected _transactionsService = inject(TransactionsService);
   private dialog = inject(Dialog);

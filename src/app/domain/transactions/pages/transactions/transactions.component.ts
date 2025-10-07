@@ -1,5 +1,5 @@
 import { MediaQueryService } from '../../../../shared/services/media-query/media-query.service';
-import { Component, effect, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { UtilsService } from '../../../../shared/services/utils/utils.service';
 import { pagesItems } from '../../../../constants/menu';
 import { CardComponent } from '../../../../shared/components/card/card.component';
@@ -49,6 +49,8 @@ export class TransactionsComponent implements OnInit {
 
   protected chartOptions!: Partial<ChartOptions> | any;
 
+  public showLoader = signal(false);
+
   constructor() {
     effect(() => {
       if (this.sheetService.reloadTransactionsSignal()) {
@@ -62,7 +64,6 @@ export class TransactionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._transactionService.loaders.showTransaction.set(false);
     this.getTransactions();
   }
 
@@ -78,6 +79,8 @@ export class TransactionsComponent implements OnInit {
       )
       .subscribe({
         next: ({ receitas, despesas }) => {
+          this.showLoader.set(true);
+
           this.incomings = this._dataPickerService.filterTransactionByDate(receitas);
           this.expenses = this._dataPickerService.filterTransactionByDate(despesas);
 
@@ -89,12 +92,12 @@ export class TransactionsComponent implements OnInit {
             this.incomings,
             this.currentMonthDataPicker
           );
+
           this.expenses = this._transactionService.checkAndSetRepeatTransactions(
             this.expenses,
             this.currentMonthDataPicker
           );
 
-          // Seta icones conforme categoria
           this.incomings = this.setIconCategoryInTransaction(this.incomings);
           this.expenses = this.setIconCategoryInTransaction(this.expenses);
 
@@ -103,7 +106,7 @@ export class TransactionsComponent implements OnInit {
           );
           this.totalExpenses = this._transactionService.totalTransactionAccumulator(this.expenses);
 
-          this._transactionService.loaders.showTransaction.set(true);
+          this.showLoader.set(false);
           this.initChart();
         },
       });

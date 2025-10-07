@@ -2,7 +2,7 @@
   <label class="text-md text-secundaryColor font-medium">{{ label }}</label>
   <ul class="flex flex-col gap-6">
     @for (transaction of transactions; track $index) {
-      @if (_transactionsService.loaders.showTransaction()) {
+      @if (!showLoader()) {
         <li
           class="box hover:bg-hoverColor transaction cursor-pointer"
           (click)="handleEditTransaction(transaction)"

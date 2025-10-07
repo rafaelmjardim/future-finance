@@ -10,8 +10,18 @@
     <h2 class="box__title">Transações</h2>
 
     <div class="box__content flex flex-col gap-8">
-      <app-transactions-list label="Receitas" typeRef="INCOME" [transactions]="incomings" />
-      <app-transactions-list label="Despesas" typeRef="EXPENSE" [transactions]="expenses" />
+      <app-transactions-list
+        label="Receitas"
+        typeRef="INCOME"
+        [transactions]="incomings"
+        [showLoader]="showLoader()"
+      />
+      <app-transactions-list
+        label="Despesas"
+        typeRef="EXPENSE"
+        [transactions]="expenses"
+        [showLoader]="showLoader()"
+      />
     </div>
   </div>
 
@@ -46,7 +56,7 @@
 
     @if (!mediaQueryService.isMobile()) {
       <div class="box w-full">
-        @if (_transactionService.loaders.showTransaction()) {
+        @if (!showLoader()) {
           <apx-chart
             [series]="chartOptions.series"
             [chart]="chartOptions.chart"

@@ -7,18 +7,21 @@
       [value]="totalIncomings - totalExpenses"
       [description]="'Total mês de ' + dataPickerService.currentDateSignal().format('MMM')"
       [typeRef]="'BALANCO'"
+      [showLoader]="showLoader()"
     />
     <app-card
       title="Receitas"
       [value]="totalIncomings"
       [description]="'Total de ' + dataPickerService.currentDateSignal().format('MMM')"
       [typeRef]="'RECEITA'"
+      [showLoader]="showLoader()"
     />
     <app-card
       title="Despesas"
       [value]="totalExpenses"
       [description]="'Total de ' + dataPickerService.currentDateSignal().format('MMM')"
       [typeRef]="'DESPESA'"
+      [showLoader]="showLoader()"
     />
   </div>
 
@@ -26,7 +29,7 @@
     <div
       class="box dark:bg-surfaceColorDark dark:border-borderColorDark col-span-1 grid items-center"
     >
-      @if (!showLoader) {
+      @if (!showLoader()) {
         <apx-chart
           [series]="chartOptionsCategory.series"
           [chart]="chartOptionsCategory.chart"
@@ -54,7 +57,7 @@
     <div
       class="box dark:bg-surfaceColorDark dark:border-borderColorDark col-span-2 grid items-center"
     >
-      @if (!showLoader) {
+      @if (!showLoader()) {
         <apx-chart
           [series]="chartOptions.series"
           [chart]="chartOptions.chart"

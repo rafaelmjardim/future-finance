@@ -1,7 +1,7 @@
 import { MediaQueryService } from '../../../../shared/services/media-query/media-query.service';
 import { DataPickerService } from '../../../../shared/components/data-picker/data-picker.service';
 import { UtilsService } from '../../../../shared/services/utils/utils.service';
-import { Component, effect, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { pagesItems } from '../../../../constants/menu';
 import { CardComponent } from '../../../../shared/components/card/card.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
   protected chartOptions!: Partial<ChartOptions> | any;
   protected chartOptionsCategory!: Partial<ChartOptionsCategory> | Partial<any>;
 
-  public showLoader = true;
+  public showLoader = signal(false);
 
   constructor() {
     effect(() => {
@@ -45,7 +45,6 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._transactionsService.loaders.showTransaction.set(false);
     this.getTransactions();
   }
 
@@ -55,6 +54,8 @@ export class DashboardComponent implements OnInit {
       .pipe(filter((transactions) => !!transactions))
       .subscribe({
         next: ({ receitas, despesas }) => {
+          this.showLoader.set(true);
+
           const receitasResponse = this.utilsService.convertGetFirebase(receitas);
           const despesasResponse = this.utilsService.convertGetFirebase(despesas);
 
@@ -79,7 +80,7 @@ export class DashboardComponent implements OnInit {
           );
           this.totalExpenses = this._transactionsService.totalTransactionAccumulator(this.expenses);
 
-          this.showLoader = false;
+          this.showLoader.set(false);
 
           this.initChart();
         },

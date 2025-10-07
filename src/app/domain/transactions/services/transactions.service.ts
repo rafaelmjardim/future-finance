@@ -9,10 +9,6 @@ import { DataPickerService } from '../../../shared/components/data-picker/data-p
 export class TransactionsService {
   private readonly _dataPickerService = inject(DataPickerService);
 
-  public loaders = {
-    showTransaction: signal(false),
-  };
-
   //Função que retorna o valor total de uma transição (acumulador: Soma de todos os valores)
   public totalTransactionAccumulator = (transactions: Transaction[]) => {
     return transactions.reduce((acc, transaction) => {
