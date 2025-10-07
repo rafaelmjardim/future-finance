@@ -3,9 +3,9 @@ import { Component, inject, input, Input, signal } from '@angular/core';
 import { NgIcon } from '@ng-icons/core';
 import { ItemLoaderComponent } from './item-loader/item-loader.component';
 import { Dialog } from '@angular/cdk/dialog';
-import { SheetComponent } from '../../../components/sheet/sheet.component';
-import { Transaction } from '../../../interfaces/interfaces';
-import { TransactionsService } from '../../../services/transactions.service';
+import { Transaction } from '../../interfaces/interfaces';
+import { TransactionsService } from '../../services/transactions.service';
+import { SheetComponent } from '../sheet/sheet.component';
 
 @Component({
   selector: 'app-transactions-list',

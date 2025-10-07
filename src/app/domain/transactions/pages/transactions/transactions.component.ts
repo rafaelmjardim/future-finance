@@ -9,10 +9,10 @@ import { DataPickerService } from '../../../../shared/components/data-picker/dat
 import { NgClass } from '@angular/common';
 import { TransactionApi } from '../../apis/transaction.api';
 import { PageHeaderComponent } from '../../../../shared/components/pageheader/page-header.component';
-import { TransactionsListComponent } from './transactions-list/transactions-list.component';
 import { filter, map } from 'rxjs';
 import { ChartOptions, Transaction } from '../../interfaces/interfaces';
 import { TransactionsService } from '../../services/transactions.service';
+import { TransactionsListComponent } from '../../components/transactions-list/transactions-list.component';
 
 @Component({
   selector: 'app-transactions',
