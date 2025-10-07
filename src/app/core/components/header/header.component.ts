@@ -9,10 +9,10 @@ import { NgClass } from '@angular/common';
 import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 
 @Component({
-    selector: 'app-header',
-    imports: [NgIcon, NgClass, CdkMenu, CdkMenuItem, CdkMenuTrigger],
-    templateUrl: './header.component.html',
-    styleUrl: './header.component.scss'
+  selector: 'app-header',
+  imports: [NgIcon, NgClass, CdkMenu, CdkMenuItem, CdkMenuTrigger],
+  templateUrl: './header.component.html',
+  styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
   protected mediaQueryService = inject(MediaQueryService);
@@ -26,16 +26,6 @@ export class HeaderComponent {
       icon: 'ionSparklesOutline',
       txt: 'Upgrade Premium',
       actionFunc: () => '',
-    },
-    {
-      icon: 'ionSettingsOutline',
-      txt: 'Config',
-      actionFunc: () => this.changeDarkMode(),
-    },
-    {
-      icon: 'ionPersonOutline',
-      txt: 'Conta',
-      actionFunc: () => {},
     },
     {
       icon: 'lucideLogOut',
