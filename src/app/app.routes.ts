@@ -28,5 +28,11 @@ export const routes: Routes = [
       ),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'account',
+    loadComponent: () =>
+      import('./domain/account/pages/account/account.page').then((c) => c.AccountPageComponent),
+    canActivate: [AuthGuard],
+  },
   { path: '**', redirectTo: 'login' }, //Error route
 ];
