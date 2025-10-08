@@ -24,6 +24,13 @@
 
   <!-- Rigth -->
   <div class="flex flex-col items-center justify-center bg-surfaceColor">
+    @if (mediaQueryService.isMobile()) {
+      <img
+        class="absolute top-[2.6rem] left-[1.6rem]"
+        src="assets/logo-preta.png"
+        alt="Logo do sistema"
+      />
+    }
     <p
       class="absolute top-[3.5rem] right-[3.5rem] flex items-center gap-3 acursor-pointer hover:text-greenColor transaction cursor-pointer"
       (click)="changeLoginForm()"
@@ -45,7 +52,10 @@
       </p>
     </div>
 
-    <form class="flex flex-col gap-6 w-[34rem]" [formGroup]="!isRegistration ? form : registerForm">
+    <form
+      class="flex flex-col gap-6 sm:w-[34rem] w-full px-5"
+      [formGroup]="!isRegistration ? form : registerForm"
+    >
       @if (isRegistration) {
         <label class="input">
           <span>Nome</span>
@@ -104,6 +114,7 @@
       }
 
       <app-button
+        class="mt-6"
         [txt]="
           isRegistration && showLoader ? 'Entrando' : isRegistration ? 'Cadastrar' : 'Fazer Login'
         "
