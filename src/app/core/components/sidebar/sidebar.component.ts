@@ -41,7 +41,7 @@ export class SidebarComponent {
     {
       txt: 'Config',
       icon: 'ionSettingsOutline',
-      rota: '/account',
+      rota: '/config',
     },
   ];
 }
