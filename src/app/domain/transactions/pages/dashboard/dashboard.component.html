@@ -29,7 +29,7 @@
     <div
       class="box dark:bg-surfaceColorDark dark:border-borderColorDark col-span-1 grid items-center"
     >
-      @if (!showLoader()) {
+      @if (!showLoader() && chartOptionsCategory) {
         <apx-chart
           [series]="chartOptionsCategory.series"
           [chart]="chartOptionsCategory.chart"
@@ -57,7 +57,7 @@
     <div
       class="box dark:bg-surfaceColorDark dark:border-borderColorDark col-span-2 grid items-center"
     >
-      @if (!showLoader()) {
+      @if (!showLoader() && chartOptions) {
         <apx-chart
           [series]="chartOptions.series"
           [chart]="chartOptions.chart"

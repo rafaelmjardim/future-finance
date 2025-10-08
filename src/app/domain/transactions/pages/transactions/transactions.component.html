@@ -56,7 +56,7 @@
 
     @if (!mediaQueryService.isMobile()) {
       <div class="box w-full">
-        @if (!showLoader()) {
+        @if (!showLoader() && chartOptions) {
           <apx-chart
             [series]="chartOptions.series"
             [chart]="chartOptions.chart"
