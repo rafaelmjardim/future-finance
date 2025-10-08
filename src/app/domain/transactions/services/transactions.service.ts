@@ -21,9 +21,11 @@ export class TransactionsService {
     currentMonthDataPicker: any
   ) => {
     let transactionsFormatted = transactions.map((transaction) => {
-      const initMonth = moment(transaction.data).month();
-      const currentMonth = this._dataPickerService.currentDateSignal().month();
-      const currentRepeat = currentMonth - initMonth + 1;
+      const startDate = moment(transaction.data).startOf('month');
+      const currentDate = this._dataPickerService.currentDateSignal().startOf('month');
+
+      const diffInMonths = currentDate.diff(startDate, 'month');
+      const currentRepeat = diffInMonths + 1;
 
       if (transaction.sobrescrita) {
         transaction = { ...transaction, ...transaction.sobrescrita[currentMonthDataPicker] };

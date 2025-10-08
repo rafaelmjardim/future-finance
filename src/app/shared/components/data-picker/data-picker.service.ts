@@ -9,27 +9,26 @@ export class DataPickerService {
   public currentDateSignal = signal(moment());
 
   public filterTransactionByDate = (transactions: Transaction[]) => {
+    const currentDate = this.currentDateSignal(); // moment()
+    const currentMonth = currentDate.startOf('month');
+
     return transactions.filter((transaction) => {
-      const transactionDate = moment(transaction.data).format('MM/YYYY');
-      const transitioYear = moment(transaction.data).format('YYYY');
-      const currentMonthDataPicker = this.currentDateSignal().format('MM/YYYY');
-      const currentYearDataPicker = this.currentDateSignal().format('YYYY');
+      const startDate = moment(transaction.data).startOf('month');
 
       if (transaction.repete) {
         const endDate = moment(transaction.data)
           .add(transaction.repeticoes - 1, 'month')
-          .format('MM/YYYY');
-        return (
-          transactionDate <= currentMonthDataPicker &&
-          currentMonthDataPicker <= endDate &&
-          transitioYear === currentYearDataPicker
-        );
+          .endOf('month');
+
+        // Verifica se o mês atual está dentro do intervalo [início, fim]
+        return currentMonth.isBetween(startDate, endDate, 'month', '[]');
       }
 
       if (transaction.recorrente) {
-        return transactionDate <= currentMonthDataPicker && transitioYear === currentYearDataPicker;
+        return currentMonth.isSameOrAfter(startDate, 'month');
       }
-      return transactionDate == currentMonthDataPicker;
+
+      return currentMonth.isSame(startDate, 'month');
     });
   };
 }
