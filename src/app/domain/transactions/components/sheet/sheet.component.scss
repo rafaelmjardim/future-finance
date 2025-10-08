@@ -1,51 +1,54 @@
-.sheet{
-    background: #fff;
-    border-top-left-radius: .8rem;
-    border-bottom-left-radius: .8rem;
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-    width: 40rem;
-    padding: 1.6rem;
-    position: fixed;
-    right: 0;
-    top: 0;
-    bottom: 0;
+.sheet {
+  background: #fff;
+  border-top-left-radius: 0.8rem;
+  border-bottom-left-radius: 0.8rem;
+  box-shadow:
+    rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  width: 40rem;
+  padding: 1.6rem;
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
 
-    /* Quando o sheet estiver ativo (entrada) */
-    &--active {
-        animation: slideInFromRight 0.3s ease forwards;
-    }
+  /* Quando o sheet estiver ativo (entrada) */
+  &--active {
+    animation: slideInFromRight 0.3s ease forwards;
+  }
 
-    /* Quando o sheet estiver fechando (saída) */
-    &--closing {
-        animation: slideOutToRight 0.3s ease forwards;
-    }
+  /* Quando o sheet estiver fechando (saída) */
+  &--closing {
+    animation: slideOutToRight 0.3s ease forwards;
+  }
 
-    &--mobile {
-        width: 100%;
-    }
-    
+  &--mobile {
+    width: 100%;
+    height: 100dvh;
+    overflow: auto;
+  }
 }
 
 /* Define a animação de entrada */
 @keyframes slideInFromRight {
-    from {
-      transform: translateX(100%);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(0);
-      opacity: 1;
-    }
+  from {
+    transform: translateX(100%);
+    opacity: 0;
   }
-  
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 /* Define a animação de saída */
 @keyframes slideOutToRight {
-    from {
-        transform: translateX(0);
-        opacity: 1;
-    }
-    to {
-        transform: translateX(100%);
-        opacity: 0;
-    }
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
 }
