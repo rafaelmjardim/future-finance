@@ -1,29 +1,15 @@
 <div
   class="flex items-center justify-end px-10 bg-surfaceColor dark:bg-surfaceColorDark h-[6rem] border-b border-borderColor dark:border-borderColorDark"
-  [ngClass]="{ 'justify-between': mediaQueryService.isMobile() }"
+  [ngClass]="{ 'justify-between px-4': mediaQueryService.isMobile() }"
 >
   @if (mediaQueryService.isMobile()) {
-    <div class="w-[16rem] flex justify-center items-center">
-      <img src="assets/logo.png" alt="Logo do sistema" />
+    <div class="flex items-center">
+      <img class="w-[3.6rem] h-[3.6rem]" src="assets/logo-preta.png" alt="Logo do sistema" />
     </div>
   }
 
   <!-- Actions -->
   <div class="flex items-center gap-6">
-    @if (!mediaQueryService.isMobile()) {
-      <!-- Mudança para darkmode temporario -->
-      <!-- <ng-icon class="cursor-pointer text-grayDarkColor dark:text-white hover:text-greenColor transaction" 
-                [name]="!utilsService.darkModeSignal() ? 'ionSettings' : 'ionSettingsOutline' " 
-                size="2.2rem"
-                (click)="changeDarkMode()"
-            ></ng-icon> -->
-    }
-
-    <!-- <ng-icon class="cursor-pointer text-grayDarkColor dark:text-white hover:text-greenColor transaction" 
-            name="lucideLogOut" size="2.2rem" 
-            (click)="handleLogout()"
-        ></ng-icon> -->
-
     <div
       class="flex items-center gap-4 cursor-pointer border border-transparent hover:border-secundaryColor rounded-lg transaction-all py-2 px-3"
       [cdkMenuTriggerFor]="menu"
@@ -34,11 +20,12 @@
         src="../../../assets/avatars/lorelei-1738289187655.png"
       />
 
-      <div>
-        <h2 class="text-md font-medium">Usuário</h2>
-        <p class="text-sm text-secundaryColor">exemple&#64;email.com</p>
-      </div>
-
+      @if (!mediaQueryService.isMobile()) {
+        <div>
+          <h2 class="text-md font-medium">Usuário</h2>
+          <p class="text-sm text-secundaryColor">exemple&#64;email.com</p>
+        </div>
+      }
       <ng-icon name="ionChevronDown"></ng-icon>
     </div>
 
