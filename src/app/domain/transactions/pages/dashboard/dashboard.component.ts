@@ -256,14 +256,20 @@ export class DashboardComponent implements OnInit {
 
       //Filtra as receitas e pega o total de todas as receitas dos ultimos meses estipulados
       const incomingsFiltered = this.incomings.filter(
-        (incoming) => moment(incoming.data).format('MM/YYYY') == nextDates
+        (incoming) =>
+          moment(incoming.data).format('MM/YYYY') == nextDates ||
+          incoming?.recorrente == true ||
+          incoming?.repete == true
       );
       const totalIncomings =
         this._transactionsService.totalTransactionAccumulator(incomingsFiltered);
 
       //Filtra as despesas e pega o total de todas as despesas dos ultimos meses estipulados
       const expenseFiltered = this.expenses.filter(
-        (incoming) => moment(incoming.data).format('MM/YYYY') == nextDates
+        (expense) =>
+          moment(expense.data).format('MM/YYYY') == nextDates ||
+          expense?.recorrente == true ||
+          expense?.repete == true
       );
       const totalExpenses = this._transactionsService.totalTransactionAccumulator(expenseFiltered);
 
