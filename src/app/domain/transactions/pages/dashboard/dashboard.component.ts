@@ -8,7 +8,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import moment from 'moment';
 import { TransactionApi } from '../../apis/transaction.api';
 import { PageHeaderComponent } from '../../../../shared/components/pageheader/page-header.component';
-import { filter } from 'rxjs';
+import { filter, map } from 'rxjs';
 import { ChartOptions, ChartOptionsCategory, Transaction } from '../../interfaces/interfaces';
 import { TransactionsService } from '../../services/transactions.service';
 
@@ -51,16 +51,19 @@ export class DashboardComponent implements OnInit {
   private getTransactions = () => {
     this.apiService
       .getTransactions()
-      .pipe(filter((transactions) => !!transactions))
+      .pipe(
+        filter((transactions) => !!transactions),
+        map(({ receitas, despesas }) => ({
+          receitas: this.utilsService.convertGetFirebase(receitas),
+          despesas: this.utilsService.convertGetFirebase(despesas),
+        }))
+      )
       .subscribe({
         next: ({ receitas, despesas }) => {
           this.showLoader.set(true);
 
-          const receitasResponse = this.utilsService.convertGetFirebase(receitas);
-          const despesasResponse = this.utilsService.convertGetFirebase(despesas);
-
-          this.incomings = this.dataPickerService.filterTransactionByDate(receitasResponse);
-          this.expenses = this.dataPickerService.filterTransactionByDate(despesasResponse);
+          this.incomings = this.dataPickerService.filterTransactionByDate(receitas);
+          this.expenses = this.dataPickerService.filterTransactionByDate(despesas);
 
           const currentMonthDataPicker = this.dataPickerService
             .currentDateSignal()
