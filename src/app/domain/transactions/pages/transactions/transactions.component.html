@@ -2,11 +2,8 @@
 <app-page-header [title]="pageItem.txt" [icon]="pageItem.icon" />
 
 <!-- Main -->
-<div
-  class="grid gap-[1.6rem]"
-  [ngClass]="!mediaQueryService.isMobile() ? 'grid-cols-2' : 'grid-cols-1'"
->
-  <div class="box" [ngClass]="{ 'order-2': mediaQueryService.isMobile() }">
+<div class="grid gap-[1.6rem] grid-cols-1 lg:grid-cols-2">
+  <div class="box order-2 lg:order-1">
     <h2 class="box__title">Transações</h2>
 
     <div class="box__content flex flex-col gap-8">
@@ -25,37 +22,37 @@
     </div>
   </div>
 
-  <div class="flex flex-col gap-[1.6rem]">
-    <div
-      class=""
-      [ngClass]="{ box: !mediaQueryService.isMobile(), 'order-2': mediaQueryService.isMobile() }"
-    >
+  <div class="flex flex-col gap-[1.6rem] order-1 lg:order-2">
+    <div>
       <h2 class="box__title">Resumo</h2>
 
-      <div class="grid grid-cols-3 gap-4 sm:gap-6">
+      <div class="grid grid-cols-4 xl:grid-cols-3 gap-4 sm:gap-6">
         <app-card
-          title="Balanço"
-          [value]="totalIncomings - totalExpenses"
-          [description]="'Total de ' + _dataPickerService.currentDateSignal().format('MMM')"
-          [typeRef]="'BALANCO'"
-        />
-        <app-card
+          class="col-span-2 xl:col-span-1"
           title="Receitas"
           [value]="totalIncomings"
           [description]="'Total de ' + _dataPickerService.currentDateSignal().format('MMM')"
           [typeRef]="'RECEITA'"
         />
         <app-card
+          class="col-span-2 xl:col-span-1"
           title="Despesas"
           [value]="totalExpenses"
           [description]="'Total de ' + _dataPickerService.currentDateSignal().format('MMM')"
           [typeRef]="'DESPESA'"
         />
+        <app-card
+          class="col-span-4 xl:col-span-1"
+          title="Balanço"
+          [value]="totalIncomings - totalExpenses"
+          [description]="'Total de ' + _dataPickerService.currentDateSignal().format('MMM')"
+          [typeRef]="'BALANCO'"
+        />
       </div>
     </div>
 
     @if (!mediaQueryService.isMobile()) {
-      <div class="box w-full">
+      <div class="box w-full hidden lg:block">
         @if (!showLoader() && chartOptions) {
           <apx-chart
             [series]="chartOptions.series"

@@ -1,8 +1,9 @@
 <app-page-header [title]="pageItem.txt" [icon]="pageItem.icon"></app-page-header>
 
 <div class="grid gap-4 sm:gap-6">
-  <div class="grid grid-cols-3 gap-4 sm:gap-6">
+  <div class="grid grid-cols-4 md:grid-cols-3 gap-4 sm:gap-6">
     <app-card
+      class="col-span-2 md:col-span-1"
       title="Balanço"
       [value]="totalIncomings - totalExpenses"
       [description]="'Total de ' + dataPickerService.currentDateSignal().format('MMM')"
@@ -10,6 +11,7 @@
       [showLoader]="showLoader()"
     />
     <app-card
+      class="col-span-2 md:col-span-1"
       title="Receitas"
       [value]="totalIncomings"
       [description]="'Total de ' + dataPickerService.currentDateSignal().format('MMM')"
@@ -17,6 +19,7 @@
       [showLoader]="showLoader()"
     />
     <app-card
+      class="col-span-4 md:col-span-1"
       title="Despesas"
       [value]="totalExpenses"
       [description]="'Total de ' + dataPickerService.currentDateSignal().format('MMM')"
@@ -25,7 +28,7 @@
     />
   </div>
 
-  <div class="grid grid-cols-1 sm:grid-cols-3 gap-y-4 sm:gap-6">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-0 gap-y-4 sm:gap-y-6 lg:gap-6">
     <div
       class="box dark:bg-surfaceColorDark dark:border-borderColorDark col-span-1 grid items-center justify-center w-full"
     >
