@@ -212,9 +212,9 @@ export class DashboardComponent implements OnInit {
         {
           breakpoint: 480,
           options: {
-            chart: {
-              width: 200,
-            },
+            // chart: {
+            //   width: 300,
+            // },
             legend: {
               position: 'bottom',
             },
