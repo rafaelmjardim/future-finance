@@ -26,6 +26,7 @@ export type GET_TRANSITIONS = {
 export type Transaction = {
   id: string;
   sobrescrita?: any;
+  recorrenteRules?: any;
   nome: string;
   categoria: string;
   data: string;
@@ -39,6 +40,8 @@ export type Transaction = {
   repeticoes: number;
   currentRepeat: number;
   tipo: string;
+  startMonth?: string;
+  endMonth?: string;
 };
 
 export type ChartOptions = {

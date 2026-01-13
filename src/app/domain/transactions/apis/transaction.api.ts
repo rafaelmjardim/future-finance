@@ -63,6 +63,21 @@ export class TransactionApi {
     );
   };
 
+  putTransactionRecorrenteRules = (id: string, transactionFormData: any, rota: Rota) => {
+    const payload = {
+      valor: transactionFormData.value,
+      nome: transactionFormData.name,
+      categoria: transactionFormData.category,
+      descricao: transactionFormData.description,
+      tipo: transactionFormData.typeRef,
+      status: transactionFormData.status,
+      startMonth: transactionFormData.date,
+      endMonth: null,
+    };
+
+    return this._http.patch(`${API_KEY}/${rota}/${id}/recorrenteRules.json`, payload);
+  };
+
   deleteTransactionSobrescrita = (id: string, dateRecorrent: any, rota: Rota) => {
     return this._http.patch(`${API_KEY}/${rota}/${id}/sobrescrita/${dateRecorrent}.json`, {
       deletado: true,

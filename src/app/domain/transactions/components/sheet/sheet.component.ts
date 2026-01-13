@@ -115,6 +115,17 @@ export class SheetComponent implements OnInit {
 
       if (this.isEditConfirm && this.transactionForm.value.typeMovimentation === 2) {
         this.apiService
+          .putTransactionRecorrenteRules(this.transactionData.id, transactionFormData, rota)
+          .subscribe({
+            next: () => {
+              this.sheetService.reloadTransactions();
+              this.dialogRef.close();
+            },
+          });
+      }
+
+      if (this.isEditConfirm && this.transactionForm.value.typeMovimentation === 3) {
+        this.apiService
           .deleteAllTransactionsSobrescritas(this.transactionData.id, this.selectRoteRequest())
           .subscribe({
             next: () => {

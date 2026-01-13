@@ -23,12 +23,19 @@ export class TransactionsService {
     let transactionsFormatted = transactions.map((transaction) => {
       const startDate = moment(transaction.data).startOf('month');
       const currentDate = this._dataPickerService.currentDateSignal().startOf('month');
-
       const diffInMonths = currentDate.diff(startDate, 'month');
       const currentRepeat = diffInMonths + 1;
 
       if (transaction.sobrescrita) {
         transaction = { ...transaction, ...transaction.sobrescrita[currentMonthDataPicker] };
+      }
+
+      // Foi criado regras recorrentes que sao separadas da sobrescrita, elas são usadas para editar proximos meses
+      // (Depois migrar repeticoes para esse formato adicionando endMonth)
+      if (transaction.recorrenteRules && !transaction.sobrescrita[currentMonthDataPicker]) {
+        if (this.isRulesActive(transaction.recorrenteRules, currentMonthDataPicker)) {
+          transaction = { ...transaction, ...transaction.recorrenteRules };
+        }
       }
 
       return transaction.repete ? { ...transaction, currentRepeat } : transaction;
@@ -41,4 +48,11 @@ export class TransactionsService {
 
     return (transactions = [...transactionsFormatted]);
   };
+
+  public isRulesActive(rule: any, month: any): boolean {
+    if (rule.startMonth > month) return false;
+    if (rule.endMonth && rule.endMonth < month) return false;
+
+    return true;
+  }
 }
