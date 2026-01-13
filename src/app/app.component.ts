@@ -8,18 +8,10 @@ import { SidebarComponent } from './core/components/sidebar/sidebar.component';
 import { SidebarService } from './core/components/sidebar/sidebar.service';
 import { NavbarMobileComponent } from './core/components/navbar-mobile/navbar-mobile.component';
 import { MediaQueryService } from './shared/services/media-query/media-query.service';
-import { LoaderComponent } from './shared/components/loader/loader.component';
 
 @Component({
   selector: 'app-root',
-  imports: [
-    RouterOutlet,
-    AsyncPipe,
-    HeaderComponent,
-    SidebarComponent,
-    NavbarMobileComponent,
-    LoaderComponent,
-  ],
+  imports: [RouterOutlet, AsyncPipe, HeaderComponent, SidebarComponent, NavbarMobileComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

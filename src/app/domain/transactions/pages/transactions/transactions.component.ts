@@ -6,7 +6,6 @@ import { CardComponent } from '../../../../shared/components/card/card.component
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { SheetService } from '../../components/sheet/sheet.service';
 import { DataPickerService } from '../../../../shared/components/data-picker/data-picker.service';
-import { NgClass } from '@angular/common';
 import { TransactionApi } from '../../apis/transaction.api';
 import { PageHeaderComponent } from '../../../../shared/components/pageheader/page-header.component';
 import { filter, map } from 'rxjs';
@@ -16,13 +15,7 @@ import { TransactionsListComponent } from '../../components/transactions-list/tr
 
 @Component({
   selector: 'app-transactions',
-  imports: [
-    PageHeaderComponent,
-    TransactionsListComponent,
-    CardComponent,
-    NgApexchartsModule,
-    NgClass,
-  ],
+  imports: [PageHeaderComponent, TransactionsListComponent, CardComponent, NgApexchartsModule],
   templateUrl: './transactions.component.html',
   styleUrl: './transactions.component.scss',
 })
