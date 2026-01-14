@@ -1,11 +1,11 @@
 <div
   class="app"
   [class]="{
-    'app--authenticated': !mediaQueryService.isMobile() && (authService.isAuthenticated$ | async),
+    'app--authenticated': !mediaQueryService.isMobile(),
     dark: utilsService.darkModeSignal(),
   }"
 >
-  @if (authService.isAuthenticated$ | async) {
+  @if (!authService.sessionLoading() && (authService.isAuthenticated$ | async)) {
     @if (!mediaQueryService.isMobile()) {
       <div
         class="app__sidebar"
@@ -32,7 +32,11 @@
         <app-navbar-mobile></app-navbar-mobile>
       </div>
     }
-  } @else {
+  } @else if (!authService.sessionLoading()) {
     <router-outlet></router-outlet>
+  } @else {
+    <div class="flex items-center justify-center h-screen">
+      <app-loader [size]="40" />
+    </div>
   }
 </div>
