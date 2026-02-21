@@ -32,7 +32,7 @@ export class TransactionsService {
 
       // Foi criado regras recorrentes que sao separadas da sobrescrita, elas são usadas para editar proximos meses
       // (Depois migrar repeticoes para esse formato adicionando endMonth)
-      if (transaction.recorrenteRules && !transaction.sobrescrita[currentMonthDataPicker]) {
+      if (transaction.recorrenteRules && !transaction?.sobrescrita?.[currentMonthDataPicker]) {
         if (this.isRulesActive(transaction.recorrenteRules, currentMonthDataPicker)) {
           transaction = { ...transaction, ...transaction.recorrenteRules };
         }
